@@ -356,22 +356,23 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
         @Override
         protected void onRun(final TaskResult<JecFile[]> taskResult, Void... params) throws Exception {
 
-            if (!(path instanceof RootFile) && (isRoot || RootShellRunner.isRootPath(path.getPath()))) {
-                RootFile.obtain(path.getPath(), new OnResultCallback<RootFile>() {
-                    @Override
-                    public void onError(String error) {
-                        updateList(taskResult);
-                    }
-
-                    @Override
-                    public void onSuccess(RootFile result) {
+//            if (!(path instanceof RootFile) && (isRoot || RootShellRunner.isRootPath(path.getPath()))) {
+//                RootFile.obtain(path.getPath(), new OnResultCallback<RootFile>() {
+//                    @Override
+//                    public void onError(String error) {
+//                        updateList(taskResult);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(RootFile result) {
 //                        path = result;
-                        updateList(taskResult);
-                    }
-                });
-            } else {
-                updateList(taskResult);
-            }
+//                        updateList(taskResult);
+//                    }
+//                });
+//            } else {
+//                updateList(taskResult);
+//            }
+            updateList(taskResult);
         }
 
         private void updateList(final TaskResult<JecFile[]> taskResult) {
