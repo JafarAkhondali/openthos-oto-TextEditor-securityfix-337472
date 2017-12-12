@@ -100,7 +100,7 @@ def changeApkName(applicationVariants, defaultConfig) {
 //                    def sp = file.name.split('\\-')
 //                    def date = new java.text.SimpleDateFormat("yyyy_MM_dd").format(new Date())//时间
 //                    def newName = "${sp[0]}_${variant.productFlavors[0].name}_${versionName}_${versionCode}_${date}.apk"
-                    def newName = "920_Text_Editor_${versionName}_${versionCode}.apk"
+                    def newName = "Text_Editor_${versionName}_${versionCode}.apk"
 
 //                    def path = new File(projectDir, "apk/${sp[0]}_${versionName}_${versionCode}_svn${svnRev}");
                     def path = new File(projectDir, "../apk");
