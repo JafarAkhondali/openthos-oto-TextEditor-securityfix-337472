@@ -21,3 +21,5 @@ apk/
 captures
 *.iml
 .gradle
+
+tools/assets/ace/node_modules
