@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'blockcanaryex'
 
-Properties properties = new Properties()
-properties.load(file('../../keystore/920-text-editor-v2.gradle.properties').newDataInputStream())
-def KEYSTORE_ALIAS = properties.getProperty('KEYSTORE_ALIAS')
-def KEYSTORE_PASSWORD = properties.getProperty('KEYSTORE_PASSWORD')
-def GOOGLE_BILLING_KEY = properties.getProperty('GOOGLE_BILLING_KEY')
+//Properties properties = new Properties()
+//properties.load(file('../../keystore/920-text-editor-v2.gradle.properties').newDataInputStream())
+//def KEYSTORE_ALIAS = properties.getProperty('KEYSTORE_ALIAS')
+//def KEYSTORE_PASSWORD = properties.getProperty('KEYSTORE_PASSWORD')
+//def GOOGLE_BILLING_KEY = properties.getProperty('GOOGLE_BILLING_KEY')
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -17,41 +17,41 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 32
         versionName "v2"
-        buildConfigField "String", "GOOGLE_BILLING_KEY", "\"" + GOOGLE_BILLING_KEY + "\""
+//        buildConfigField "String", "GOOGLE_BILLING_KEY", "\"" + GOOGLE_BILLING_KEY + "\""
     }
 
-    signingConfigs {
-        debug {
-            keyAlias KEYSTORE_ALIAS
-            keyPassword KEYSTORE_PASSWORD
-            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
-            storePassword KEYSTORE_PASSWORD
-        }
-        release {
-            keyAlias KEYSTORE_ALIAS
-            keyPassword KEYSTORE_PASSWORD
-            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
-            storePassword KEYSTORE_PASSWORD
-        }
-    }
-
-    buildTypes {
-        release {
-            debuggable false
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-
-        }
-        debug {
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            keyAlias KEYSTORE_ALIAS
+//            keyPassword KEYSTORE_PASSWORD
+//            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
+//            storePassword KEYSTORE_PASSWORD
+//        }
+//        release {
+//            keyAlias KEYSTORE_ALIAS
+//            keyPassword KEYSTORE_PASSWORD
+//            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
+//            storePassword KEYSTORE_PASSWORD
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            debuggable false
+//            minifyEnabled false
+//            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//
+//        }
+//        debug {
+//            debuggable true
+//            minifyEnabled false
+//            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.debug
+//        }
+//    }
 
     packagingOptions {
         exclude 'proguard-project.txt'

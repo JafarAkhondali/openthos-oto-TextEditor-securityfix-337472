@@ -59,6 +59,10 @@ public class InputConnectionHacker implements InputConnection {
         return cursorBeforeText == null ? "" : cursorBeforeText;
     }
 
+    public boolean isLauncherFocus(boolean isFocus) {
+        return false;
+    }
+
     @Override
     public CharSequence getTextAfterCursor(int n, int flags) {
         return ic.getTextAfterCursor(n, flags);

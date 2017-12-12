@@ -21,6 +21,7 @@ package com.jecelyin.editor.v2.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Base64;
+import android.util.Log;
 
 import com.jecelyin.common.utils.L;
 import com.jecelyin.common.utils.SysUtils;
@@ -33,7 +34,7 @@ import java.security.MessageDigest;
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 public class AppUtils {
-    private final static String rightSign = "u+AXcAUmNluGqVoNFQCe4+o6BLc=\n";
+    private final static String rightSign = "wQ9W4ivsEnl90JyiZmo2e7bBWvw=\n";
 
     public static boolean verifySign(Context context) {
         try {
@@ -43,6 +44,7 @@ public class AppUtils {
             MessageDigest md = MessageDigest.getInstance("SHA");
             md.update(signature);
             final String currentSignature = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+            Log.i("ljh",currentSignature);
             return rightSign.equals(currentSignature);
         } catch (Exception e) {
             L.e(e);

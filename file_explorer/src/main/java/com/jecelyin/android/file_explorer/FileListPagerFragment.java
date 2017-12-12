@@ -365,7 +365,7 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
 
                     @Override
                     public void onSuccess(RootFile result) {
-                        path = result;
+//                        path = result;
                         updateList(taskResult);
                     }
                 });
