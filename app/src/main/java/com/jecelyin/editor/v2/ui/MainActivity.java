@@ -228,7 +228,7 @@ public class MainActivity extends BaseActivity
 
     private void bindPreferences() {
         mDrawerLayout.setKeepScreenOn(pref.isKeepScreenOn());
-        mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
+//        mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
 
         onSharedPreferenceChanged(null, Pref.KEY_PREF_ENABLE_DRAWERS);
         pref.registerOnSharedPreferenceChangeListener(this);
@@ -260,7 +260,7 @@ public class MainActivity extends BaseActivity
                 mDrawerLayout.setDrawerLockMode(pref.isEnabledDrawers() ? TranslucentDrawerLayout.LOCK_MODE_UNDEFINED : TranslucentDrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
                 break;
             case Pref.KEY_READ_ONLY:
-                mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
+//                mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
                 break;
         }
     }
@@ -734,7 +734,7 @@ public class MainActivity extends BaseActivity
     public void setSymbolVisibility(boolean b) {
         if (pref.isReadOnly())
             return;
-        mSymbolBarLayout.setVisibility(b ? View.VISIBLE : View.GONE);
+//        mSymbolBarLayout.setVisibility(b ? View.VISIBLE : View.GONE);
     }
 
 }
