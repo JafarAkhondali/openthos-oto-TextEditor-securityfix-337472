@@ -55,10 +55,13 @@ public class MainMenuAdapter extends RecyclerView.Adapter {
         menuItems = new ArrayList<MenuItemInfo>();
 
         for (MenuGroup group : groups) {
-            if(group.getNameResId() == 0)
+            if (group.getNameResId() == 0)
                 continue; //top group
-            menuItems.add(new MenuItemInfo(group, 0, Command.CommandEnum.NONE, 0, 0));
-            menuItems.addAll(menuFactory.getMenuItemsWithoutToolbarMenu(group));
+            List<MenuItemInfo> menus = menuFactory.getMenuItemsWithoutToolbarMenu(group);
+            if (menus.size() != 0) {
+                menuItems.add(new MenuItemInfo(group, 0, Command.CommandEnum.NONE, 0, 0));
+                menuItems.addAll(menus);
+            }
         }
     }
 
@@ -83,30 +86,30 @@ public class MainMenuAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final MenuItemInfo item = menuItems.get(position);
-        if(holder instanceof ItemViewHolder) {
-            final ItemViewHolder vh = (ItemViewHolder)holder;
+        if (holder instanceof ItemViewHolder) {
+            final ItemViewHolder vh = (ItemViewHolder) holder;
             vh.mTextView.setText(item.getTitleResId());
             Drawable icon = MenuManager.makeMenuNormalIcon(vh.itemView.getResources(), item.getIconResId());
             vh.mTextView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(menuItemClickListener != null) {
+                    if (menuItemClickListener != null) {
                         menuItemClickListener.onMenuItemClick(item);
-                        if(MenuFactory.isCheckboxMenu(item.getItemId())) {
+                        if (MenuFactory.isCheckboxMenu(item.getItemId())) {
                             vh.mCheckBox.setChecked(!vh.mCheckBox.isChecked());
                         }
                     }
                 }
             });
-            if(MenuFactory.isCheckboxMenu(item.getItemId())) {
+            if (MenuFactory.isCheckboxMenu(item.getItemId())) {
                 vh.mCheckBox.setVisibility(View.VISIBLE);
                 vh.mCheckBox.setChecked(MenuFactory.isChecked(vh.itemView.getContext(), item.getItemId()));
             } else {
                 vh.mCheckBox.setVisibility(View.GONE);
             }
         } else {
-            GroupViewHolder vh = (GroupViewHolder)holder;
+            GroupViewHolder vh = (GroupViewHolder) holder;
             vh.mNameTextView.setText(item.getGroup().getNameResId());
         }
     }

@@ -80,6 +80,7 @@ public class CrashReportDialogActivity extends JecActivity {
         getSupportActionBar().setTitle(R.string.crash_report);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_btn);
 
+        Log.i("ljh","trace " + trace);
         stacktraceTextView.setText(trace);
     }
 
