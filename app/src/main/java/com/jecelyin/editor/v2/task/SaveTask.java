@@ -54,21 +54,21 @@ public class SaveTask {
     }
 
     public void save(boolean isCluster, SaveListener listener) {
-        if(writing)
+        if (writing)
             return;
 
         Document document = documentWR.get();
         EditorDelegate editorDelegate = editorDelegateWR.get();
         if (document == null || editorDelegate == null)
             return;
-        if(!document.isChanged()) {
+        if (!document.isChanged()) {
 //            if(!isCluster)
 //                UIUtils.toast(context, R.string.no_change);
             return;
         }
         this.isCluster = isCluster;
         File file = document.getFile();
-        if(file == null) {
+        if (file == null) {
             editorDelegate.startSaveFileSelectorActivity();
             return;
         }
@@ -80,8 +80,7 @@ public class SaveTask {
     }
 
     /**
-     *
-     * @param file 如果是Root处理，保存成功后要回写到原始文件
+     * @param file     如果是Root处理，保存成功后要回写到原始文件
      * @param encoding
      * @param listener
      */
@@ -99,12 +98,12 @@ public class SaveTask {
                 if (documentWR.get() == null || contextWR.get() == null || editorDelegateWR.get() == null)
                     return;
                 documentWR.get().onSaveSuccess(file, encoding);
-                if(!isCluster) {
+                if (!isCluster) {
                     UIUtils.toast(contextWR.get(), R.string.save_success);
                 } else {
                     editorDelegateWR.get().getMainActivity().doNextCommand();
                 }
-                if(listener != null)
+                if (listener != null)
                     listener.onSaved();
             }
 

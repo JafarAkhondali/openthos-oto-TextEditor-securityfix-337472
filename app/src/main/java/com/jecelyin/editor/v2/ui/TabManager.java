@@ -79,7 +79,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     private void onTabMenuViewsClick(View v) {
         switch (v.getId()) {
             case R.id.close_image_view:
-                closeTab((int)v.getTag());
+                closeTab((int) v.getTag());
                 break;
             default:
                 int position = (int) v.getTag();
@@ -99,7 +99,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
             File f;
             for (DBHelper.RecentFileItem item : recentFiles) {
                 f = new File(item.path);
-                if(!f.isFile())
+                if (!f.isFile())
                     continue;
                 editorAdapter.newEditor(false, f, item.line, item.column, item.encoding);
                 setCurrentTab(editorAdapter.getCount() - 1); //fixme: auto load file, otherwise click other tab will crash by search result
@@ -149,11 +149,11 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
 
     public boolean newTab(File path, int line, int column, String encoding) {
         int count = editorAdapter.getCount();
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             EditorDelegate fragment = editorAdapter.getItem(i);
-            if(fragment.getPath() == null)
+            if (fragment.getPath() == null)
                 continue;
-            if(fragment.getPath().equals(path.getPath())) {
+            if (fragment.getPath().equals(path.getPath())) {
                 setCurrentTab(i);
                 return false;
             }
@@ -170,7 +170,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public int getTabCount() {
-        if(tabAdapter == null)
+        if (tabAdapter == null)
             return 0;
         return tabAdapter.getItemCount();
     }
@@ -228,7 +228,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
 
     private void updateToolbar() {
         EditorDelegate delegate = editorAdapter.getItem(getCurrentTab());
-        if(delegate == null)
+        if (delegate == null)
             return;
         mainActivity.mToolbar.setTitle(delegate.getToolbarText());
     }

@@ -74,7 +74,7 @@ public class RootShellRunner {
                     listener.onError(errors);
                     return;
                 }
-                run(new CopyRunner(source, destination, mode){
+                run(new CopyRunner(source, destination, mode) {
                     @Override
                     public void onResult(Boolean result, @NonNull String errors) {
                         if (mountPoint != null && !mountPoint.isEmpty()) {
@@ -95,7 +95,7 @@ public class RootShellRunner {
                     listener.onError(errors);
                     return;
                 }
-                run(new MkdirRunner(path){
+                run(new MkdirRunner(path) {
                     @Override
                     public void onResult(Boolean result, @NonNull String errors) {
                         if (!errors.isEmpty()) {
@@ -112,7 +112,7 @@ public class RootShellRunner {
         });
     }
 
-    public void chmod(final String mode, final String path,  final OnResultCallback<Boolean> listener) {
+    public void chmod(final String mode, final String path, final OnResultCallback<Boolean> listener) {
         run(new MountFileSystemRWRunner(path) {
             @Override
             public void onResult(final String mountPoint, @NonNull String errors) {
@@ -120,7 +120,7 @@ public class RootShellRunner {
                     listener.onError(errors);
                     return;
                 }
-                run(new Runner<Boolean>(){
+                run(new Runner<Boolean>() {
                     @Override
                     public String command() {
                         return "chmod " + mode + " \"" + path + "\"";
@@ -155,7 +155,7 @@ public class RootShellRunner {
                     listener.onError(errors);
                     return;
                 }
-                run(new Runner<Boolean>(){
+                run(new Runner<Boolean>() {
                     @Override
                     public String command() {
                         return "rm -rf \"" + path + "\"";
@@ -190,7 +190,7 @@ public class RootShellRunner {
                     return;
                 }
 
-                run(new Runner<Boolean>(){
+                run(new Runner<Boolean>() {
                     @Override
                     public String command() {
                         return "cat \"" + path + "\" > \"" + destination + "\";" +
@@ -223,7 +223,7 @@ public class RootShellRunner {
     }
 
     public static boolean isRootPath(String path) {
-        String[] paths = new String[] {SysUtils.getInternalStorageDirectory(), "/sdcard", "/mnt/sdcard", "/storage/emulated", "/storage/sdcard0", "/storage/sdcard1"};
+        String[] paths = new String[]{SysUtils.getInternalStorageDirectory(), "/sdcard", "/mnt/sdcard", "/storage/emulated", "/storage/sdcard0", "/storage/sdcard1"};
         for (String prefix : paths) {
             if (path.startsWith(prefix)) {
                 String androidPath = prefix + "/Android/";

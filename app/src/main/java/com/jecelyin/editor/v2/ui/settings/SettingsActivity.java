@@ -31,6 +31,7 @@ import com.jecelyin.editor.v2.R;
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,

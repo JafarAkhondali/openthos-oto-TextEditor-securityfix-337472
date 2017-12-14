@@ -42,8 +42,7 @@ public abstract class JecApp extends Application implements Thread.UncaughtExcep
         if (startupTimestamp == 0)
             startupTimestamp = System.currentTimeMillis();
 
-        if (SysUtils.isDebug(this))
-        {
+        if (SysUtils.isDebug(this)) {
             L.debug = true;
             //内存泄漏监控
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -59,8 +58,7 @@ public abstract class JecApp extends Application implements Thread.UncaughtExcep
     }
 
     @Override
-    public void uncaughtException(Thread thread, final Throwable ex)
-    {
+    public void uncaughtException(Thread thread, final Throwable ex) {
         Log.e("uncaughtException", "#ERROR: " + ex.getMessage(), ex);
 
         CrashUtils.saveException(getApplicationContext(), ex, thread);

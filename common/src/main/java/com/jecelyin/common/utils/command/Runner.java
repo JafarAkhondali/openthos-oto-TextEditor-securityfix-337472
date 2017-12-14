@@ -30,7 +30,10 @@ import java.util.UUID;
 public abstract class Runner<T> {
     boolean done = false;
     public final String token = UUID.randomUUID().toString();
+
     abstract public String command();
+
     abstract protected void process(List<String> result, @NonNull String errors);
+
     abstract public void onResult(T result, @NonNull String errors);
 }

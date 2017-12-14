@@ -72,7 +72,7 @@ public class EditorToolbar extends Toolbar {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(title == null)
+        if (title == null)
             return;
         canvas.drawText(title, 0, title.length(), 40, getHeight() - 10, titlePaint);
     }

@@ -180,7 +180,7 @@ public class LocalFile extends JecFile {
         if (!(dest instanceof LocalFile)) {
             throw new ExplorerException(dest + " !(dest instanceof LocalFile)");
         }
-        boolean result = IOUtils.copyFile(file, ((LocalFile)dest).file);
+        boolean result = IOUtils.copyFile(file, ((LocalFile) dest).file);
         if (listener != null)
             listener.onResult(result);
     }
@@ -204,7 +204,7 @@ public class LocalFile extends JecFile {
     public boolean equals(Object o) {
         if (!(o instanceof LocalFile))
             return false;
-        return file.equals(((LocalFile)o).file);
+        return file.equals(((LocalFile) o).file);
     }
 
     @Override

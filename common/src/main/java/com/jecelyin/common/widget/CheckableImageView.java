@@ -29,9 +29,11 @@ public class CheckableImageView extends ImageView implements Checkable {
     private static final int[] CHECKED_STATE_SET = {
             android.R.attr.state_checked
     };
+
     public CheckableImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
     @Override
     public int[] onCreateDrawableState(int extraSpace) {
         final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);

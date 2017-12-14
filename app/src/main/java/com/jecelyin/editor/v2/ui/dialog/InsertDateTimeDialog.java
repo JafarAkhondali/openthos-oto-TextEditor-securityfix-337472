@@ -92,17 +92,17 @@ public class InsertDateTimeDialog extends AbstractDialog implements AdapterView.
         SimpleDateFormat cnDateFormat = new SimpleDateFormat("a", Locale.CHINA);
 
         final ArrayList<CharSequence> englishList = new ArrayList<CharSequence>(english.length);
-        for(String format : english) {
+        for (String format : english) {
             usDateFormat.applyPattern(format);
             englishList.add(usDateFormat.format(date));
         }
         final ArrayList<CharSequence> chineseList = new ArrayList<CharSequence>(chinese.length);
-        for(String format : chinese) {
+        for (String format : chinese) {
             cnDateFormat.applyPattern(format);
             chineseList.add(convertFormat(context, cnDateFormat, date, cnDateFormat.format(date)));
         }
 
-        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(context, R.layout.dialog_list_item, R.id.title, (ArrayList<CharSequence>)englishList.clone());
+        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(context, R.layout.dialog_list_item, R.id.title, (ArrayList<CharSequence>) englishList.clone());
         adapter.setNotifyOnChange(false);
         formatListView.setAdapter(adapter);
         formatListView.setOnItemClickListener(this);
@@ -151,10 +151,10 @@ public class InsertDateTimeDialog extends AbstractDialog implements AdapterView.
         int length = number.length();
         char c;
         StringBuilder sb = new StringBuilder();
-        for (int i=0; i<length; i++) {
+        for (int i = 0; i < length; i++) {
             c = number.charAt(i);
-            if(c >= '0' && c <= '9') {
-                sb.append(numArr[c-'0']);
+            if (c >= '0' && c <= '9') {
+                sb.append(numArr[c - '0']);
             } else {
                 sb.append(c);
             }
@@ -165,7 +165,7 @@ public class InsertDateTimeDialog extends AbstractDialog implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         dialog.dismiss();
-        getMainActivity().insertText(((TextView)view).getText().toString());
+        getMainActivity().insertText(((TextView) view).getText().toString());
         dialog = null;
     }
 }

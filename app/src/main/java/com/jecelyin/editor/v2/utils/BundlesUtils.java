@@ -43,7 +43,7 @@ public class BundlesUtils {
     public static void unzipBundles(Context context) throws IOException {
         File cacheDir = SysUtils.getCacheDir(context);
         File okFile = new File(cacheDir, ".bundles_unzip_ok");
-        if(L.debug && okFile.isFile())
+        if (L.debug && okFile.isFile())
             return;
         AssetManager assetManager = context.getAssets();
         BufferedReader reader = null;
@@ -54,25 +54,24 @@ public class BundlesUtils {
 
             // do reading, usually loop until end of file reading
             String mLine;
-            while ( (mLine = reader.readLine()) != null ) {
+            while ((mLine = reader.readLine()) != null) {
                 //process line
-                if(!mLine.startsWith("Bundles/"))
+                if (!mLine.startsWith("Bundles/"))
                     continue;
 
                 try {
                     in = assetManager.open(mLine);
                     File outFile = new File(cacheDir, mLine);
                     File path = outFile.getParentFile();
-                    if(!path.isDirectory() && !path.mkdirs()) {
-                        L.e("can't create dir: "+path.getPath());
+                    if (!path.isDirectory() && !path.mkdirs()) {
+                        L.e("can't create dir: " + path.getPath());
                         continue;
                     }
                     out = new FileOutputStream(outFile);
                     copyFile(in, out);
-                } catch(IOException e) {
+                } catch (IOException e) {
                     throw e;
-                }
-                finally {
+                } finally {
                     if (in != null) {
                         try {
                             in.close();
@@ -103,10 +102,11 @@ public class BundlesUtils {
         }
 
     }
+
     private static void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[12024];
         int read;
-        while((read = in.read(buffer)) != -1){
+        while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
     }

@@ -15,25 +15,25 @@ public class GrepBuilder {
     }
 
     // Regex options
-    public GrepBuilder setRegex( final String find, boolean regex ) {
+    public GrepBuilder setRegex(final String find, boolean regex) {
 
         theGrep.setRegex(find, regex);
 
         return this;
     }
 
-    public GrepBuilder addRegexFromFiles( final String... files ) {
-        theGrep.readRegexFromFile( files );
+    public GrepBuilder addRegexFromFiles(final String... files) {
+        theGrep.readRegexFromFile(files);
         return this;
     }
 
-    public GrepBuilder addLongRegexFromFiles( final String... files ) {
-        theGrep.readLongRegexFromFile( files );
+    public GrepBuilder addLongRegexFromFiles(final String... files) {
+        theGrep.readLongRegexFromFile(files);
         return this;
     }
 
     public GrepBuilder ignoreCase() {
-        theGrep.ignoreCase=true;
+        theGrep.ignoreCase = true;
         return this;
     }
 
@@ -59,7 +59,7 @@ public class GrepBuilder {
     }
 
     // Output control
-    public GrepBuilder maxCount( final int l ) {
+    public GrepBuilder maxCount(final int l) {
         theGrep.maxCount = l;
         return this;
     }
@@ -105,34 +105,34 @@ public class GrepBuilder {
         return this;
     }
 
-    public GrepBuilder include( final String... includes ) {
+    public GrepBuilder include(final String... includes) {
 
         theGrep.useInclude = true;
-        theGrep.includeFilePatterns.addAll( Arrays.asList( includes ) );
+        theGrep.includeFilePatterns.addAll(Arrays.asList(includes));
         return this;
     }
 
-    public GrepBuilder includeFrom( final String... from ) {
+    public GrepBuilder includeFrom(final String... from) {
         theGrep.useInclude = true;
-        theGrep.readIncludesFrom( from );
+        theGrep.readIncludesFrom(from);
         return this;
     }
 
-    public GrepBuilder exclude( final String... excludes ) {
+    public GrepBuilder exclude(final String... excludes) {
         theGrep.useExclude = true;
-        theGrep.excludeFilePatterns.addAll( Arrays.asList( excludes ) ) ;
+        theGrep.excludeFilePatterns.addAll(Arrays.asList(excludes));
         return this;
     }
 
-    public GrepBuilder excludeFrom( final String... from ) {
+    public GrepBuilder excludeFrom(final String... from) {
 
         theGrep.useExclude = true;
-        theGrep.readExcludeFrom( from );
+        theGrep.readExcludeFrom(from);
         return this;
     }
 
-    public GrepBuilder excludeDir( final String... dirs ) {
-        theGrep.excludeDirPatterns.addAll( Arrays.asList( dirs ) );
+    public GrepBuilder excludeDir(final String... dirs) {
+        theGrep.excludeDirPatterns.addAll(Arrays.asList(dirs));
         return this;
     }
 
@@ -152,29 +152,29 @@ public class GrepBuilder {
     }
 
     // Context control
-    public GrepBuilder context( final int lines ) {
+    public GrepBuilder context(final int lines) {
 
-        theGrep.afterContext = lines ;
-        theGrep.beforeContext = lines ;
+        theGrep.afterContext = lines;
+        theGrep.beforeContext = lines;
         return this;
     }
 
-    public GrepBuilder afterContext( final int lines ) {
+    public GrepBuilder afterContext(final int lines) {
 
         theGrep.afterContext = lines;
         return this;
     }
 
-    public GrepBuilder beforeContext( final int lines ) {
+    public GrepBuilder beforeContext(final int lines) {
 
         theGrep.beforeContext = lines;
         return this;
 
     }
 
-    public GrepBuilder addFile( final String name ) {
+    public GrepBuilder addFile(final String name) {
 
-        theGrep.addFile( name );
+        theGrep.addFile(name);
         return this;
     }
 

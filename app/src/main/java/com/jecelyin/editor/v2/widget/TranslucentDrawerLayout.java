@@ -64,7 +64,7 @@ import java.util.List;
 /**
  * DrawerLayout acts as a top-level container for window content that allows for
  * interactive "drawer" views to be pulled out from one or both vertical edges of the window.
- *
+ * <p>
  * <p>Drawer positioning and layout is controlled using the <code>android:layout_gravity</code>
  * attribute on child views corresponding to which side of the view you want the drawer
  * to emerge from: left or right (or start/end on platform versions that support layout direction.)
@@ -72,24 +72,24 @@ import java.util.List;
  * layout configures more than one drawer view per vertical edge of the window, an exception will
  * be thrown at runtime.
  * </p>
- *
+ * <p>
  * <p>To use a DrawerLayout, position your primary content view as the first child with
  * width and height of <code>match_parent</code> and no <code>layout_gravity></code>.
  * Add drawers as child views after the main content view and set the <code>layout_gravity</code>
  * appropriately. Drawers commonly use <code>match_parent</code> for height with a fixed width.</p>
- *
+ * <p>
  * <p>{@link DrawerListener} can be used to monitor the state and motion of drawer views.
  * Avoid performing expensive operations such as layout during animation as it can cause
  * stuttering; try to perform expensive operations during the {@link #STATE_IDLE} state.
  * {@link SimpleDrawerListener} offers default/no-op implementations of each callback method.</p>
- *
+ * <p>
  * <p>As per the <a href="{@docRoot}design/patterns/navigation-drawer.html">Android Design
  * guide</a>, any drawers positioned to the left/start should
  * always contain content for navigating around the application, whereas any drawers
  * positioned to the right/end should always contain actions to take on the current content.
  * This preserves the same navigation left, actions right structure present in the Action Bar
  * and elsewhere.</p>
- *
+ * <p>
  * <p>For more information about how to use DrawerLayout, read <a
  * href="{@docRoot}training/implementing-navigation/nav-drawer.html">Creating a Navigation
  * Drawer</a>.</p>
@@ -99,7 +99,8 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     @IntDef({STATE_IDLE, STATE_DRAGGING, STATE_SETTLING})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface State {}
+    private @interface State {
+    }
 
     /**
      * Indicates that any drawers are in an idle, settled state. No animation is in progress.
@@ -116,11 +117,14 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      */
     public static final int STATE_SETTLING = ViewDragHelper.STATE_SETTLING;
 
-    /** @hide */
+    /**
+     * @hide
+     */
     @IntDef({LOCK_MODE_UNLOCKED, LOCK_MODE_LOCKED_CLOSED, LOCK_MODE_LOCKED_OPEN,
             LOCK_MODE_UNDEFINED})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface LockMode {}
+    private @interface LockMode {
+    }
 
     /**
      * The drawer is unlocked.
@@ -144,10 +148,13 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      */
     public static final int LOCK_MODE_UNDEFINED = 3;
 
-    /** @hide */
+    /**
+     * @hide
+     */
     @IntDef({Gravity.LEFT, Gravity.RIGHT, GravityCompat.START, GravityCompat.END})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface EdgeGravity {}
+    private @interface EdgeGravity {
+    }
 
 
     private static final int MIN_DRAWER_MARGIN = 64; // dp
@@ -174,14 +181,18 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     private static final float TOUCH_SLOP_SENSITIVITY = 1.f;
 
-    private static final int[] LAYOUT_ATTRS = new int[] {
+    private static final int[] LAYOUT_ATTRS = new int[]{
             android.R.attr.layout_gravity
     };
 
-    /** Whether we can use NO_HIDE_DESCENDANTS accessibility importance. */
+    /**
+     * Whether we can use NO_HIDE_DESCENDANTS accessibility importance.
+     */
     private static final boolean CAN_HIDE_DESCENDANTS = Build.VERSION.SDK_INT >= 19;
 
-    /** Whether the drawer shadow comes from setting elevation on the drawer. */
+    /**
+     * Whether the drawer shadow comes from setting elevation on the drawer.
+     */
     private static final boolean SET_DRAWER_SHADOW_FROM_ELEVATION =
             Build.VERSION.SDK_INT >= 21;
 
@@ -203,15 +214,26 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
     private boolean mInLayout;
     private boolean mFirstLayout = true;
 
-    private @LockMode int mLockModeLeft = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeRight = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeStart = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeEnd = LOCK_MODE_UNDEFINED;
+    private
+    @LockMode
+    int mLockModeLeft = LOCK_MODE_UNDEFINED;
+    private
+    @LockMode
+    int mLockModeRight = LOCK_MODE_UNDEFINED;
+    private
+    @LockMode
+    int mLockModeStart = LOCK_MODE_UNDEFINED;
+    private
+    @LockMode
+    int mLockModeEnd = LOCK_MODE_UNDEFINED;
 
     private boolean mDisallowInterceptRequested;
     private boolean mChildrenCanceledTouch;
 
-    private @Deprecated @Nullable DrawerListener mListener;
+    private
+    @Deprecated
+    @Nullable
+    DrawerListener mListener;
     private List<DrawerListener> mListeners;
 
     private float mInitialMotionX;
@@ -227,7 +249,9 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
     private Object mLastInsets;
     private boolean mDrawStatusBarBackground;
 
-    /** Shadow drawables for different gravity */
+    /**
+     * Shadow drawables for different gravity
+     */
     private Drawable mShadowStart = null;
     private Drawable mShadowEnd = null;
     private Drawable mShadowLeft = null;
@@ -241,7 +265,8 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
     public interface DrawerListener {
         /**
          * Called when a drawer's position changes.
-         * @param drawerView The child view that was moved
+         *
+         * @param drawerView  The child view that was moved
          * @param slideOffset The new offset of this drawer within its range, from 0-1
          */
         public void onDrawerSlide(View drawerView, float slideOffset);
@@ -294,9 +319,13 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     interface DrawerLayoutCompatImpl {
         void configureApplyInsets(View drawerLayout);
+
         void dispatchChildInsets(View child, Object insets, int drawerGravity);
+
         void applyMarginInsets(MarginLayoutParams lp, Object insets, int drawerGravity);
+
         int getTopInset(Object lastInsets);
+
         Drawable getDefaultStatusBarBackground(Context context);
     }
 
@@ -449,7 +478,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      * Set a simple drawable used for the left or right shadow. The drawable provided must have a
      * nonzero intrinsic width. For API 21 and above, an elevation will be set on the drawer
      * instead of the drawable provided.
-     *
+     * <p>
      * <p>Note that for better support for both left-to-right and right-to-left layout
      * directions, a drawable for RTL layout (in additional to the one in LTR layout) can be
      * defined with a resource qualifier "ldrtl" for API 17 and above with the gravity
@@ -457,7 +486,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      * auto-mirrored such that the drawable will be mirrored in RTL layout.</p>
      *
      * @param shadowDrawable Shadow drawable to use at the edge of a drawer
-     * @param gravity Which drawer the shadow should apply to
+     * @param gravity        Which drawer the shadow should apply to
      */
     public void setDrawerShadow(Drawable shadowDrawable, @EdgeGravity int gravity) {
         /*
@@ -488,14 +517,14 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      * Set a simple drawable used for the left or right shadow. The drawable provided must have a
      * nonzero intrinsic width. For API 21 and above, an elevation will be set on the drawer
      * instead of the drawable provided.
-     *
+     * <p>
      * <p>Note that for better support for both left-to-right and right-to-left layout
      * directions, a drawable for RTL layout (in additional to the one in LTR layout) can be
      * defined with a resource qualifier "ldrtl" for API 17 and above with the gravity
      * {@link GravityCompat#START}. Alternatively, for API 23 and above, the drawable can
      * auto-mirrored such that the drawable will be mirrored in RTL layout.</p>
      *
-     * @param resId Resource id of a shadow drawable to use at the edge of a drawer
+     * @param resId   Resource id of a shadow drawable to use at the edge of a drawer
      * @param gravity Which drawer the shadow should apply to
      */
     public void setDrawerShadow(@DrawableRes int resId, @EdgeGravity int gravity) {
@@ -573,11 +602,11 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     /**
      * Enable or disable interaction with all drawers.
-     *
+     * <p>
      * <p>This allows the application to restrict the user's ability to open or close
      * any drawer within this layout. DrawerLayout will still respond to calls to
      * {@link #openDrawer(int)}, {@link #closeDrawer(int)} and friends if a drawer is locked.</p>
-     *
+     * <p>
      * <p>Locking drawers open or closed will implicitly open or close
      * any drawers as appropriate.</p>
      *
@@ -591,19 +620,18 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     /**
      * Enable or disable interaction with the given drawer.
-     *
+     * <p>
      * <p>This allows the application to restrict the user's ability to open or close
      * the given drawer. DrawerLayout will still respond to calls to {@link #openDrawer(int)},
      * {@link #closeDrawer(int)} and friends if a drawer is locked.</p>
-     *
+     * <p>
      * <p>Locking a drawer open or closed will implicitly open or close
      * that drawer as appropriate.</p>
      *
-     * @param lockMode The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
-     *                 {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
+     * @param lockMode    The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
+     *                    {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END.
      *                    Expresses which drawer to change the mode for.
-     *
      * @see #LOCK_MODE_UNLOCKED
      * @see #LOCK_MODE_LOCKED_CLOSED
      * @see #LOCK_MODE_LOCKED_OPEN
@@ -651,18 +679,17 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     /**
      * Enable or disable interaction with the given drawer.
-     *
+     * <p>
      * <p>This allows the application to restrict the user's ability to open or close
      * the given drawer. DrawerLayout will still respond to calls to {@link #openDrawer(int)},
      * {@link #closeDrawer(int)} and friends if a drawer is locked.</p>
-     *
+     * <p>
      * <p>Locking a drawer open or closed will implicitly open or close
      * that drawer as appropriate.</p>
      *
-     * @param lockMode The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
-     *                 {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
+     * @param lockMode   The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
+     *                   {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
      * @param drawerView The drawer view to change the lock mode for
-     *
      * @see #LOCK_MODE_UNLOCKED
      * @see #LOCK_MODE_LOCKED_CLOSED
      * @see #LOCK_MODE_LOCKED_OPEN
@@ -681,7 +708,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      *
      * @param edgeGravity Gravity of the drawer to check
      * @return one of {@link #LOCK_MODE_UNLOCKED}, {@link #LOCK_MODE_LOCKED_CLOSED} or
-     *         {@link #LOCK_MODE_LOCKED_OPEN}.
+     * {@link #LOCK_MODE_LOCKED_OPEN}.
      */
     @LockMode
     public int getDrawerLockMode(@EdgeGravity int edgeGravity) {
@@ -738,7 +765,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      *
      * @param drawerView Drawer view to check lock mode
      * @return one of {@link #LOCK_MODE_UNLOCKED}, {@link #LOCK_MODE_LOCKED_CLOSED} or
-     *         {@link #LOCK_MODE_LOCKED_OPEN}.
+     * {@link #LOCK_MODE_LOCKED_OPEN}.
      */
     @LockMode
     public int getDrawerLockMode(View drawerView) {
@@ -756,8 +783,8 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      * identify the drawer to the active accessibility service.
      *
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END. Expresses which
-     *            drawer to set the title for.
-     * @param title The title for the drawer.
+     *                    drawer to set the title for.
+     * @param title       The title for the drawer.
      */
     public void setDrawerTitle(@EdgeGravity int edgeGravity, CharSequence title) {
         final int absGravity = GravityCompat.getAbsoluteGravity(
@@ -773,7 +800,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      * Returns the title of the drawer with the given gravity.
      *
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END. Expresses which
-     *            drawer to return the title for.
+     *                    drawer to return the title for.
      * @return The title of the drawer, or null if none set.
      * @see #setDrawerTitle(int, CharSequence)
      */
@@ -925,7 +952,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     /**
      * @return the absolute gravity of the child drawerView, resolved according
-     *         to the current layout direction
+     * to the current layout direction
      */
     int getDrawerViewAbsoluteGravity(View drawerView) {
         final int gravity = ((LayoutParams) drawerView.getLayoutParams()).gravity;
@@ -963,8 +990,8 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
     /**
      * @param gravity the gravity of the child to return. If specified as a
-     *            relative value, it will be resolved according to the current
-     *            layout direction.
+     *                relative value, it will be resolved according to the current
+     *                layout direction.
      * @return the drawer with the specified gravity
      */
     View findDrawerWithGravity(int gravity) {
@@ -1391,7 +1418,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 
             canvas.drawRect(clipLeft, 0, clipRight, getHeight(), mScrimPaint);
         } else if (mShadowLeftResolved != null
-                &&  checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
+                && checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
             final int shadowWidth = mShadowLeftResolved.getIntrinsicWidth();
             final int childRight = child.getRight();
             final int drawerPeekDistance = mLeftDragger.getEdgeSize();
@@ -1402,7 +1429,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
             mShadowLeftResolved.setAlpha((int) (0xff * alpha));
             mShadowLeftResolved.draw(canvas);
         } else if (mShadowRightResolved != null
-                &&  checkDrawerViewAbsoluteGravity(child, Gravity.RIGHT)) {
+                && checkDrawerViewAbsoluteGravity(child, Gravity.RIGHT)) {
             final int shadowWidth = mShadowRightResolved.getIntrinsicWidth();
             final int childLeft = child.getLeft();
             final int showing = getWidth() - childLeft;
@@ -1961,10 +1988,14 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
      */
     protected static class SavedState extends BaseSavedState {
         int openDrawerGravity = Gravity.NO_GRAVITY;
-        @LockMode int lockModeLeft;
-        @LockMode int lockModeRight;
-        @LockMode int lockModeStart;
-        @LockMode int lockModeEnd;
+        @LockMode
+        int lockModeLeft;
+        @LockMode
+        int lockModeRight;
+        @LockMode
+        int lockModeStart;
+        @LockMode
+        int lockModeEnd;
 
         public SavedState(Parcel in) {
             super(in);
@@ -2008,7 +2039,8 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
         private ViewDragHelper mDragger;
 
         private final Runnable mPeekRunnable = new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 peekDrawer();
             }
         };

@@ -25,5 +25,6 @@ import com.jecelyin.android.file_explorer.io.JecFile;
  */
 public interface FileListResultListener {
     void onResult(JecFile[] result);
+
     void onError(String error);
 }

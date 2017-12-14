@@ -60,7 +60,7 @@ public class FileUtils {
     }
 
     public static void copyDirectory(final JecFile srcDir, JecFile destDir
-                                     , final boolean moveFile) {
+            , final boolean moveFile) {
         if (srcDir == null) {
             throw new NullPointerException("Source must not be null");
         }

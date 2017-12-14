@@ -76,15 +76,15 @@ public class EditorObjectProcessor {
 
             List<HashMap<String, Object>> data = new ArrayList<>();
             File file = null;
-            for(ExtGrep.Result rs : results) {
-                if(file == null || !rs.file.equals(file)) {
+            for (ExtGrep.Result rs : results) {
+                if (file == null || !rs.file.equals(file)) {
                     file = rs.file;
                     ssb.append("\n")
-                    .append("[PATH]")
-                    .append(file.getPath())
-                    .append("[/PATH]")
+                            .append("[PATH]")
+                            .append(file.getPath())
+                            .append("[/PATH]")
 //                    ssb.append(file.getPath(), new ForegroundColorSpan(findResultsPathColor), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    .append("\n");
+                            .append("\n");
                     data.add(null);
                     data.add(null);
                 }
@@ -94,9 +94,9 @@ public class EditorObjectProcessor {
                 int end = rs.matchEnd;
 
                 ssb.append(String.format("%1$4d\t", rs.lineNumber))
-                   .append(rs.line.substring(0, start))
-                   .append(rs.line.substring(start, end))
-                   .append(rs.line.substring(end));
+                        .append(rs.line.substring(0, start))
+                        .append(rs.line.substring(start, end))
+                        .append(rs.line.substring(end));
                 ssb.append("\n");
 
                 HashMap<String, Object> json = new HashMap<>();

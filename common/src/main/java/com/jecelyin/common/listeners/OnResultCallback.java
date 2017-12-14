@@ -24,5 +24,6 @@ package com.jecelyin.common.listeners;
 
 public interface OnResultCallback<T> {
     void onError(String error);
+
     void onSuccess(T result);
 }

@@ -42,7 +42,7 @@ public class CharsetDetector {
 //        String encoding = detector.getDetectedCharset();
 //        detector.reset();
         // jchardet ==================
-        nsDetector det = new nsDetector(nsPSMDetector.ALL) ;
+        nsDetector det = new nsDetector(nsPSMDetector.ALL);
 
         // Set an observer...
         // The Notify() will be called when a matching charset is found.
@@ -53,20 +53,20 @@ public class CharsetDetector {
             }
         });
 
-        byte[] buf = new byte[1024] ;
+        byte[] buf = new byte[1024];
         int len;
-        boolean done = false ;
-        boolean isAscii = true ;
+        boolean done = false;
+        boolean isAscii = true;
 
-        while( (len=bufferedInputStream.read(buf,0,buf.length)) != -1) {
+        while ((len = bufferedInputStream.read(buf, 0, buf.length)) != -1) {
 
             // Check if the stream is only ascii.
             if (isAscii)
-                isAscii = det.isAscii(buf,len);
+                isAscii = det.isAscii(buf, len);
 
             // DoIt if non-ascii and not done yet.
             if (!isAscii && !done)
-                done = det.DoIt(buf,len, false);
+                done = det.DoIt(buf, len, false);
         }
         det.DataEnd();
 

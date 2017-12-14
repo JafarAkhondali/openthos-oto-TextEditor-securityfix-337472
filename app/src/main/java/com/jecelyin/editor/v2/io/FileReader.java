@@ -44,8 +44,8 @@ public class FileReader extends AsyncTask<Void, Void, StringBuilder> {
     private File file;
     private String encoding;
     private int lineNumber;
-//    private int BUFFER_SIZE = 8192;
-    private final static int BUFFER_SIZE = 16*1024;
+    //    private int BUFFER_SIZE = 8192;
+    private final static int BUFFER_SIZE = 16 * 1024;
     private File rootFile;
     private Throwable error;
 
@@ -111,10 +111,10 @@ public class FileReader extends AsyncTask<Void, Void, StringBuilder> {
 
     private StringBuilder read() throws Exception, OutOfMemoryError {
         File f = rootFile != null && rootFile.isFile() ? rootFile : file;
-        if(TextUtils.isEmpty(encoding))
+        if (TextUtils.isEmpty(encoding))
             encoding = FileEncodingDetector.detectEncoding(f);
 
-        L.d(file.getPath()+" encoding is "+encoding);
+        L.d(file.getPath() + " encoding is " + encoding);
         LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(f), encoding));
 
         char[] buf = new char[BUFFER_SIZE];

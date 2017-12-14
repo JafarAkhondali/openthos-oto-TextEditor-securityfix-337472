@@ -11,9 +11,9 @@ import java.lang.reflect.Type;
  * Gson utilities.
  */
 public abstract class GsonUtils {
-    
+
     private final static ThreadLocal<char[]> charsLocal = new ThreadLocal<char[]>();
-    
+
     private static char[] allocatechars(int length) {
         char[] chars = charsLocal.get();
 
@@ -38,10 +38,10 @@ public abstract class GsonUtils {
     @SuppressWarnings("unchecked")
     public static <T> T parseObject(Reader is, //
                                     Type type) throws IOException {
- 
+
         char[] chars = allocatechars(1024 * 64);
         int offset = 0;
-        for (;;) {
+        for (; ; ) {
             int readCount = is.read(chars, offset, chars.length - offset);
             if (readCount == -1) {
                 break;

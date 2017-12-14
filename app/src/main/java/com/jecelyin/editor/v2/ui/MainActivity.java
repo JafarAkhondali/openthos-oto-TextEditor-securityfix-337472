@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity
 
     private Pref pref;
     private ClusterCommand clusterCommand;
-//    TabDrawable tabDrawable;
+    //    TabDrawable tabDrawable;
     private MenuManager menuManager;
     private FolderChooserDialog.FolderCallback findFolderCallback;
     private long mExitTime;
@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity
             }
         });
 
-        if(!AppUtils.verifySign(getContext())) {
+        if (!AppUtils.verifySign(getContext())) {
             UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
                 @Override
                 public void onOkClick() {
@@ -208,7 +208,7 @@ public class MainActivity extends BaseActivity
         final String version = SysUtils.getVersionName(this);
         mVersionTextView.setText(version);
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 ) {
             requestWriteExternalStoragePermission();
@@ -237,6 +237,7 @@ public class MainActivity extends BaseActivity
     /**
      * 注意registerOnSharedPreferenceChangeListener的listeners是使用WeakHashMap引用的
      * 不能直接registerOnSharedPreferenceChangeListener(new ...) 否则可能监听不起作用
+     *
      * @param sharedPreferences
      * @param key
      */
@@ -244,7 +245,7 @@ public class MainActivity extends BaseActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (mToolbar == null)
             return;
-        switch(key) {
+        switch (key) {
             case Pref.KEY_KEEP_SCREEN_ON:
                 mToolbar.setKeepScreenOn(sharedPreferences.getBoolean(key, false));
                 break;
@@ -270,9 +271,9 @@ public class MainActivity extends BaseActivity
 
         if (Pref.SCREEN_ORIENTATION_AUTO == orgi) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        } else if(Pref.SCREEN_ORIENTATION_LANDSCAPE == orgi) {
+        } else if (Pref.SCREEN_ORIENTATION_LANDSCAPE == orgi) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else if(Pref.SCREEN_ORIENTATION_PORTRAIT == orgi) {
+        } else if (Pref.SCREEN_ORIENTATION_PORTRAIT == orgi) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
@@ -350,18 +351,17 @@ public class MainActivity extends BaseActivity
     private boolean processIntentImpl() throws Throwable {
         Intent intent = getIntent();
         L.d("intent=" + intent);
-        if(intent == null)
+        if (intent == null)
             return true; //pass hint
 
         String action = intent.getAction();
         // action == null if change theme
-        if(action == null || Intent.ACTION_MAIN.equals(action)) {
+        if (action == null || Intent.ACTION_MAIN.equals(action)) {
             return true;
         }
 
-        if (Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action) ) {
-            if (intent.getScheme().equals("content"))
-            {
+        if (Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action)) {
+            if (intent.getScheme().equals("content")) {
                 try {
                     InputStream attachment = getContentResolver().openInputStream(intent.getData());
                     String text = IOUtils.toString(attachment);
@@ -373,16 +373,16 @@ public class MainActivity extends BaseActivity
                 }
 
                 return true;
-            }else if(intent.getScheme().equals("file")) {
+            } else if (intent.getScheme().equals("file")) {
                 Uri mUri = intent.getData();
                 String file = mUri != null ? mUri.getPath() : null;
-                if(!TextUtils.isEmpty(file)) {
+                if (!TextUtils.isEmpty(file)) {
                     openFile(file);
                     return true;
                 }
             }
 
-        }else if (Intent.ACTION_SEND.equals(action) && intent.getExtras() != null) {
+        } else if (Intent.ACTION_SEND.equals(action) && intent.getExtras() != null) {
             Bundle extras = intent.getExtras();
             CharSequence text = extras.getCharSequence(Intent.EXTRA_TEXT);
 
@@ -391,8 +391,8 @@ public class MainActivity extends BaseActivity
                 return true;
             } else {
                 Object stream = extras.get(Intent.EXTRA_STREAM);
-                if(stream != null && stream instanceof Uri) {
-                    openFile(((Uri)stream).getPath());
+                if (stream != null && stream instanceof Uri) {
+                    openFile(((Uri) stream).getPath());
                     return true;
                 }
             }
@@ -402,9 +402,8 @@ public class MainActivity extends BaseActivity
     }
 
     /**
-     *
      * @param menuResId
-     * @param status {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_NORMAL}, {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_DISABLED}
+     * @param status    {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_NORMAL}, {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_DISABLED}
      */
     public void setMenuStatus(@IdRes int menuResId, int status) {
         MenuItem menuItem = mToolbar.getMenu().findItem(menuResId);
@@ -602,6 +601,7 @@ public class MainActivity extends BaseActivity
 
     /**
      * 需要手动回调 {@link #doNextCommand}
+     *
      * @param command
      */
     public void doClusterCommand(Command command) {
@@ -651,7 +651,7 @@ public class MainActivity extends BaseActivity
             return;
         switch (requestCode) {
             case RC_OPEN_FILE:
-                if(data == null)
+                if (data == null)
                     break;
                 openFile(FileExplorerActivity.getFile(data), FileExplorerActivity.getFileEncoding(data), 0, 0);
                 break;
@@ -669,7 +669,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void openText(CharSequence content) {
-        if(TextUtils.isEmpty(content))
+        if (TextUtils.isEmpty(content))
             return;
         tabManager.newTab(content);
     }
@@ -679,7 +679,7 @@ public class MainActivity extends BaseActivity
     }
 
     public void openFile(String file, String encoding, int line, int column) {
-        if(TextUtils.isEmpty(file))
+        if (TextUtils.isEmpty(file))
             return;
 
         if (!tabManager.newTab(new File(file), line, column, encoding))

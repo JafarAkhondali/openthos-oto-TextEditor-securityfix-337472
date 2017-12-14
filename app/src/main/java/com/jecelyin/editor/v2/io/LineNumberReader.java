@@ -24,8 +24,7 @@ public class LineNumberReader extends BufferedReader {
      * Constructs a new LineNumberReader on the Reader {@code in}. The internal
      * buffer gets the default size (8 KB).
      *
-     * @param in
-     *            the Reader that is buffered.
+     * @param in the Reader that is buffered.
      */
     public LineNumberReader(Reader in) {
         super(in);
@@ -35,12 +34,9 @@ public class LineNumberReader extends BufferedReader {
      * Constructs a new LineNumberReader on the Reader {@code in}. The size of
      * the internal buffer is specified by the parameter {@code size}.
      *
-     * @param in
-     *            the Reader that is buffered.
-     * @param size
-     *            the size of the buffer to allocate.
-     * @throws IllegalArgumentException
-     *             if {@code size <= 0}.
+     * @param in   the Reader that is buffered.
+     * @param size the size of the buffer to allocate.
+     * @throws IllegalArgumentException if {@code size <= 0}.
      */
     public LineNumberReader(Reader in, int size) {
         super(in, size);
@@ -65,11 +61,9 @@ public class LineNumberReader extends BufferedReader {
      * line number associated with this marked position is also stored so that
      * it can be restored when {@code reset()} is called.
      *
-     * @param readlimit
-     *            the number of characters that can be read from this stream
-     *            before the mark is invalidated.
-     * @throws java.io.IOException
-     *             if an error occurs while setting the mark in this reader.
+     * @param readlimit the number of characters that can be read from this stream
+     *                  before the mark is invalidated.
+     * @throws java.io.IOException if an error occurs while setting the mark in this reader.
      * @see #markSupported()
      * @see #reset()
      */
@@ -93,9 +87,8 @@ public class LineNumberReader extends BufferedReader {
      * {@code '\n'}.
      *
      * @return the character read or -1 if the end of the source reader has been
-     *         reached.
-     * @throws java.io.IOException
-     *             if the reader is closed or another IOException occurs.
+     * reached.
+     * @throws java.io.IOException if the reader is closed or another IOException occurs.
      */
     @SuppressWarnings("fallthrough")
     @Override
@@ -123,13 +116,12 @@ public class LineNumberReader extends BufferedReader {
      * them in the character array {@code buffer} starting at {@code offset}.
      * Returns the number of characters actually read or -1 if no characters
      * have been read and the end of this reader has been reached.
-     *
+     * <p>
      * <p>The line number count is incremented if a line terminator is encountered.
      * Recognized line terminator sequences are {@code '\r'}, {@code '\n'} and
      * {@code "\r\n"}.
      *
-     * @throws java.io.IOException
-     *             if this reader is closed or another IOException occurs.
+     * @throws java.io.IOException if this reader is closed or another IOException occurs.
      */
     @Override
     public int read(char[] buffer, int offset, int count) throws IOException {
@@ -163,9 +155,8 @@ public class LineNumberReader extends BufferedReader {
      * string does not include the newline sequence.
      *
      * @return the contents of the line or {@code null} if no characters have
-     *         been read before the end of the stream has been reached.
-     * @throws java.io.IOException
-     *             if this reader is closed or another IOException occurs.
+     * been read before the end of the stream has been reached.
+     * @throws java.io.IOException if this reader is closed or another IOException occurs.
      */
     @Override
     public String readLine() throws IOException {
@@ -187,10 +178,9 @@ public class LineNumberReader extends BufferedReader {
      * count to what is was when this reader was marked. This implementation
      * resets the source reader.
      *
-     * @throws java.io.IOException
-     *             if this reader is already closed, no mark has been set or the
-     *             mark is no longer valid because more than {@code readlimit}
-     *             bytes have been read since setting the mark.
+     * @throws java.io.IOException if this reader is already closed, no mark has been set or the
+     *                             mark is no longer valid because more than {@code readlimit}
+     *                             bytes have been read since setting the mark.
      * @see #mark(int)
      * @see #markSupported()
      */
@@ -208,8 +198,7 @@ public class LineNumberReader extends BufferedReader {
      * Note that this may have side effects on the line number associated with
      * the last marked position.
      *
-     * @param lineNumber
-     *            the new line number value.
+     * @param lineNumber the new line number value.
      * @see #mark(int)
      * @see #reset()
      */
@@ -227,10 +216,8 @@ public class LineNumberReader extends BufferedReader {
      * terminator sequences are skipped.
      *
      * @return the number of characters actually skipped.
-     * @throws IllegalArgumentException
-     *             if {@code charCount < 0}.
-     * @throws java.io.IOException
-     *             if this reader is closed or another IOException occurs.
+     * @throws IllegalArgumentException if {@code charCount < 0}.
+     * @throws java.io.IOException      if this reader is closed or another IOException occurs.
      * @see #mark(int)
      * @see #read()
      * @see #reset()

@@ -85,7 +85,7 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
 
         filterText = filterText.toString().toLowerCase();
         int index = 0;
-        for(JecFile path : mOriginalValues) {
+        for (JecFile path : mOriginalValues) {
             if (path.getName().toLowerCase().contains(filterText)) {
                 data[index++] = path;
             }
@@ -93,7 +93,6 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
         itemCount = index;
         notifyDataSetChanged();
     }
-
 
 
     @Override
@@ -132,9 +131,9 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
         char c = file.getName().charAt(0);
 
         String prefix = file.isDirectory() ? "/" : "";
-        if ( (c >= '0' && c <= '9')
-            || (c >= 'a' && c <= 'z')
-            || (c >= 'A' && c <= 'Z')
+        if ((c >= '0' && c <= '9')
+                || (c >= 'a' && c <= 'z')
+                || (c >= 'A' && c <= 'Z')
                 ) {
             return prefix + String.valueOf(c).toUpperCase();
         }
@@ -253,7 +252,7 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
     private void setViewCheckedStatus(boolean isChecked, FileListItemBinding binding) {
         binding.iconImageView.setChecked(isChecked);
 
-        if(!isChecked) {
+        if (!isChecked) {
             binding.getRoot().setSelected(false);
             binding.extTextView.setVisibility(View.VISIBLE);
         } else {
@@ -264,7 +263,7 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
 
     private void toggleChecked(int position, FileListItemBinding binding) {
         boolean isChecked = isChecked(position);
-        if(isChecked) {
+        if (isChecked) {
             checkedArray.delete(position);
         } else {
             checkedArray.put(position, 1);
@@ -272,7 +271,7 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
 
         setViewCheckedStatus(!isChecked, binding);
 
-        if(onCheckedChangeListener != null) {
+        if (onCheckedChangeListener != null) {
             onCheckedChangeListener.onCheckedChanged(getItem(position), position, !isChecked);
             onCheckedChangeListener.onCheckedChanged(checkedArray.size());
         }

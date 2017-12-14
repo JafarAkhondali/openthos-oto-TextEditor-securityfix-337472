@@ -87,7 +87,7 @@ public class XML2Bin {
             String langMap = readFile(new File(assetsPath, "lang_map.tpl"));
             langMap = langMap.replace("@CASE_LIST@", mapCode.toString());
             writeFile(new File(highlightPath, "LangMap.java"), langMap);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -124,7 +124,7 @@ public class XML2Bin {
                 File langFile = new File(rawPath, clsName);
                 packer = MessagePack.newDefaultPacker(new FileOutputStream(langFile));
 
-                handleChild((Element)item);
+                handleChild((Element) item);
 
                 mapCode.append(space(12)).append("case ").append(textString(file.getName()))
                         .append(": return R.raw.").append(clsName).append(";\n");

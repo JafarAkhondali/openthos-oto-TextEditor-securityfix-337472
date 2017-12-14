@@ -33,7 +33,7 @@ public class MatcherResult {
     public MatcherResult(Matcher m) {
         start = m.start();
         end = m.end();
-        groupCount = m.groupCount()+1;
+        groupCount = m.groupCount() + 1;
 
         groups = new String[groupCount];
         for (int i = 0; i < groupCount; i++) {

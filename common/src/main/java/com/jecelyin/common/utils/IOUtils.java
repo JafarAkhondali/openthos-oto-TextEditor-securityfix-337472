@@ -103,7 +103,7 @@ public class IOUtils {
     }
 
     public static String toString(InputStream inputStream) throws IOException {
-        return toString(inputStream, 16*1024, "UTF-8");
+        return toString(inputStream, 16 * 1024, "UTF-8");
     }
 
     public static String toString(InputStream inputStream, final int bufferSize, String encoding) throws IOException {
@@ -138,7 +138,7 @@ public class IOUtils {
         byte[] data = null;
         try {
             int size = in.available();
-            if(size > 1024) size = 1024;
+            if (size > 1024) size = 1024;
             data = new byte[size];
             in.read(data);
             in.close();

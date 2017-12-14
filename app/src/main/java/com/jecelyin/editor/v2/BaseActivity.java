@@ -29,7 +29,7 @@ public class BaseActivity extends FullScreenActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((JecApp)getApplication()).watch(this);
+        ((JecApp) getApplication()).watch(this);
     }
 
 }

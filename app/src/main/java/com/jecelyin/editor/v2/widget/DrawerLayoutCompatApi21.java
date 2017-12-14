@@ -57,7 +57,7 @@ class DrawerLayoutCompatApi21 {
     }
 
     public static void applyMarginInsets(ViewGroup.MarginLayoutParams lp, Object insets,
-            int gravity) {
+                                         int gravity) {
         WindowInsets wi = (WindowInsets) insets;
         if (gravity == Gravity.LEFT) {
             wi = wi.replaceSystemWindowInsets(wi.getSystemWindowInsetLeft(),

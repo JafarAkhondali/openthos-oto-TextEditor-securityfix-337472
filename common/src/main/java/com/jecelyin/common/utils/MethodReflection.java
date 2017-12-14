@@ -29,7 +29,6 @@ import java.lang.reflect.Method;
  * Utility class to use reflection to call methods.
  * getMethods方法, 包其继承类的方法,但不包括私有方法
  * getDeclaredMethods方法只包含当前类的方法,但包括私有方法
- *
  */
 public class MethodReflection {
     private Method method;
@@ -37,20 +36,18 @@ public class MethodReflection {
     private String methodName;
 
     /**
-     *
      * @param object
      * @param methodName
-     * @param argTypes null if argument not
+     * @param argTypes   null if argument not
      */
     public MethodReflection(Object object, String methodName, Class<?>[] argTypes) {
         this(object.getClass(), methodName, argTypes);
     }
 
     /**
-     *
      * @param cls
      * @param methodName
-     * @param argTypes null if argument not
+     * @param argTypes   null if argument not
      */
     public MethodReflection(Class<?> cls, String methodName, Class<?>[] argTypes) {
         className = cls.getName();
@@ -75,7 +72,6 @@ public class MethodReflection {
     }
 
     /**
-     *
      * @param instance null if static method
      * @param args
      * @return
@@ -88,7 +84,7 @@ public class MethodReflection {
         try {
             return method.invoke(instance, args);
         } catch (Exception e) {
-            if(e instanceof InvocationTargetException){
+            if (e instanceof InvocationTargetException) {
                 throw ((InvocationTargetException) e).getTargetException();
             } else {
                 throw e;
@@ -107,7 +103,6 @@ public class MethodReflection {
     }
 
     /**
-     *
      * @param instance null if static method
      * @param args
      * @throws Throwable
@@ -122,6 +117,7 @@ public class MethodReflection {
 
     /**
      * 修改 static final Type type = xx; 这样的值
+     *
      * @param field
      * @param newValue
      * @throws Exception
@@ -138,7 +134,7 @@ public class MethodReflection {
         Field f;
         try {
             f = cls.getDeclaredField(varName);
-        }catch (NoSuchFieldException e) {
+        } catch (NoSuchFieldException e) {
             f = cls.getField(varName);
         }
         setFinalStatic(f, value);

@@ -568,19 +568,16 @@ public class ExtGrep implements Parcelable {
         }.setTaskListener(listener).execute(start);
     }
 
-    private static String escapeRegexChar(String pattern)
-    {
+    private static String escapeRegexChar(String pattern) {
         final String metachar = ".^$[]*+?|()\\{}";
 
         StringBuilder newpat = new StringBuilder();
 
         int len = pattern.length();
 
-        for (int i = 0; i < len; i++)
-        {
+        for (int i = 0; i < len; i++) {
             char c = pattern.charAt(i);
-            if (metachar.indexOf(c) >= 0)
-            {
+            if (metachar.indexOf(c) >= 0) {
                 newpat.append('\\');
             }
             newpat.append(c);

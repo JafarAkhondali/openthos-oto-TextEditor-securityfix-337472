@@ -36,6 +36,7 @@ public class StringUtils {
 
     /**
      * 不能使用 {@link MessageDigest#isEqual} 因为像华为emui 2.3这个函数不能正确比较
+     *
      * @param digesta
      * @param digestb
      * @return
@@ -81,6 +82,7 @@ public class StringUtils {
         }
         return true;
     }
+
     /**
      * 解析一个字符串为整数；
      */
@@ -154,10 +156,11 @@ public class StringUtils {
 
     /**
      * 判定输入汉字
+     *
      * @param c
      * @return
      */
-    public  final static boolean isChinese(char c) {
+    public final static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
                 || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
@@ -172,12 +175,13 @@ public class StringUtils {
 
     /**
      * Returns a string containing the tokens joined by delimiters.
+     *
      * @param tokens an array objects to be joined.
      */
     public static String join(CharSequence delimiter, int[] tokens) {
         StringBuilder sb = new StringBuilder();
         boolean firstTime = true;
-        for (Object token: tokens) {
+        for (Object token : tokens) {
             if (firstTime) {
                 firstTime = false;
             } else {
@@ -241,7 +245,7 @@ public class StringUtils {
         int mb = kb * kb;
         int gb = mb * kb;
 
-        if(size < 0) return "";
+        if (size < 0) return "";
 
         int factor = (10 ^ decimalPoints);
 
@@ -250,13 +254,13 @@ public class StringUtils {
         if (size <= kb)
             ssize = size + " B";
         else if (size > kb && size <= mb)
-            ssize = ((double)Math.round(((double)size / kb) * factor) / factor)
+            ssize = ((double) Math.round(((double) size / kb) * factor) / factor)
                     + (includeUnits ? " KB" : "");
         else if (size > mb && size <= gb)
-            ssize = ((double)Math.round(((double)size / mb) * factor) / factor)
+            ssize = ((double) Math.round(((double) size / mb) * factor) / factor)
                     + (includeUnits ? " MB" : "");
         else if (size > gb)
-            ssize = ((double)Math.round(((double)size / gb) * factor) / factor)
+            ssize = ((double) Math.round(((double) size / gb) * factor) / factor)
                     + (includeUnits ? " GB" : "");
 
         return ssize;
@@ -265,26 +269,22 @@ public class StringUtils {
     /**
      * Returns the md5sum for given string. Or dummy byte array on error
      * Suppress NoSuchAlgorithmException because MD5 algorithm always present in JRE
+     *
      * @param charSequence Given string
      * @return md5 sum of given string
      */
-    public static byte[] md5(CharSequence charSequence)
-    {
-        try
-        {
+    public static byte[] md5(CharSequence charSequence) {
+        try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             byte[] ba = new byte[2];
-            for(int i = 0, n = charSequence.length(); i < n; i++)
-            {
+            for (int i = 0, n = charSequence.length(); i < n; i++) {
                 char cp = charSequence.charAt(i);
-                ba[0] = (byte)(cp & 0xff);
-                ba[1] = (byte)(cp >> 8 & 0xff);
+                ba[0] = (byte) (cp & 0xff);
+                ba[1] = (byte) (cp >> 8 & 0xff);
                 digest.update(ba);
             }
             return digest.digest();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             L.e("Can't Calculate MD5 hash!", e);
             return charSequence.toString().getBytes();
         }

@@ -242,7 +242,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<String> getFindKeywords(boolean isReplace) {
         ArrayList<String> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("find_keywords", new String[]{"keyword"}, "is_replace=?", new String[]{isReplace ? "1" : "0"}, null, null,  "ctime desc" , "100");
+        Cursor cursor = db.query("find_keywords", new String[]{"keyword"}, "is_replace=?", new String[]{isReplace ? "1" : "0"}, null, null, "ctime desc", "100");
 
         while (cursor.moveToNext()) {
             list.add(cursor.getString(0));

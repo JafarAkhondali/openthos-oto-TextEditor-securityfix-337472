@@ -38,7 +38,7 @@ import java.io.OutputStreamWriter;
 public class FileWriter extends AsyncTask<String, Void, Void> {
     private final String encoding;
     private final File file;
-    private final static int BUFFER_SIZE = 16*1024;
+    private final static int BUFFER_SIZE = 16 * 1024;
     private final File backupFile;
     private final boolean root;
     private final boolean keepBackupFile;
@@ -47,6 +47,7 @@ public class FileWriter extends AsyncTask<String, Void, Void> {
 
     public static interface FileWriteListener {
         public void onSuccess();
+
         public void onError(Exception e);
     }
 
@@ -120,20 +121,20 @@ public class FileWriter extends AsyncTask<String, Void, Void> {
     }
 
     private void writeFileWithoutRoot(String text) throws Exception {
-        if(backupFile.exists()) {
-            if(!backupFile.delete()) {
+        if (backupFile.exists()) {
+            if (!backupFile.delete()) {
                 throw new IOException("Couldn't delete backup file " + backupFile);
             }
         }
 
-        if(file.isFile() && !IOUtils.copyFile(file, backupFile)) {
+        if (file.isFile() && !IOUtils.copyFile(file, backupFile)) {
             throw new IOException("Couldn't copy file " + file
                     + " to backup file " + backupFile);
         }
 
         writeFile(file, text);
 
-        if(!keepBackupFile && backupFile.exists() && !backupFile.delete()) {
+        if (!keepBackupFile && backupFile.exists() && !backupFile.delete()) {
             throw new IOException("Couldn't remove backup file " + backupFile);
         }
     }
@@ -144,7 +145,7 @@ public class FileWriter extends AsyncTask<String, Void, Void> {
         int size = text.length();
         if (size > 0) {
             int start = 0, end = BUFFER_SIZE;
-            for (;;) {
+            for (; ; ) {
                 end = Math.min(end, size);
                 text.getChars(start, end, buffer, 0);
 
@@ -163,9 +164,9 @@ public class FileWriter extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        if(fileWriteListener == null)
+        if (fileWriteListener == null)
             return;
-        if(error == null)
+        if (error == null)
             fileWriteListener.onSuccess();
         else
             fileWriteListener.onError(error);

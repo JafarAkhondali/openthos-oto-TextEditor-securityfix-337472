@@ -327,23 +327,23 @@ public class GitHubClient {
         return createConnection(uri, METHOD_DELETE);
     }
 
-	/**
-	 * Set credentials
-	 *
-	 * @param user
-	 * @param password
-	 * @return this client
-	 */
-	public GitHubClient setCredentials(final String user, final String password) {
-		this.user = user;
-		if (user != null && user.length() > 0 && password != null
-				&& password.length() > 0)
-			credentials = "Basic " //$NON-NLS-1$
-					+ Base64.encodeToString((user + ":" + password).getBytes(), Base64.DEFAULT);
-		else
-			credentials = null;
-		return this;
-	}
+    /**
+     * Set credentials
+     *
+     * @param user
+     * @param password
+     * @return this client
+     */
+    public GitHubClient setCredentials(final String user, final String password) {
+        this.user = user;
+        if (user != null && user.length() > 0 && password != null
+                && password.length() > 0)
+            credentials = "Basic " //$NON-NLS-1$
+                    + Base64.encodeToString((user + ":" + password).getBytes(), Base64.DEFAULT);
+        else
+            credentials = null;
+        return this;
+    }
 
     /**
      * Set OAuth2 token

@@ -148,7 +148,7 @@ public class BottomDrawerLayout extends ViewGroup {
 
         final boolean measureMatchParentChildren =
                 MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.EXACTLY ||
-                MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY;
+                        MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY;
         mMatchParentChildren.clear();
 
         int maxHeight = 0;
@@ -202,7 +202,7 @@ public class BottomDrawerLayout extends ViewGroup {
                 } else {
                     childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec,
                             getPaddingLeftWithForeground() + getPaddingRightWithForeground() +
-                            lp.leftMargin + lp.rightMargin,
+                                    lp.leftMargin + lp.rightMargin,
                             lp.width);
                 }
 
@@ -216,7 +216,7 @@ public class BottomDrawerLayout extends ViewGroup {
                 } else {
                     childHeightMeasureSpec = getChildMeasureSpec(heightMeasureSpec,
                             getPaddingTopWithForeground() + getPaddingBottomWithForeground() +
-                            lp.topMargin + lp.bottomMargin,
+                                    lp.topMargin + lp.bottomMargin,
                             lp.height);
                 }
 
@@ -234,7 +234,7 @@ public class BottomDrawerLayout extends ViewGroup {
     }
 
     void layoutChildren(int left, int top, int right, int bottom,
-                                  boolean forceLeftGravity) {
+                        boolean forceLeftGravity) {
         final int count = getChildCount();
 
         final int parentLeft = getPaddingLeftWithForeground();
@@ -267,7 +267,7 @@ public class BottomDrawerLayout extends ViewGroup {
                 switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
                     case Gravity.CENTER_HORIZONTAL:
                         childLeft = parentLeft + (parentRight - parentLeft - width) / 2 +
-                        lp.leftMargin - lp.rightMargin;
+                                lp.leftMargin - lp.rightMargin;
                         break;
                     case Gravity.RIGHT:
                     case Gravity.END:
@@ -287,11 +287,11 @@ public class BottomDrawerLayout extends ViewGroup {
                         break;
                     case Gravity.CENTER_VERTICAL:
                         childTop = parentTop + (parentBottom - parentTop - height) / 2 +
-                        lp.topMargin - lp.bottomMargin;
+                                lp.topMargin - lp.bottomMargin;
                         break;
                     case Gravity.BOTTOM:
-                        symbolHeight = ((ViewGroup)child).getChildCount() > 0 ? ((ViewGroup)child).getChildAt(0).getMeasuredHeight() : 0;
-                        float offset = mSlideOffset == 0 ? (symbolHeight == 0 ? 0.3f : symbolHeight / (float)height) : mSlideOffset;
+                        symbolHeight = ((ViewGroup) child).getChildCount() > 0 ? ((ViewGroup) child).getChildAt(0).getMeasuredHeight() : 0;
+                        float offset = mSlideOffset == 0 ? (symbolHeight == 0 ? 0.3f : symbolHeight / (float) height) : mSlideOffset;
                         childTop = parentBottom - (int) (height * offset);
 //                        childTop = parentBottom - height - lp.bottomMargin;
                         break;
@@ -310,8 +310,7 @@ public class BottomDrawerLayout extends ViewGroup {
      * the VISIBLE or INVISIBLE state, when measuring. Defaults to false.
      *
      * @param measureAll true to consider children marked GONE, false otherwise.
-     * Default value is false.
-     *
+     *                   Default value is false.
      * @attr ref android.R.styleable#FrameLayout_measureAllChildren
      */
     public void setMeasureAllChildren(boolean measureAll) {
@@ -323,7 +322,6 @@ public class BottomDrawerLayout extends ViewGroup {
      * INVISIBLE state, are considered when measuring.
      *
      * @return Whether all children are considered when measuring.
-     *
      * @deprecated This method is deprecated in favor of
      * {@link #getMeasureAllChildren() getMeasureAllChildren()}, which was
      * renamed for consistency with
@@ -415,7 +413,7 @@ public class BottomDrawerLayout extends ViewGroup {
     }
 
     public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        if ( !mBottomDragger.isEdgeTouched(ViewDragHelper.EDGE_BOTTOM) ) {
+        if (!mBottomDragger.isEdgeTouched(ViewDragHelper.EDGE_BOTTOM)) {
             // If we have an edge touch we want to skip this and track it for later instead.
             super.requestDisallowInterceptTouchEvent(disallowIntercept);
         }
@@ -444,8 +442,8 @@ public class BottomDrawerLayout extends ViewGroup {
             final View child = getChildAt(i);
             final int childAbsGravity = getDrawerViewAbsoluteGravity(child);
             if (
-                    ( absHorizGravity != 0 && (childAbsGravity & Gravity.HORIZONTAL_GRAVITY_MASK) == absHorizGravity ) ||
-                            ( absVerticalGravity != 0 && (childAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) == absVerticalGravity )
+                    (absHorizGravity != 0 && (childAbsGravity & Gravity.HORIZONTAL_GRAVITY_MASK) == absHorizGravity) ||
+                            (absVerticalGravity != 0 && (childAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) == absVerticalGravity)
 
                     ) {
                 return child;
@@ -457,7 +455,8 @@ public class BottomDrawerLayout extends ViewGroup {
     private class ViewDragCallback extends ViewDragHelper.Callback {
         private ViewDragHelper mDragger;
         private final Runnable mPeekRunnable = new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 peekDrawer();
             }
         };
@@ -525,8 +524,8 @@ public class BottomDrawerLayout extends ViewGroup {
             // are reversed from one another.
             final float offset = mSlideOffset;
             final int childHeight = releasedChild.getHeight();
-            final float symbolHeight = ((ViewGroup)releasedChild).getChildCount() > 0
-                    ? ((ViewGroup)releasedChild).getChildAt(0).getMeasuredHeight()
+            final float symbolHeight = ((ViewGroup) releasedChild).getChildCount() > 0
+                    ? ((ViewGroup) releasedChild).getChildAt(0).getMeasuredHeight()
                     : childHeight * 0.3f;
 
             int left, top;
@@ -535,7 +534,7 @@ public class BottomDrawerLayout extends ViewGroup {
             final int height = getHeight();
             left = releasedChild.getLeft();
             //控制底部 View 高度
-            top = yvel < 0 || yvel == 0 && offset > 0.5f ? height - childHeight : height - (int)symbolHeight;
+            top = yvel < 0 || yvel == 0 && offset > 0.5f ? height - childHeight : height - (int) symbolHeight;
 
             mDragger.settleCapturedViewAt(left, top);
             invalidate();

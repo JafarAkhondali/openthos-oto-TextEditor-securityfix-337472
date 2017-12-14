@@ -47,12 +47,14 @@ import java.util.StringTokenizer;
  */
 public class SysUtils {
     public static final boolean MONKEY_RUNNER_MODE = false;
+
     /**
      * Gets a field from the project's BuildConfig. This is useful when, for example, flavors
      * are used at the project level to set custom fields.
-     * @param context       Used to find the correct file
-     * @param fieldName     The name of the field-to-access
-     * @return              The value of the field, or {@code null} if the field is not found.
+     *
+     * @param context   Used to find the correct file
+     * @param fieldName The name of the field-to-access
+     * @return The value of the field, or {@code null} if the field is not found.
      */
     public static Object getBuildConfigValue(Context context, String fieldName) {
         try {
@@ -68,20 +70,20 @@ public class SysUtils {
     /**
      * Android studio 多个module时，非当前运行的module对家获取BuildConfig.DEBUG都是false
      * 这里通过获取当前应用的context下的BuildConfig来判断才正确
+     *
      * @param context
      * @return
      */
     public static boolean isDebug(Context context) {
         Object result = getBuildConfigValue(context, "DEBUG");
-        return result != null && ((boolean)result);
+        return result != null && ((boolean) result);
     }
 
     public static boolean isMonkeyRunner(Context context) {
         return isDebug(context) && MONKEY_RUNNER_MODE;
     }
 
-    public static int dpAsPixels(Context context, int dp)
-    {
+    public static int dpAsPixels(Context context, int dp) {
         Resources resources = context.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
     }
@@ -91,7 +93,7 @@ public class SysUtils {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
             cacheDir = context.getExternalCacheDir();
-            if(cacheDir == null)
+            if (cacheDir == null)
                 cacheDir = context.getCacheDir();
         } else {
             cacheDir = context.getCacheDir();
@@ -104,7 +106,7 @@ public class SysUtils {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
             fileDir = context.getExternalFilesDir(null);
-            if(fileDir == null)
+            if (fileDir == null)
                 fileDir = context.getFilesDir();
         } else {
             fileDir = context.getFilesDir();
@@ -134,6 +136,7 @@ public class SysUtils {
 
     /**
      * require: <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     *
      * @param context
      * @return
      */
@@ -199,8 +202,7 @@ public class SysUtils {
         return Environment.getExternalStorageDirectory().getPath();
     }
 
-    public static List<String> getStorageDirectories(boolean removableStorageOnly)
-    {
+    public static List<String> getStorageDirectories(boolean removableStorageOnly) {
         List<String> list = new ArrayList<String>();
         String internalPath = getInternalStorageDirectory();
 
@@ -221,7 +223,7 @@ public class SysUtils {
 
                 if (removableStorageOnly && mountPoint.equals(internalPath)) {
                 } else if (mountPoint.startsWith("/mnt/") || mountPoint.startsWith("/storage")
-                        || mountPoint.startsWith("/sdcard")){
+                        || mountPoint.startsWith("/sdcard")) {
                     list.add(mountPoint);
                 }
             }
@@ -232,7 +234,8 @@ public class SysUtils {
             if (buf_reader != null) {
                 try {
                     buf_reader.close();
-                } catch (IOException ex) {}
+                } catch (IOException ex) {
+                }
             }
         }
         return list;

@@ -114,7 +114,7 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 holder.mPathLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                 holder.mRecursivelyCheckBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                if(isChecked)
+                if (isChecked)
                     holder.mReplaceCheckBox.setChecked(false);
             }
         });
@@ -128,7 +128,7 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
             @Override
             public void onClick(View v) {
                 String path = Pref.getInstance(context).getLastOpenPath();
-                if(! new File(path).isDirectory())
+                if (!new File(path).isDirectory())
                     path = SysUtils.getInternalStorageDirectory();
                 new FolderChooserDialog.Builder(getMainActivity())
                         .initialPath(path)
@@ -137,7 +137,7 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
                         .show();
             }
         });
-        if(fragment.getPath() != null) {
+        if (fragment.getPath() != null) {
             holder.mPathEditText.setText(new File(fragment.getPath()).getParent());
         }
         holder.mRegexCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -182,7 +182,7 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
     private boolean onFindButtonClick(ViewHolder holder) {
         //注意不要trim
         String findText = holder.mFindEditText.getText().toString();
-        if(TextUtils.isEmpty(findText)) {
+        if (TextUtils.isEmpty(findText)) {
             holder.mFindEditText.setError(context.getString(R.string.cannot_be_empty));
             return false;
         }
@@ -190,12 +190,12 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
         String replaceText = holder.mReplaceCheckBox.isChecked() ? holder.mReplaceEditText.getText().toString() : null;
         boolean findInFiles = holder.mInPathCheckBox.isChecked();
         String path = holder.mPathEditText.getText().toString().trim();
-        if(findInFiles) {
-            if(TextUtils.isEmpty(path)) {
+        if (findInFiles) {
+            if (TextUtils.isEmpty(path)) {
                 holder.mPathEditText.setError(context.getString(R.string.cannot_be_empty));
                 return false;
             }
-            if(!(new File(path).exists())) {
+            if (!(new File(path).exists())) {
                 holder.mPathEditText.setError(context.getString(R.string.path_not_exists));
                 return false;
             }
@@ -207,13 +207,13 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
             builder.ignoreCase();
         }
         boolean wholeWordOnly = holder.mWholeWordsOnlyCheckBox.isChecked();
-        if(wholeWordOnly) {
+        if (wholeWordOnly) {
             builder.wordRegex();
         }
         boolean regex = holder.mRegexCheckBox.isChecked();
         builder.setRegex(findText, regex);
-        if(findInFiles) {
-            if(holder.mRecursivelyCheckBox.isChecked()) {
+        if (findInFiles) {
+            if (holder.mRecursivelyCheckBox.isChecked()) {
                 builder.recurseDirectories();
             }
             builder.addFile(path);
@@ -224,7 +224,7 @@ public class FinderDialog extends AbstractDialog implements DrawClickableEditTex
         DBHelper.getInstance(context).addFindKeyword(findText, false);
         DBHelper.getInstance(context).addFindKeyword(replaceText, true);
 
-        if(findInFiles) {
+        if (findInFiles) {
             doInFiles(grep, replaceText);
         } else {
             fragment.mEditText.doFind(findText, replaceText, caseSensitive, wholeWordOnly, regex);

@@ -79,7 +79,7 @@ public class CursorWidthPreference extends JecListPreference {
 
             View cursorView = holder.mViewMap.get(R.id.cursorView);
             ViewGroup.LayoutParams lp = cursorView.getLayoutParams();
-            if(lp == null)
+            if (lp == null)
                 lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
             lp.width = SysUtils.dpAsPixels(cursorView.getContext(), value);
             cursorView.setLayoutParams(lp);

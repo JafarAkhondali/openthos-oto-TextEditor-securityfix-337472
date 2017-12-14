@@ -83,9 +83,11 @@ public class ShellDaemon extends Thread {
         }
     }
 
-    /** ------------------------------------------------------------------------
-     ------------------------------- IN THREAD ---------------------------------
-     --------------------------------------------------------------------------*/
+    /**
+     * ------------------------------------------------------------------------
+     * ------------------------------- IN THREAD ---------------------------------
+     * --------------------------------------------------------------------------
+     */
     private static class TaskResult {
         final Runner mRunner;
         final List<String> mResults;
@@ -101,7 +103,7 @@ public class ShellDaemon extends Thread {
     @Override
     public void run() {
         Runner active;
-        for (;;) {
+        for (; ; ) {
             try {
                 if ((active = queue.take()) != null) {
                     queue.remove(active);
@@ -224,7 +226,7 @@ public class ShellDaemon extends Thread {
         public void run() {
             try {
                 //as long as there is something to read, we will keep reading.
-                while (!close || reader.ready() ) {
+                while (!close || reader.ready()) {
                     String outputLine = reader.readLine();
 
                     if (outputLine == null) {
@@ -278,7 +280,7 @@ public class ShellDaemon extends Thread {
 
     private static void closeQuietly(Closeable closeable) {
         try {
-            if(closeable != null) {
+            if (closeable != null) {
                 closeable.close();
             }
         } catch (IOException e) {

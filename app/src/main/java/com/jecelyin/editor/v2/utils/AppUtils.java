@@ -44,7 +44,7 @@ public class AppUtils {
             MessageDigest md = MessageDigest.getInstance("SHA");
             md.update(signature);
             final String currentSignature = Base64.encodeToString(md.digest(), Base64.DEFAULT);
-            Log.i("ljh",currentSignature);
+            Log.i("ljh", currentSignature);
             return rightSign.equals(currentSignature);
         } catch (Exception e) {
             L.e(e);

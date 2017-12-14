@@ -29,52 +29,69 @@ import java.util.Iterator;
 /**
  * This provides static methods to convert an XML text into a JSONObject, and to
  * covert a JSONObject into an XML text.
- * 
+ *
  * @author JSON.org
  * @version 2016-08-10
  */
 @SuppressWarnings("boxing")
 public class XML {
 
-    /** The Character '&amp;'. */
+    /**
+     * The Character '&amp;'.
+     */
     public static final Character AMP = '&';
 
-    /** The Character '''. */
+    /**
+     * The Character '''.
+     */
     public static final Character APOS = '\'';
 
-    /** The Character '!'. */
+    /**
+     * The Character '!'.
+     */
     public static final Character BANG = '!';
 
-    /** The Character '='. */
+    /**
+     * The Character '='.
+     */
     public static final Character EQ = '=';
 
-    /** The Character '>'. */
+    /**
+     * The Character '>'.
+     */
     public static final Character GT = '>';
 
-    /** The Character '&lt;'. */
+    /**
+     * The Character '&lt;'.
+     */
     public static final Character LT = '<';
 
-    /** The Character '?'. */
+    /**
+     * The Character '?'.
+     */
     public static final Character QUEST = '?';
 
-    /** The Character '"'. */
+    /**
+     * The Character '"'.
+     */
     public static final Character QUOT = '"';
 
-    /** The Character '/'. */
+    /**
+     * The Character '/'.
+     */
     public static final Character SLASH = '/';
 
     /**
      * Replace special characters with XML escapes:
-     * 
+     * <p>
      * <pre>
      * &amp; <small>(ampersand)</small> is replaced by &amp;amp;
      * &lt; <small>(less than)</small> is replaced by &amp;lt;
      * &gt; <small>(greater than)</small> is replaced by &amp;gt;
      * &quot; <small>(double quote)</small> is replaced by &amp;quot;
      * </pre>
-     * 
-     * @param string
-     *            The string to be escaped.
+     *
+     * @param string The string to be escaped.
      * @return The escaped string.
      */
     public static String escape(String string) {
@@ -82,23 +99,23 @@ public class XML {
         for (int i = 0, length = string.length(); i < length; i++) {
             char c = string.charAt(i);
             switch (c) {
-            case '&':
-                sb.append("&amp;");
-                break;
-            case '<':
-                sb.append("&lt;");
-                break;
-            case '>':
-                sb.append("&gt;");
-                break;
-            case '"':
-                sb.append("&quot;");
-                break;
-            case '\'':
-                sb.append("&apos;");
-                break;
-            default:
-                sb.append(c);
+                case '&':
+                    sb.append("&amp;");
+                    break;
+                case '<':
+                    sb.append("&lt;");
+                    break;
+                case '>':
+                    sb.append("&gt;");
+                    break;
+                case '"':
+                    sb.append("&quot;");
+                    break;
+                case '\'':
+                    sb.append("&apos;");
+                    break;
+                default:
+                    sb.append(c);
             }
         }
         return sb.toString();
@@ -107,9 +124,8 @@ public class XML {
     /**
      * Throw an exception if the string contains whitespace. Whitespace is not
      * allowed in tagNames and attributes.
-     * 
-     * @param string
-     *            A string.
+     *
+     * @param string A string.
      * @throws JSONException Thrown if the string contains whitespace or is empty.
      */
     public static void noSpace(String string) throws JSONException {
@@ -127,13 +143,10 @@ public class XML {
 
     /**
      * Scan the content following the named tag, attaching it to the context.
-     * 
-     * @param x
-     *            The XMLTokener containing the source string.
-     * @param context
-     *            The JSONObject that will include the new material.
-     * @param name
-     *            The tag name.
+     *
+     * @param x       The XMLTokener containing the source string.
+     * @param context The JSONObject that will include the new material.
+     * @param name    The tag name.
      * @return true if the close tag is processed.
      * @throws JSONException
      */
@@ -223,7 +236,7 @@ public class XML {
             tagName = (String) token;
             token = null;
             jsonobject = new JSONObject();
-            for (;;) {
+            for (; ; ) {
                 if (token == null) {
                     token = x.nextToken();
                 }
@@ -259,7 +272,7 @@ public class XML {
 
                 } else if (token == GT) {
                     // Content, between <...> and </...>
-                    for (;;) {
+                    for (; ; ) {
                         token = x.nextContent();
                         if (token == null) {
                             if (tagName != null) {
@@ -275,7 +288,7 @@ public class XML {
 
                         } else if (token == LT) {
                             // Nested element
-                            if (parse(x, jsonobject, tagName,keepStrings)) {
+                            if (parse(x, jsonobject, tagName, keepStrings)) {
                                 if (jsonobject.length() == 0) {
                                     context.accumulate(tagName, "");
                                 } else if (jsonobject.length() == 1
@@ -295,14 +308,14 @@ public class XML {
             }
         }
     }
-    
+
     /**
      * This method has been deprecated in favor of the
      * {@link JSONObject.stringToValue(String)} method. Use it instead.
-     * 
-     * @deprecated Use JSONObject#stringToValue(String) instead.
+     *
      * @param string String to convert
      * @return JSON value of this string or the string
+     * @deprecated Use JSONObject#stringToValue(String) instead.
      */
     @Deprecated
     public static Object stringToValue(String string) {
@@ -319,9 +332,8 @@ public class XML {
      * elements are represented as JSONArrays. Content text may be placed in a
      * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
      * are ignored.
-     * 
-     * @param string
-     *            The source string.
+     *
+     * @param string The source string.
      * @return A JSONObject containing the structured data from the XML string.
      * @throws JSONException Thrown if there is an errors while parsing the string
      */
@@ -340,14 +352,13 @@ public class XML {
      * elements are represented as JSONArrays. Content text may be placed in a
      * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
      * are ignored.
-     * 
+     * <p>
      * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
      * numbers but will instead be the exact value as seen in the XML document.
-     * 
-     * @param string
-     *            The source string.
+     *
+     * @param string      The source string.
      * @param keepStrings If true, then values will not be coerced into boolean
-     *  or numeric values and will instead be left as strings
+     *                    or numeric values and will instead be left as strings
      * @return A JSONObject containing the structured data from the XML string.
      * @throws JSONException Thrown if there is an errors while parsing the string
      */
@@ -359,11 +370,11 @@ public class XML {
         }
         return jo;
     }
+
     /**
      * Convert a JSONObject into a well-formed, element-normal XML string.
-     * 
-     * @param object
-     *            A JSONObject.
+     *
+     * @param object A JSONObject.
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
@@ -373,11 +384,9 @@ public class XML {
 
     /**
      * Convert a JSONObject into a well-formed, element-normal XML string.
-     * 
-     * @param object
-     *            A JSONObject.
-     * @param tagName
-     *            The optional name of the enclosing tag.
+     *
+     * @param object  A JSONObject.
+     * @param tagName The optional name of the enclosing tag.
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
@@ -488,7 +497,7 @@ public class XML {
         string = (object == null) ? "null" : escape(object.toString());
         return (tagName == null) ? "\"" + string + "\""
                 : (string.length() == 0) ? "<" + tagName + "/>" : "<" + tagName
-                        + ">" + string + "</" + tagName + ">";
+                + ">" + string + "</" + tagName + ">";
 
     }
 }

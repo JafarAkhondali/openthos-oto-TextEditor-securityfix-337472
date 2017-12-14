@@ -50,25 +50,25 @@ public class ChangeThemeDialog extends AbstractDialog {
         }
 
         getDialogBuilder()
-            .items(names)
-            .title(R.string.change_theme)
-            .itemsCallbackSingleChoice(themeIndex, new MaterialDialog.ListCallbackSingleChoice() {
+                .items(names)
+                .title(R.string.change_theme)
+                .itemsCallbackSingleChoice(themeIndex, new MaterialDialog.ListCallbackSingleChoice() {
 
-                @Override
-                public boolean onSelection(MaterialDialog materialDialog, View view, final int i, CharSequence charSequence) {
-                    materialDialog.dismiss();
-                    UIUtils.showConfirmDialog(context, R.string.confirm_change_theme_message, new UIUtils.OnClickCallback() {
-                        @Override
-                        public void onOkClick() {
-                            Pref.getInstance(context).setTheme(i);
-                            restartApp();
-                        }
-                    });
+                    @Override
+                    public boolean onSelection(MaterialDialog materialDialog, View view, final int i, CharSequence charSequence) {
+                        materialDialog.dismiss();
+                        UIUtils.showConfirmDialog(context, R.string.confirm_change_theme_message, new UIUtils.OnClickCallback() {
+                            @Override
+                            public void onOkClick() {
+                                Pref.getInstance(context).setTheme(i);
+                                restartApp();
+                            }
+                        });
 
-                    return true;
-                }
-            })
-            .show();
+                        return true;
+                    }
+                })
+                .show();
     }
 
     private void restartApp() {

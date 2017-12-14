@@ -83,7 +83,7 @@ public class SymbolBarLayout extends FlowLayout implements View.OnClickListener 
         if (onSymbolCharClickListener == null)
             return;
 
-        String str = ((TextView)v).getText().toString();
+        String str = ((TextView) v).getText().toString();
         if ("\\t".equals(str)) {
             str = "\t";
         } else if ("\\n".equals(str)) {

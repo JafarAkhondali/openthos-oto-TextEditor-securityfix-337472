@@ -29,6 +29,6 @@ public class BaseFragment extends JecFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((JecApp)getContext()).watch(this);
+        ((JecApp) getContext()).watch(this);
     }
 }

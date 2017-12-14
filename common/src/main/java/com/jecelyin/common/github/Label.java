@@ -17,89 +17,91 @@ import java.io.Serializable;
  */
 public class Label implements Serializable {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = 859851442075061861L;
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 859851442075061861L;
 
-	private String color;
+    private String color;
 
-	private String name;
+    private String name;
 
-	private String url;
+    private String url;
 
-	/**
-	 * @see Object#equals(Object)
-	 */
-	public boolean equals(Object obj) {
-		if (obj == this)
-			return true;
-		if (!(obj instanceof Label))
-			return false;
+    /**
+     * @see Object#equals(Object)
+     */
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof Label))
+            return false;
 
-		final String name = this.name;
-		return name != null && name.equals(((Label) obj).name);
-	}
+        final String name = this.name;
+        return name != null && name.equals(((Label) obj).name);
+    }
 
-	/**
-	 * @see Object#hashCode()
-	 */
-	public int hashCode() {
-		final String name = this.name;
-		return name != null ? name.hashCode() : super.hashCode();
-	}
+    /**
+     * @see Object#hashCode()
+     */
+    public int hashCode() {
+        final String name = this.name;
+        return name != null ? name.hashCode() : super.hashCode();
+    }
 
-	/**
-	 * @see Object#toString()
-	 */
-	public String toString() {
-		final String name = this.name;
-		return name != null ? name : super.toString();
-	}
+    /**
+     * @see Object#toString()
+     */
+    public String toString() {
+        final String name = this.name;
+        return name != null ? name : super.toString();
+    }
 
-	/**
-	 * @return color
-	 */
-	public String getColor() {
-		return color;
-	}
+    /**
+     * @return color
+     */
+    public String getColor() {
+        return color;
+    }
 
-	/**
-	 * @param color
-	 * @return this label
-	 */
-	public Label setColor(String color) {
-		this.color = color;
-		return this;
-	}
+    /**
+     * @param color
+     * @return this label
+     */
+    public Label setColor(String color) {
+        this.color = color;
+        return this;
+    }
 
-	/**
-	 * @return name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param name
-	 * @return this label
-	 */
-	public Label setName(String name) {
-		this.name = name;
-		return this;
-	}
+    /**
+     * @param name
+     * @return this label
+     */
+    public Label setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	/**
-	 * @return url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * @return url
+     */
+    public String getUrl() {
+        return url;
+    }
 
-	/**
-	 * @param url
-	 * @return this label
-	 */
-	public Label setUrl(String url) {
-		this.url = url;
-		return this;
-	}
+    /**
+     * @param url
+     * @return this label
+     */
+    public Label setUrl(String url) {
+        this.url = url;
+        return this;
+    }
 }

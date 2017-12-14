@@ -56,7 +56,7 @@ public class TabAdapter extends RecyclerView.Adapter {
         viewHolder.mTitleTextView.setText((tabInfo.hasChanged() ? "* " : "") + tabInfo.getTitle());
         viewHolder.mFileTextView.setText(tabInfo.getPath());
 
-        if(onClickListener != null) {
+        if (onClickListener != null) {
             viewHolder.mCloseImageView.setTag(position);
             viewHolder.mCloseImageView.setOnClickListener(onClickListener);
 

@@ -44,7 +44,8 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
     private boolean clearVisible;
     private int paddingRight;
 
-    public enum DrawablePosition { TOP, BOTTOM, LEFT, RIGHT }
+    public enum DrawablePosition {TOP, BOTTOM, LEFT, RIGHT}
+
     public interface DrawableClickListener {
         void onClick(DrawClickableEditText editText, DrawablePosition target);
     }
@@ -80,7 +81,7 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
         super.setPadding(getPaddingLeft(), getPaddingTop(), rightPadding, getPaddingBottom());
     }
 
-    public void setClearDrawable(int resId){
+    public void setClearDrawable(int resId) {
         clearDrawable = getResources().getDrawable(resId);
         clearDrawable.setBounds(0, 0, clearDrawable.getIntrinsicWidth(), clearDrawable.getIntrinsicHeight());
     }
@@ -92,6 +93,7 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
      * 对于fragment
      * Activity.DispatchTouchEventListener
      * 在dispatchTouchEvent访问调用本方法即可
+     *
      * @param event
      * @return
      */
@@ -100,12 +102,12 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
             if (isFocused()) {
                 Rect outRect = new Rect();
                 getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(),(int)event.getRawY()))   {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     clearFocus();
                     //
                     // Hide keyboard
                     //
-                    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindowToken(), 0);
                     return true;
                 }
@@ -144,7 +146,7 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(clearDrawable != null && clearVisible && isEnabled()) {
+        if (clearDrawable != null && clearVisible && isEnabled()) {
             drawableClearable(canvas);
         }
     }
@@ -153,7 +155,7 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
         int vspace = getBottom() - getTop() - getCompoundPaddingBottom() - getCompoundPaddingTop();
         int rightOffset = getCompoundDrawablePadding();
         Drawable[] compoundDrawables = getCompoundDrawables();
-        if(compoundDrawables[2] != null) {
+        if (compoundDrawables[2] != null) {
             rightOffset += compoundDrawables[2].getIntrinsicWidth() + getCompoundDrawablePadding();
         }
 
@@ -219,7 +221,7 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
             int width = getWidth();
             if (drawableRight != null) {
                 int dX = width - getPaddingRight() - drawableRight.getIntrinsicWidth() - getCompoundDrawablePadding();
-                if(actionX > dX && clickListener != null) {
+                if (actionX > dX && clickListener != null) {
                     clickListener.onClick(this, DrawablePosition.RIGHT);
                     event.setAction(MotionEvent.ACTION_CANCEL);
                     return false;
@@ -227,12 +229,12 @@ public class DrawClickableEditText extends MaterialEditText implements TextWatch
             }
             if (clearDrawable != null) {
                 int rightOffset = 0;
-                if(drawableRight != null) {
+                if (drawableRight != null) {
                     rightOffset += drawableRight.getIntrinsicWidth() + getCompoundDrawablePadding();
                 }
 
                 int dX = width - getPaddingRight() - clearDrawable.getIntrinsicWidth() - rightOffset - getCompoundDrawablePadding();
-                if(actionX > dX) {
+                if (actionX > dX) {
                     setText("");
                     event.setAction(MotionEvent.ACTION_CANCEL);
                     return false;

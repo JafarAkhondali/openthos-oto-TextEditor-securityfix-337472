@@ -34,17 +34,19 @@ public class FileListSorter implements Comparator<JecFile> {
     public final static int SORT_DATE = 1;
     public final static int SORT_SIZE = 2;
     public final static int SORT_TYPE = 3;
+
     @IntDef({SORT_NAME, SORT_DATE, SORT_SIZE, SORT_TYPE})
-    public @interface SortType {}
+    public @interface SortType {
+    }
 
     public FileListSorter() {
         this(true, SORT_NAME, true);
     }
+
     /**
-     *
      * @param dirsOnTop 1 dir on top, 0 dir on bottom
-     * @param sort 0 name, 1 time 2 size 3 type
-     * @param asc -1 asc, 1 desc
+     * @param sort      0 name, 1 time 2 size 3 type
+     * @param asc       -1 asc, 1 desc
      */
     public FileListSorter(boolean dirsOnTop, @SortType int sort, boolean asc) {
         this.dirsOnTop = dirsOnTop;
@@ -82,7 +84,7 @@ public class FileListSorter implements Comparator<JecFile> {
             }
         }
 
-        if(res == 0)
+        if (res == 0)
             return 0;
 
         return asc && res < 0 ? -1 : 1;

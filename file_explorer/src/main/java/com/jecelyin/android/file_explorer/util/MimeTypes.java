@@ -33,7 +33,7 @@ public class MimeTypes {
     private static MimeTypes instance = null;
 
     public static MimeTypes getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new MimeTypes();
         return instance;
     }
@@ -62,10 +62,10 @@ public class MimeTypes {
 
     /**
      * Gets the extension of a file name, like ".png" or ".jpg".
-     * 
+     *
      * @param uri
      * @return Extension including the dot("."); "" if there is no extension;
-     *         null if uri was null.
+     * null if uri was null.
      */
     public static String getExtension(String uri) {
         if (uri == null) {
@@ -89,7 +89,7 @@ public class MimeTypes {
         // extension-to-MIME map.
         // Be sure to remove the first character from the extension, which is
         // the "." character.
-        if(extension == null) return null;
+        if (extension == null) return null;
         if (extension.length() > 0) {
             String webkitMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
                     extension.substring(1));
@@ -127,8 +127,7 @@ public class MimeTypes {
         return !file.isDirectory() && isMimeText(getMimeType(file.getPath()));
     }
 
-    public static boolean isMimeText(String mime)
-    {
+    public static boolean isMimeText(String mime) {
         return mime.startsWith("text");
     }
 

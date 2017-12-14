@@ -54,7 +54,7 @@ public class RecentFilesManager implements MaterialDialog.ListCallback, Material
 //            }
 //        });
         String[] items = new String[list.size()];
-        for(int i=list.size()-1; i>=0; i--) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             items[i] = list.get(i).path;
         }
         new MaterialDialog.Builder(context)
@@ -78,7 +78,7 @@ public class RecentFilesManager implements MaterialDialog.ListCallback, Material
     @Override
     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
         materialDialog.dismiss();
-        if(onFileItemClickListener == null)
+        if (onFileItemClickListener == null)
             return;
         DBHelper.RecentFileItem item = list.get(i);
         onFileItemClickListener.onClick(item);

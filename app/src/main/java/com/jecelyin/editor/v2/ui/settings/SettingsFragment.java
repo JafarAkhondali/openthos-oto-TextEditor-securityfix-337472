@@ -66,7 +66,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                 : null);
             } else if (preference instanceof CheckBoxPreference) {
                 ((CheckBoxPreference) preference).setChecked((boolean) value);
-            } else if("pref_highlight_file_size_limit".equals(key)) {
+            } else if ("pref_highlight_file_size_limit".equals(key)) {
                 preference.setSummary(stringValue + " KB");
             } else {
                 // For all other preferences, set the summary to the value's
@@ -135,31 +135,31 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         Pref pref = Pref.getInstance(pg.getContext());
 
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             preference = pg.getPreference(i);
             key = preference.getKey();
 
-            if(preference instanceof PreferenceGroup) {
+            if (preference instanceof PreferenceGroup) {
                 dependBindPreference((PreferenceGroup) preference);
                 continue;
             }
 
             Class<? extends Preference> cls = preference.getClass();
-            if(cls.equals(Preference.class))
+            if (cls.equals(Preference.class))
                 continue;
 
             value = pref.getValue(key);
 
-            if(preference instanceof JecListPreference) {
+            if (preference instanceof JecListPreference) {
 //                if("pref_font_size".equals(key)) {
 //                    new FontSizePreference((JecListPreference)preference);
 //                } else if("pref_cursor_width".equals(key)) {
 //                    new CursorWidthPreference((JecListPreference)preference);
 //                }
-            } else if(preference instanceof EditTextPreference) {
-                ((EditTextPreference)preference).setText(String.valueOf(value));
-            } else if(preference instanceof CheckBoxPreference) {
-                ((CheckBoxPreference)preference).setChecked((boolean)value);
+            } else if (preference instanceof EditTextPreference) {
+                ((EditTextPreference) preference).setText(String.valueOf(value));
+            } else if (preference instanceof CheckBoxPreference) {
+                ((CheckBoxPreference) preference).setChecked((boolean) value);
             }
 
             if (!Pref.KEY_SYMBOL.equals(key))

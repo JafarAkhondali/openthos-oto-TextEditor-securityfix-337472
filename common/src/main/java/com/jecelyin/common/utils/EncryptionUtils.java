@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.jecelyin.common.utils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 /**
  * Utilities used to encrypt/decrypt passwords in case of Java-based implementation of PasswordSafe.
  * The class internal and could change without notice.
@@ -60,12 +62,14 @@ public class EncryptionUtils {
      */
     private static final IvParameterSpec CBC_SALT_KEY =
             new IvParameterSpec(new byte[]{-84, 125, 61, 61, 95, -34, -112, -9, 7, 25, -42, 96, 11, 89, -101, -70});
+
     /**
      * The private constructor
      */
     private EncryptionUtils() {
         // do nothing
     }
+
     /**
      * Calculate raw key
      *
@@ -76,6 +80,7 @@ public class EncryptionUtils {
     static byte[] rawKey(Class requester, String key) {
         return hash(getUTF8Bytes(requester.getName() + "/" + key));
     }
+
     /**
      * Generate key based on secure random
      *
@@ -89,6 +94,7 @@ public class EncryptionUtils {
         }
         return key;
     }
+
     /**
      * Generate key based on password
      *
@@ -98,6 +104,7 @@ public class EncryptionUtils {
     public static byte[] genPasswordKey(String password) {
         return genKey(hash(getUTF8Bytes(password)));
     }
+
     /**
      * Encrypt key (does not use salting, so the encryption result is the same for the same input)
      *
@@ -110,11 +117,11 @@ public class EncryptionUtils {
             Cipher c = Cipher.getInstance(ENCRYPT_KEY_ALGORITHM);
             c.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(password, SECRET_KEY_ALGORITHM), CBC_SALT_KEY);
             return c.doFinal(rawKey);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException(ENCRYPT_KEY_ALGORITHM + " is not available", e);
         }
     }
+
     /**
      * Create encrypted db key
      *
@@ -126,6 +133,7 @@ public class EncryptionUtils {
     public static byte[] dbKey(byte[] password, Class requester, String key) {
         return encryptKey(password, rawKey(requester, key));
     }
+
     /**
      * Decrypt key (does not use salting, so the encryption result is the same for the same input)
      *
@@ -138,11 +146,11 @@ public class EncryptionUtils {
             Cipher c = Cipher.getInstance(ENCRYPT_KEY_ALGORITHM);
             c.init(Cipher.DECRYPT_MODE, new SecretKeySpec(password, SECRET_KEY_ALGORITHM), CBC_SALT_KEY);
             return c.doFinal(encryptedKey);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException(ENCRYPT_KEY_ALGORITHM + " is not available", e);
         }
     }
+
     /**
      * Encrypt key (does not use salting, so the encryption result is the same for the same input)
      *
@@ -154,13 +162,13 @@ public class EncryptionUtils {
         try {
             Cipher c = Cipher.getInstance(ENCRYPT_DATA_ALGORITHM);
             c.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(password, SECRET_KEY_ALGORITHM), CBC_SALT_DATA);
-            c.update(new byte[]{(byte)(size >> 24), (byte)(size >> 16), (byte)(size >> 8), (byte)(size)});
+            c.update(new byte[]{(byte) (size >> 24), (byte) (size >> 16), (byte) (size >> 8), (byte) (size)});
             return c.doFinal(data);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException(ENCRYPT_DATA_ALGORITHM + " is not available", e);
         }
     }
+
     /**
      * Encrypt text
      *
@@ -172,6 +180,7 @@ public class EncryptionUtils {
         byte[] data = getUTF8Bytes(text);
         return encryptData(password, data.length, data);
     }
+
     /**
      * Decrypt key (does not use salting, so the encryption result is the same for the same input)
      *
@@ -184,11 +193,11 @@ public class EncryptionUtils {
             Cipher c = Cipher.getInstance(ENCRYPT_DATA_ALGORITHM);
             c.init(Cipher.DECRYPT_MODE, new SecretKeySpec(password, SECRET_KEY_ALGORITHM), CBC_SALT_DATA);
             return c.doFinal(encryptedData);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException(ENCRYPT_DATA_ALGORITHM + " is not available", e);
         }
     }
+
     /**
      * Encrypt text
      *
@@ -204,11 +213,11 @@ public class EncryptionUtils {
         }
         try {
             return new String(plain, 4, len, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 is not available", e);
         }
     }
+
     /**
      * Convert string to UTF-8 bytes
      *
@@ -218,11 +227,11 @@ public class EncryptionUtils {
     public static byte[] getUTF8Bytes(String string) {
         try {
             return string.getBytes("UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 encoding is not available", e);
         }
     }
+
     /**
      * Hash the specified sequence of bytes
      *
@@ -236,8 +245,7 @@ public class EncryptionUtils {
                 h.update(d);
             }
             return h.digest();
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("The hash algorithm " + HASH_ALGORITHM + " is not available", e);
         }
     }

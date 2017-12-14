@@ -29,7 +29,8 @@ public class EditorCommand {
     HashMap<String, Object> data;
     JsCallback callback;
 
-    private EditorCommand() {}
+    private EditorCommand() {
+    }
 
     public static class Builder {
         private EditorCommand ec;

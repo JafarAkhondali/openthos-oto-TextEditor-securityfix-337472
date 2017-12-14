@@ -93,7 +93,7 @@ public class CrashDbHelper extends SQLiteOpenHelper {
 
     public void crashToString(StringBuilder sb) {
         Cursor cursor = readDb.query("errors", new String[]{"trace"}, "committed=?", new String[]{"0"}, null, null, null, "30");
-        if(cursor == null)
+        if (cursor == null)
             return;
         while (cursor.moveToNext()) {
             sb.append(cursor.getString(0));

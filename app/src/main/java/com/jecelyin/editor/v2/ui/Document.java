@@ -69,6 +69,7 @@ public class Document implements ReadFileListener {
     public void loadFile(File file) {
         loadFile(file, null);
     }
+
     public void loadFile(File f, String encodingName) {
         encoding = encodingName;
         this.file = f;
@@ -95,7 +96,7 @@ public class Document implements ReadFileListener {
                 root = false;
             }
         }
-        if(!f.isFile() || !f.exists()) {
+        if (!f.isFile() || !f.exists()) {
             UIUtils.alert(context, context.getString(R.string.cannt_access_file, f.getPath()));
             return;
         }
@@ -103,7 +104,7 @@ public class Document implements ReadFileListener {
     }
 
     private void doLoad() {
-        if(!file.canRead() && !root) {
+        if (!file.canRead() && !root) {
             UIUtils.alert(context, context.getString(R.string.cannt_read_file, file.getPath()));
             return;
         }
@@ -120,10 +121,10 @@ public class Document implements ReadFileListener {
     @Override
     public void onDone(StringBuilder StringBuilder, String encoding, Throwable throwable) {
         //给回收了。。
-        if(editorDelegate == null || editorDelegate.mEditText == null)
+        if (editorDelegate == null || editorDelegate.mEditText == null)
             return;
         this.encoding = encoding;
-        if(throwable != null) {
+        if (throwable != null) {
             editorDelegate.onLoadFinish();
             String message;
             if (throwable instanceof OutOfMemoryError) {

@@ -58,7 +58,7 @@ public class JecListPreference extends MaterialListPreference {
         super.showDialog(state);
 
         MaterialDialog dialog = (MaterialDialog) getDialog();
-        if(adapter != null)
+        if (adapter != null)
             dialog.getRecyclerView().setAdapter(adapter);
     }
 

@@ -31,18 +31,17 @@ import java.io.OutputStream;
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
-public abstract class JecFile implements Parcelable
-{
+public abstract class JecFile implements Parcelable {
 
     /* -- Constructors -- */
+
     /**
      * Creates a new <code>File</code> instance by converting the given
      * pathname string into an abstract pathname.  If the given string is
      * the empty string, then the result is the empty abstract pathname.
      *
-     * @param   pathname  A pathname string
-     * @throws  NullPointerException
-     *          If the <code>pathname</code> argument is <code>null</code>
+     * @param pathname A pathname string
+     * @throws NullPointerException If the <code>pathname</code> argument is <code>null</code>
      */
     public JecFile(String pathname) {
         if (pathname == null) {
@@ -60,12 +59,12 @@ public abstract class JecFile implements Parcelable
     /**
      * Creates a new <code>File</code> instance from a parent pathname string
      * and a child pathname string.
-     *
+     * <p>
      * <p> If <code>parent</code> is <code>null</code> then the new
      * <code>File</code> instance is created as if by invoking the
      * single-argument <code>File</code> constructor on the given
      * <code>child</code> pathname string.
-     *
+     * <p>
      * <p> Otherwise the <code>parent</code> pathname string is taken to denote
      * a directory, and the <code>child</code> pathname string is taken to
      * denote either a directory or a file.  If the <code>child</code> pathname
@@ -77,10 +76,9 @@ public abstract class JecFile implements Parcelable
      * string is converted into an abstract pathname and the child abstract
      * pathname is resolved against the parent.
      *
-     * @param   parent  The parent pathname string
-     * @param   child   The child pathname string
-     * @throws  NullPointerException
-     *          If <code>child</code> is <code>null</code>
+     * @param parent The parent pathname string
+     * @param child  The child pathname string
+     * @throws NullPointerException If <code>child</code> is <code>null</code>
      */
     public JecFile(String parent, String child) {
         if (child == null) {
@@ -91,12 +89,12 @@ public abstract class JecFile implements Parcelable
     /**
      * Creates a new <code>File</code> instance from a parent abstract
      * pathname and a child pathname string.
-     *
+     * <p>
      * <p> If <code>parent</code> is <code>null</code> then the new
      * <code>File</code> instance is created as if by invoking the
      * single-argument <code>File</code> constructor on the given
      * <code>child</code> pathname string.
-     *
+     * <p>
      * <p> Otherwise the <code>parent</code> abstract pathname is taken to
      * denote a directory, and the <code>child</code> pathname string is taken
      * to denote either a directory or a file.  If the <code>child</code>
@@ -108,10 +106,9 @@ public abstract class JecFile implements Parcelable
      * pathname string is converted into an abstract pathname and the child
      * abstract pathname is resolved against the parent.
      *
-     * @param   parent  The parent abstract pathname
-     * @param   child   The child pathname string
-     * @throws  NullPointerException
-     *          If <code>child</code> is <code>null</code>
+     * @param parent The parent abstract pathname
+     * @param child  The child pathname string
+     * @throws NullPointerException If <code>child</code> is <code>null</code>
      */
     public JecFile(JecFile parent, String child) {
         if (child == null) {
@@ -123,6 +120,7 @@ public abstract class JecFile implements Parcelable
 
     /**
      * 代替 {@link JecFile(JecFile, String)} 避免判断类型
+     *
      * @param filename
      * @return
      */
@@ -134,24 +132,24 @@ public abstract class JecFile implements Parcelable
      * sequence.  If the pathname's name sequence is empty, then the empty
      * string is returned.
      *
-     * @return  The name of the file or directory denoted by this abstract
-     *          pathname, or the empty string if this pathname's name sequence
-     *          is empty
+     * @return The name of the file or directory denoted by this abstract
+     * pathname, or the empty string if this pathname's name sequence
+     * is empty
      */
     public abstract String getName();
 
     /**
      * Returns the pathname string of this abstract pathname's parent, or
      * <code>null</code> if this pathname does not name a parent directory.
-     *
+     * <p>
      * <p> The <em>parent</em> of an abstract pathname consists of the
      * pathname's prefix, if any, and each name in the pathname's name
      * sequence except for the last.  If the name sequence is empty then
      * the pathname does not name a parent directory.
      *
-     * @return  The pathname string of the parent directory named by this
-     *          abstract pathname, or <code>null</code> if this pathname
-     *          does not name a parent
+     * @return The pathname string of the parent directory named by this
+     * abstract pathname, or <code>null</code> if this pathname
+     * does not name a parent
      */
     public abstract String getParent();
 
@@ -159,16 +157,15 @@ public abstract class JecFile implements Parcelable
      * Returns the abstract pathname of this abstract pathname's parent,
      * or <code>null</code> if this pathname does not name a parent
      * directory.
-     *
+     * <p>
      * <p> The <em>parent</em> of an abstract pathname consists of the
      * pathname's prefix, if any, and each name in the pathname's name
      * sequence except for the last.  If the name sequence is empty then
      * the pathname does not name a parent directory.
      *
-     * @return  The abstract pathname of the parent directory named by this
-     *          abstract pathname, or <code>null</code> if this pathname
-     *          does not name a parent
-     *
+     * @return The abstract pathname of the parent directory named by this
+     * abstract pathname, or <code>null</code> if this pathname
+     * does not name a parent
      * @since 1.2
      */
     public abstract JecFile getParentFile();
@@ -178,7 +175,7 @@ public abstract class JecFile implements Parcelable
      * string uses the separator default name-separator character to
      * separate the names in the name sequence.
      *
-     * @return  The string form of this abstract pathname
+     * @return The string form of this abstract pathname
      */
     public abstract String getPath();
 
@@ -186,7 +183,7 @@ public abstract class JecFile implements Parcelable
 
     /**
      * Returns the absolute pathname string of this abstract pathname.
-     *
+     * <p>
      * <p> If this abstract pathname is already absolute, then the pathname
      * string is simply returned as if by the <code>{@link #getPath}</code>
      * method.  If this abstract pathname is the empty abstract pathname then
@@ -199,12 +196,9 @@ public abstract class JecFile implements Parcelable
      * pathname, if any; if not, it is resolved against the current user
      * directory.
      *
-     * @return  The absolute pathname string denoting the same file or
-     *          directory as this abstract pathname
-     *
-     * @throws  SecurityException
-     *          If a required system property value cannot be accessed.
-     *
+     * @return The absolute pathname string denoting the same file or
+     * directory as this abstract pathname
+     * @throws SecurityException If a required system property value cannot be accessed.
      */
     public abstract String getAbsolutePath();
 
@@ -212,12 +206,9 @@ public abstract class JecFile implements Parcelable
      * Returns the absolute form of this abstract pathname.  Equivalent to
      * <code>new&nbsp;File(this.{@link #getAbsolutePath})</code>.
      *
-     * @return  The absolute abstract pathname denoting the same file or
-     *          directory as this abstract pathname
-     *
-     * @throws  SecurityException
-     *          If a required system property value cannot be accessed.
-     *
+     * @return The absolute abstract pathname denoting the same file or
+     * directory as this abstract pathname
+     * @throws SecurityException If a required system property value cannot be accessed.
      * @since 1.2
      */
     public abstract JecFile getAbsoluteFile();
@@ -229,14 +220,12 @@ public abstract class JecFile implements Parcelable
      * Tests whether the application can read the file denoted by this
      * abstract pathname.
      *
-     * @return  <code>true</code> if and only if the file specified by this
-     *          abstract pathname exists <em>and</em> can be read by the
-     *          application; <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file
+     * @return <code>true</code> if and only if the file specified by this
+     * abstract pathname exists <em>and</em> can be read by the
+     * application; <code>false</code> otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file
      */
     public abstract boolean canRead();
 
@@ -244,15 +233,13 @@ public abstract class JecFile implements Parcelable
      * Tests whether the application can modify the file denoted by this
      * abstract pathname.
      *
-     * @return  <code>true</code> if and only if the file system actually
-     *          contains a file denoted by this abstract pathname <em>and</em>
-     *          the application is allowed to write to the file;
-     *          <code>false</code> otherwise.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkWrite(String)}</code>
-     *          method denies write access to the file
+     * @return <code>true</code> if and only if the file system actually
+     * contains a file denoted by this abstract pathname <em>and</em>
+     * the application is allowed to write to the file;
+     * <code>false</code> otherwise.
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkWrite(String)}</code>
+     *                           method denies write access to the file
      */
     public abstract boolean canWrite();
 
@@ -260,32 +247,28 @@ public abstract class JecFile implements Parcelable
      * Tests whether the file or directory denoted by this abstract pathname
      * exists.
      *
-     * @return  <code>true</code> if and only if the file or directory denoted
-     *          by this abstract pathname exists; <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file or directory
+     * @return <code>true</code> if and only if the file or directory denoted
+     * by this abstract pathname exists; <code>false</code> otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file or directory
      */
     public abstract boolean exists();
 
     /**
      * Tests whether the file denoted by this abstract pathname is a
      * directory.
-     *
+     * <p>
      * <p> Where it is required to distinguish an I/O exception from the case
      * that the file is not a directory, or where several attributes of the
      * same file are required at the same time.
      *
      * @return <code>true</code> if and only if the file denoted by this
-     *          abstract pathname exists <em>and</em> is a directory;
-     *          <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file
+     * abstract pathname exists <em>and</em> is a directory;
+     * <code>false</code> otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file
      */
     public abstract boolean isDirectory();
 
@@ -294,60 +277,54 @@ public abstract class JecFile implements Parcelable
      * file.  A file is <em>normal</em> if it is not a directory and, in
      * addition, satisfies other system-dependent criteria.  Any non-directory
      * file created by a Java application is guaranteed to be a normal file.
-     *
+     * <p>
      * <p> Where it is required to distinguish an I/O exception from the case
      * that the file is not a normal file, or where several attributes of the
      * same file are required at the same time.
      *
-     * @return  <code>true</code> if and only if the file denoted by this
-     *          abstract pathname exists <em>and</em> is a normal file;
-     *          <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file
+     * @return <code>true</code> if and only if the file denoted by this
+     * abstract pathname exists <em>and</em> is a normal file;
+     * <code>false</code> otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file
      */
     public abstract boolean isFile();
 
     /**
      * Returns the time that the file denoted by this abstract pathname was
      * last modified.
-     *
+     * <p>
      * <p> Where it is required to distinguish an I/O exception from the case
      * where {@code 0L} is returned, or where several attributes of the
      * same file are required at the same time, or where the time of last
      * access or the creation time are required.
      *
-     * @return  A <code>long</code> value representing the time the file was
-     *          last modified, measured in milliseconds since the epoch
-     *          (00:00:00 GMT, January 1, 1970), or <code>0L</code> if the
-     *          file does not exist or if an I/O error occurs
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file
+     * @return A <code>long</code> value representing the time the file was
+     * last modified, measured in milliseconds since the epoch
+     * (00:00:00 GMT, January 1, 1970), or <code>0L</code> if the
+     * file does not exist or if an I/O error occurs
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file
      */
     public abstract long lastModified();
 
     /**
      * Returns the length of the file denoted by this abstract pathname.
      * The return value is unspecified if this pathname denotes a directory.
-     *
+     * <p>
      * <p> Where it is required to distinguish an I/O exception from the case
      * that {@code 0L} is returned, or where several attributes of the same file
      * are required at the same time.
      *
-     * @return  The length, in bytes, of the file denoted by this abstract
-     *          pathname, or <code>0L</code> if the file does not exist.  Some
-     *          operating systems may return <code>0L</code> for pathnames
-     *          denoting system-dependent entities such as devices or pipes.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method denies read access to the file
+     * @return The length, in bytes, of the file denoted by this abstract
+     * pathname, or <code>0L</code> if the file does not exist.  Some
+     * operating systems may return <code>0L</code> for pathnames
+     * denoting system-dependent entities such as devices or pipes.
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method denies read access to the file
      */
     public abstract long length();
 
@@ -360,20 +337,18 @@ public abstract class JecFile implements Parcelable
      * this pathname denotes a directory, then the directory must be empty in
      * order to be deleted.
      *
-     * @return  <code>true</code> if and only if the file or directory is
-     *          successfully deleted; <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkDelete}</code> method denies
-     *          delete access to the file
+     * @return <code>true</code> if and only if the file or directory is
+     * successfully deleted; <code>false</code> otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkDelete}</code> method denies
+     *                           delete access to the file
      */
     public abstract void delete(BoolResultListener listener);
 
     /**
      * Returns an array of abstract pathnames denoting the files in the
      * directory denoted by this abstract pathname.
-     *
+     * <p>
      * <p> If this abstract pathname does not denote a directory, then this
      * method returns {@code null}.  Otherwise an array of {@code File} objects
      * is returned, one for each file or directory in the directory.  Pathnames
@@ -384,23 +359,20 @@ public abstract class JecFile implements Parcelable
      * pathname is absolute then each resulting pathname is absolute; if this
      * pathname is relative then each resulting pathname will be relative to
      * the same directory.
-     *
+     * <p>
      * <p> There is no guarantee that the name strings in the resulting array
      * will appear in any specific order; they are not, in particular,
      * guaranteed to appear in alphabetical order.
      *
-     * @return  An array of abstract pathnames denoting the files and
-     *          directories in the directory denoted by this abstract pathname.
-     *          The array will be empty if the directory is empty.  Returns
-     *          {@code null} if this abstract pathname does not denote a
-     *          directory, or if an I/O error occurs.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its {@link
-     *          SecurityManager#checkRead(String)} method denies read access to
-     *          the directory
-     *
-     * @since  1.2
+     * @return An array of abstract pathnames denoting the files and
+     * directories in the directory denoted by this abstract pathname.
+     * The array will be empty if the directory is empty.  Returns
+     * {@code null} if this abstract pathname does not denote a
+     * directory, or if an I/O error occurs.
+     * @throws SecurityException If a security manager exists and its {@link
+     *                           SecurityManager#checkRead(String)} method denies read access to
+     *                           the directory
+     * @since 1.2
      */
     public abstract void listFiles(FileListResultListener listener);
 
@@ -410,25 +382,23 @@ public abstract class JecFile implements Parcelable
      * operation fails it may have succeeded in creating some of the necessary
      * parent directories.
      *
-     * @return  <code>true</code> if and only if the directory was created,
-     *          along with all necessary parent directories; <code>false</code>
-     *          otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkRead(String)}</code>
-     *          method does not permit verification of the existence of the
-     *          named directory and all necessary parent directories; or if
-     *          the <code>{@link
-     *          SecurityManager#checkWrite(String)}</code>
-     *          method does not permit the named directory and all necessary
-     *          parent directories to be created
+     * @return <code>true</code> if and only if the directory was created,
+     * along with all necessary parent directories; <code>false</code>
+     * otherwise
+     * @throws SecurityException If a security manager exists and its <code>{@link
+     *                           SecurityManager#checkRead(String)}</code>
+     *                           method does not permit verification of the existence of the
+     *                           named directory and all necessary parent directories; or if
+     *                           the <code>{@link
+     *                           SecurityManager#checkWrite(String)}</code>
+     *                           method does not permit the named directory and all necessary
+     *                           parent directories to be created
      */
     public abstract void mkdirs(BoolResultListener listener);
 
     /**
      * Renames the file denoted by this abstract pathname.
-     *
+     * <p>
      * <p> Many aspects of the behavior of this method are inherently
      * platform-dependent: The rename operation might not be able to move a
      * file from one filesystem to another, it might not be atomic, and it
@@ -436,18 +406,13 @@ public abstract class JecFile implements Parcelable
      * already exists.  The return value should always be checked to make sure
      * that the rename operation was successful.
      *
-     * @param  dest  The new abstract pathname for the named file
-     *
-     * @return  <code>true</code> if and only if the renaming succeeded;
-     *          <code>false</code> otherwise
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          SecurityManager#checkWrite(String)}</code>
-     *          method denies write access to either the old or new pathnames
-     *
-     * @throws  NullPointerException
-     *          If parameter <code>dest</code> is <code>null</code>
+     * @param dest The new abstract pathname for the named file
+     * @return <code>true</code> if and only if the renaming succeeded;
+     * <code>false</code> otherwise
+     * @throws SecurityException    If a security manager exists and its <code>{@link
+     *                              SecurityManager#checkWrite(String)}</code>
+     *                              method denies write access to either the old or new pathnames
+     * @throws NullPointerException If parameter <code>dest</code> is <code>null</code>
      */
     public abstract void renameTo(JecFile dest, BoolResultListener listener);
 
@@ -463,7 +428,7 @@ public abstract class JecFile implements Parcelable
      * Returns the pathname string of this abstract pathname.  This is just the
      * string returned by the <code>{@link #getPath}</code> method.
      *
-     * @return  The string form of this abstract pathname
+     * @return The string form of this abstract pathname
      */
     public String toString() {
         return getPath();

@@ -10,7 +10,9 @@ import java.io.File;
 
 
 public class SL4AIntentBuilders {
-    /** An arbitrary value that is used to identify pending intents for executing scripts. */
+    /**
+     * An arbitrary value that is used to identify pending intents for executing scripts.
+     */
     private static final int EXECUTE_SCRIPT_REQUEST_CODE = 0x12f412a;
 
     private SL4AIntentBuilders() {
@@ -26,8 +28,7 @@ public class SL4AIntentBuilders {
     /**
      * Builds an intent that will launch a script in the background.
      *
-     * @param script
-     *          the script to launch
+     * @param script the script to launch
      * @return the intent that will launch the script
      */
     public static Intent buildStartInBackgroundIntent(File script) {
@@ -42,8 +43,7 @@ public class SL4AIntentBuilders {
     /**
      * Builds an intent that launches a script in a terminal.
      *
-     * @param script
-     *          the script to launch
+     * @param script the script to launch
      * @return the intent that will launch the script
      */
     public static Intent buildStartInTerminalIntent(File script) {
@@ -58,8 +58,7 @@ public class SL4AIntentBuilders {
     /**
      * Builds an intent that launches an interpreter.
      *
-     * @param interpreterName
-     *          the interpreter to launch
+     * @param interpreterName the interpreter to launch
      * @return the intent that will launch the interpreter
      */
     public static Intent buildStartInterpreterIntent(String interpreterName) {
@@ -93,10 +92,8 @@ public class SL4AIntentBuilders {
     /**
      * Builds an intent that creates a shortcut to launch the provided script in the background.
      *
-     * @param script
-     *          the script to link to
-     * @param iconResource
-     *          the icon resource to associate with the shortcut
+     * @param script       the script to link to
+     * @param iconResource the icon resource to associate with the shortcut
      * @return the intent that will create the shortcut
      */
     public static Intent buildBackgroundShortcutIntent(File script, Parcelable iconResource) {
@@ -110,10 +107,8 @@ public class SL4AIntentBuilders {
     /**
      * Builds an intent that creates a shortcut to launch the provided script in a terminal.
      *
-     * @param script
-     *          the script to link to
-     * @param iconResource
-     *          the icon resource to associate with the shortcut
+     * @param script       the script to link to
+     * @param iconResource the icon resource to associate with the shortcut
      * @return the intent that will create the shortcut
      */
     public static Intent buildTerminalShortcutIntent(File script, Parcelable iconResource) {
@@ -127,9 +122,7 @@ public class SL4AIntentBuilders {
     /**
      * Creates a pending intent that can be used to start the trigger service.
      *
-     * @param context
-     *          the context under whose authority to launch the intent
-     *
+     * @param context the context under whose authority to launch the intent
      * @return {@link PendingIntent} object for running the trigger service
      */
     public static PendingIntent buildTriggerServicePendingIntent(Context context) {

@@ -173,9 +173,9 @@ public abstract class ListFileRunner extends Runner<List<FileInfo>> {
                 file.name = splitSl[0].trim();
                 String realPath = splitSl[1].trim();
                 if (realPath.charAt(0) != '/') {
-                    file.linkedPath  = new File(path).getParent() + "/" + realPath;
+                    file.linkedPath = new File(path).getParent() + "/" + realPath;
                 } else {
-                    file.linkedPath  = realPath;
+                    file.linkedPath = realPath;
                 }
             } else {
                 file.name = nameAndLink;

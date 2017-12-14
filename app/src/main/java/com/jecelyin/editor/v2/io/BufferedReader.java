@@ -11,9 +11,9 @@ import java.io.Reader;
  * some extra space is required to hold the buffer and that copying takes place
  * when filling that buffer, but this is usually outweighed by the performance
  * benefits.
- *
+ * <p>
  * <p/>A typical application pattern for the class looks like this:<p/>
- *
+ * <p>
  * <pre>
  * BufferedReader buf = new BufferedReader(new FileReader(&quot;file.java&quot;));
  * </pre>
@@ -35,11 +35,11 @@ public class BufferedReader extends Reader {
      * Pos points to the next readable character. End is one greater than the
      * last readable character. When {@code pos == end}, the buffer is empty and
      * must be {@link #fillBuf() filled} before characters can be read.
-     *
+     * <p>
      * <p>Mark is the value pos will be set to on calls to {@link #reset}. Its
      * value is in the range {@code [0...pos]}. If the mark is {@code -1}, the
      * buffer cannot be reset.
-     *
+     * <p>
      * <p>MarkLimit limits the distance between the mark and the pos. When this
      * limit is exceeded, {@link #reset} is permitted (but not required) to
      * throw an exception. For shorter distances, {@link #reset} shall not throw
@@ -84,7 +84,7 @@ public class BufferedReader extends Reader {
      * Constructs a new {@code BufferedReader}, providing {@code in} with {@code size} characters
      * of buffer.
      *
-     * @param in the {@code InputStream} the buffer reads from.
+     * @param in   the {@code InputStream} the buffer reads from.
      * @param size the size of buffer in characters.
      * @throws IllegalArgumentException if {@code size <= 0}.
      */
@@ -102,8 +102,7 @@ public class BufferedReader extends Reader {
      * and releases the buffer. Nothing is done if this reader has already been
      * closed.
      *
-     * @throws java.io.IOException
-     *             if an error occurs while closing this reader.
+     * @throws java.io.IOException if an error occurs while closing this reader.
      */
     @Override
     public void close() throws IOException {
@@ -120,7 +119,7 @@ public class BufferedReader extends Reader {
      * the buffer still contains data; ie. if {@code pos < end}.
      *
      * @return the number of chars read into the buffer, or -1 if the end of the
-     *      source stream has been reached.
+     * source stream has been reached.
      */
     private int fillBuf() throws IOException {
         // assert(pos == end);
@@ -165,7 +164,7 @@ public class BufferedReader extends Reader {
      * Indicates whether or not this reader is closed.
      *
      * @return {@code true} if this reader is closed, {@code false}
-     *         otherwise.
+     * otherwise.
      */
     private boolean isClosed() {
         return buf == null;
@@ -177,13 +176,10 @@ public class BufferedReader extends Reader {
      * Calling {@code reset()} will reposition the reader back to the marked
      * position if {@code markLimit} has not been surpassed.
      *
-     * @param markLimit
-     *            the number of characters that can be read before the mark is
-     *            invalidated.
-     * @throws IllegalArgumentException
-     *             if {@code markLimit < 0}.
-     * @throws java.io.IOException
-     *             if an error occurs while setting a mark in this reader.
+     * @param markLimit the number of characters that can be read before the mark is
+     *                  invalidated.
+     * @throws IllegalArgumentException if {@code markLimit < 0}.
+     * @throws java.io.IOException      if an error occurs while setting a mark in this reader.
      * @see #markSupported()
      * @see #reset()
      */
@@ -227,9 +223,8 @@ public class BufferedReader extends Reader {
      * if there are no more characters in the source reader.
      *
      * @return the character read or -1 if the end of the source reader has been
-     *         reached.
-     * @throws java.io.IOException
-     *             if this reader is closed or some other I/O error occurs.
+     * reached.
+     * @throws java.io.IOException if this reader is closed or some other I/O error occurs.
      */
     @Override
     public int read() throws IOException {
@@ -256,6 +251,7 @@ public class BufferedReader extends Reader {
             throw new ArrayIndexOutOfBoundsException(offset);
         }
     }
+
     /**
      * Reads up to {@code length} characters from this reader and stores them
      * at {@code offset} in the character array {@code buffer}. Returns the
@@ -265,10 +261,8 @@ public class BufferedReader extends Reader {
      * this readers buffer size, BufferedReader bypasses the buffer and simply
      * places the results directly into {@code buffer}.
      *
-     * @throws IndexOutOfBoundsException
-     *     if {@code offset < 0 || length < 0 || offset + length > buffer.length}.
-     * @throws java.io.IOException
-     *             if this reader is closed or some other I/O error occurs.
+     * @throws IndexOutOfBoundsException if {@code offset < 0 || length < 0 || offset + length > buffer.length}.
+     * @throws java.io.IOException       if this reader is closed or some other I/O error occurs.
      */
     @Override
     public int read(char[] buffer, int offset, int length) throws IOException {
@@ -362,9 +356,8 @@ public class BufferedReader extends Reader {
      * not include the newline sequence.
      *
      * @return the contents of the line or {@code null} if no characters were
-     *         read before the end of the reader has been reached.
-     * @throws java.io.IOException
-     *             if this reader is closed or some other I/O error occurs.
+     * read before the end of the reader has been reached.
+     * @throws java.io.IOException if this reader is closed or some other I/O error occurs.
      */
     public String readLine() throws IOException {
         synchronized (lock) {
@@ -414,9 +407,8 @@ public class BufferedReader extends Reader {
      * Indicates whether this reader is ready to be read without blocking.
      *
      * @return {@code true} if this reader will not block when {@code read} is
-     *         called, {@code false} if unknown or blocking will occur.
-     * @throws java.io.IOException
-     *             if this reader is closed or some other I/O error occurs.
+     * called, {@code false} if unknown or blocking will occur.
+     * @throws java.io.IOException if this reader is closed or some other I/O error occurs.
      * @see #read()
      * @see #read(char[], int, int)
      * @see #readLine()
@@ -434,8 +426,7 @@ public class BufferedReader extends Reader {
      * Invocations of {@code read()} and {@code skip()} will occur from this new
      * location.
      *
-     * @throws java.io.IOException
-     *             if this reader is closed or no mark has been set.
+     * @throws java.io.IOException if this reader is closed or no mark has been set.
      * @see #mark(int)
      * @see #markSupported()
      */
@@ -455,14 +446,13 @@ public class BufferedReader extends Reader {
      * Skips at most {@code charCount} chars in this stream. Subsequent calls to
      * {@code read} will not return these chars unless {@code reset} is
      * used.
-     *
+     * <p>
      * <p>Skipping characters may invalidate a mark if {@code markLimit}
      * is surpassed.
      *
      * @return the number of characters actually skipped.
      * @throws IllegalArgumentException if {@code charCount < 0}.
-     * @throws java.io.IOException
-     *             if this reader is closed or some other I/O error occurs.
+     * @throws java.io.IOException      if this reader is closed or some other I/O error occurs.
      */
     @Override
     public long skip(long charCount) throws IOException {

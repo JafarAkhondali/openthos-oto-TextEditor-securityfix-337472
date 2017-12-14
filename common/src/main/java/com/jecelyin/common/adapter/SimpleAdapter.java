@@ -42,7 +42,7 @@ public abstract class SimpleAdapter extends BaseAdapter {
     @Override
     final public View getView(int position, View convertView, ViewGroup parent) {
         SimpleViewHolder holder;
-        if(convertView == null) {
+        if (convertView == null) {
             holder = onCreateViewHolder(parent);
             convertView = holder.itemView;
             convertView.setTag(holder);
@@ -54,5 +54,6 @@ public abstract class SimpleAdapter extends BaseAdapter {
     }
 
     public abstract SimpleViewHolder onCreateViewHolder(ViewGroup parent);
+
     public abstract void onBindViewHolder(SimpleViewHolder holder, int position);
 }

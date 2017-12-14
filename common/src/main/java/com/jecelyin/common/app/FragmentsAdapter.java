@@ -28,7 +28,7 @@ import android.view.ViewGroup;
  * Implementation of {@link android.support.v4.view.PagerAdapter} that
  * uses a {@link android.support.v4.app.Fragment} to manage each page. This class also handles
  * saving and restoring of fragment's state.
- *
+ * <p>
  * <p>This version of the pager is more useful when there are a large number
  * of pages, working more like a list view.  When pages are not visible to
  * the user, their entire fragment may be destroyed, only keeping the saved
@@ -36,29 +36,29 @@ import android.view.ViewGroup;
  * memory associated with each visited page as compared to
  * {@link android.support.v4.app.FragmentPagerAdapter} at the cost of potentially more overhead when
  * switching between pages.
- *
+ * <p>
  * <p>When using FragmentPagerAdapter the host ViewPager must have a
  * valid ID set.</p>
- *
+ * <p>
  * <p>Subclasses only need to implement {@link #getItem(int)}
  * and {@link #getCount()} to have a working adapter.
- *
+ * <p>
  * <p>Here is an example implementation of a pager containing fragments of
  * lists:
- *
+ * <p>
  * {@sample development/samples/Support13Demos/src/com/example/android/supportv13/app/FragmentStatePagerSupport.java
- *      complete}
- *
+ * complete}
+ * <p>
  * <p>The <code>R.layout.fragment_pager</code> resource of the top-level fragment is:
- *
+ * <p>
  * {@sample development/samples/Support13Demos/res/layout/fragment_pager.xml
- *      complete}
- *
+ * complete}
+ * <p>
  * <p>The <code>R.layout.fragment_pager_list</code> resource containing each
  * individual fragment's layout is:
- *
+ * <p>
  * {@sample development/samples/Support13Demos/res/layout/fragment_pager_list.xml
- *      complete}
+ * complete}
  */
 public abstract class FragmentsAdapter extends PagerAdapter {
     private static final String TAG = "FragmentsAdapter";
@@ -101,20 +101,20 @@ public abstract class FragmentsAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        Fragment fragment = (Fragment)object;
+        Fragment fragment = (Fragment) object;
 
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
         if (DEBUG) Log.v(TAG, "Removing item #" + position + ": f=" + object
-                + " v=" + ((Fragment)object).getView());
+                + " v=" + ((Fragment) object).getView());
 
         mCurTransaction.remove(fragment);
     }
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        Fragment fragment = (Fragment)object;
+        Fragment fragment = (Fragment) object;
         if (fragment != mCurrentPrimaryItem) {
             if (mCurrentPrimaryItem != null) {
                 mCurrentPrimaryItem.setMenuVisibility(false);
@@ -122,8 +122,8 @@ public abstract class FragmentsAdapter extends PagerAdapter {
             }
             if (fragment != null) {
                 fragment.setMenuVisibility(true);
-                if(fragment.getFragmentManager() == null) {
-                    Log.v(TAG, "fragment manager == null item #"+position+": f="+object);
+                if (fragment.getFragmentManager() == null) {
+                    Log.v(TAG, "fragment manager == null item #" + position + ": f=" + object);
                 }
                 fragment.setUserVisibleHint(true);
             }
@@ -142,7 +142,7 @@ public abstract class FragmentsAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return ((Fragment)object).getView() == view;
+        return ((Fragment) object).getView() == view;
     }
 
 }

@@ -73,7 +73,7 @@ public class BrowserActivity extends BaseActivity {
                 binding.progressBar.setProgress(newProgress);
             }
         });
-        binding.webView.setWebViewClient(new WebViewClient(){
+        binding.webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);

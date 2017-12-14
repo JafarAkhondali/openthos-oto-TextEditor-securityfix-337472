@@ -95,7 +95,7 @@ public class UIUtils {
                 .input(hint, value, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if(callback != null) {
+                        if (callback != null) {
                             callback.onConfirm(input);
                         }
                     }
@@ -106,7 +106,8 @@ public class UIUtils {
             MaterialDialog dlg = dialog.show();
             dlg.setCanceledOnTouchOutside(false);
             dlg.setCancelable(true);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public static void showConfirmDialog(Context context, @StringRes int messageRes, final OnClickCallback callback) {
@@ -116,6 +117,7 @@ public class UIUtils {
     public static void showConfirmDialog(Context context, CharSequence message, final OnClickCallback callback) {
         showConfirmDialog(context, null, message, callback);
     }
+
     public static void showConfirmDialog(Context context, CharSequence title, CharSequence message, final OnClickCallback callback) {
         showConfirmDialog(context, title, message, callback, context.getString(android.R.string.ok), context.getString(android.R.string.cancel));
     }
@@ -133,7 +135,7 @@ public class UIUtils {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if(callback == null)
+                        if (callback == null)
                             return;
                         callback.onOkClick();
                     }
@@ -141,7 +143,7 @@ public class UIUtils {
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if(callback == null)
+                        if (callback == null)
                             return;
                         callback.onCancelClick();
                     }
@@ -154,7 +156,9 @@ public class UIUtils {
 
     public static abstract class OnClickCallback {
         public abstract void onOkClick();
-        public void onCancelClick() {}
+
+        public void onCancelClick() {
+        }
     }
 
     public static abstract class OnShowInputCallback {
@@ -166,9 +170,9 @@ public class UIUtils {
         Context context = view.getContext();
         while (context instanceof ContextWrapper) {
             if (context instanceof Activity) {
-                return (Activity)context;
+                return (Activity) context;
             }
-            context = ((ContextWrapper)context).getBaseContext();
+            context = ((ContextWrapper) context).getBaseContext();
         }
         return null;
     }

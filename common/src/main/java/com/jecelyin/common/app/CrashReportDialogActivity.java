@@ -80,7 +80,7 @@ public class CrashReportDialogActivity extends JecActivity {
         getSupportActionBar().setTitle(R.string.crash_report);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_btn);
 
-        Log.i("ljh","trace " + trace);
+        Log.i("ljh", "trace " + trace);
         stacktraceTextView.setText(trace);
     }
 
@@ -123,7 +123,7 @@ public class CrashReportDialogActivity extends JecActivity {
         sb.append("\n");
         sb.append(email);
         sb.append("\n\n");
-        sb.append("Memory: ").append(memoryInfo.availMem/1024/1024).append(" MB / ").append(memoryInfo.totalMem/1024/1024).append(" MB\n");
+        sb.append("Memory: ").append(memoryInfo.availMem / 1024 / 1024).append(" MB / ").append(memoryInfo.totalMem / 1024 / 1024).append(" MB\n");
         sb.append("LogCat Error:\n\n");
         final CrashDbHelper dbHelper = CrashDbHelper.getInstance(getContext());
         dbHelper.crashToString(sb);

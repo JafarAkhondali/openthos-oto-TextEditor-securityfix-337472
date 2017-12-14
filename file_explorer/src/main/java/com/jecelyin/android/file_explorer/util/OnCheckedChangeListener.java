@@ -25,5 +25,6 @@ import com.jecelyin.android.file_explorer.io.JecFile;
  */
 public interface OnCheckedChangeListener {
     void onCheckedChanged(JecFile file, int position, boolean checked);
+
     void onCheckedChanged(int checkedCount);
 }

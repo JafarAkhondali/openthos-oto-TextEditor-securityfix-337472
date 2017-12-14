@@ -103,7 +103,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         ws.setJavaScriptEnabled(true);
         ws.setAppCacheEnabled(false);
         ws.setDomStorageEnabled(true);
-        ws.setAppCacheMaxSize(1024*1024*80);
+        ws.setAppCacheMaxSize(1024 * 1024 * 80);
         ws.setAppCachePath(context.getCacheDir().getPath());
 //        ws.setAllowFileAccess(true);
         ws.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -216,7 +216,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
             post(new Runnable() {
                 @Override
                 public void run() {
-                    if (actionMode != null){
+                    if (actionMode != null) {
                         actionMode.finish();
                     }
                     actionMode = startActionMode(actionModeCallback);
@@ -226,7 +226,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
 
         @JavascriptInterface
         public void hideActionMode() {
-            if (actionMode != null){
+            if (actionMode != null) {
                 post(new Runnable() {
                     @Override
                     public void run() {
@@ -301,7 +301,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
 
         @JavascriptInterface
         public void updateCursorBeforeText(String text) {
-            if(inputConnectionHacker != null)
+            if (inputConnectionHacker != null)
                 inputConnectionHacker.cursorBeforeText = text;
         }
     }
@@ -545,8 +545,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     /**
-     *
-     * @param line begin with 0
+     * @param line        begin with 0
      * @param limitLength
      * @param callback
      */
@@ -563,7 +562,6 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     /**
-     *
      * @param mode [null, ace/mode/js,,,]
      */
     public void setMode(String mode) {

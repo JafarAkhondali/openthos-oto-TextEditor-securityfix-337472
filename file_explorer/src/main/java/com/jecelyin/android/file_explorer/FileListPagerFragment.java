@@ -94,7 +94,7 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        action = new FileExplorerAction(getContext(), this, ((FileExplorerActivity)getActivity()).getFileClipboard(), this);
+        action = new FileExplorerAction(getContext(), this, ((FileExplorerActivity) getActivity()).getFileClipboard(), this);
         adapter = new FileListItemAdapter();
         adapter.setOnCheckedChangeListener(action);
         adapter.setOnItemClickListener(this);
@@ -292,8 +292,8 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
     @Override
     public void onItemClick(int position, View view) {
         JecFile file = adapter.getItem(position);
-        if(!((FileExplorerActivity)getActivity()).onSelectFile(file)) {
-            if(file.isDirectory()) {
+        if (!((FileExplorerActivity) getActivity()).onSelectFile(file)) {
+            if (file.isDirectory()) {
                 switchToPath(file);
             }
         }
@@ -307,7 +307,7 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
 
     @Override
     public ActionMode startActionMode(ActionMode.Callback callback) {
-        return ((AppCompatActivity)getActivity()).startSupportActionMode(callback);
+        return ((AppCompatActivity) getActivity()).startSupportActionMode(callback);
     }
 
     @Override

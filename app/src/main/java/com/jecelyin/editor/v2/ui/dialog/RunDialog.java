@@ -74,7 +74,7 @@ public class RunDialog extends AbstractDialog {
     public void show() {
         int size = list.size();
         String[] items = new String[size];
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             items[i] = list.get(i).name;
         }
         try {
@@ -104,7 +104,7 @@ public class RunDialog extends AbstractDialog {
             UIUtils.toast(context, R.string.editor_initialing);
             return;
         }
-        if(TextUtils.isEmpty(path)) {
+        if (TextUtils.isEmpty(path)) {
             UIUtils.toast(context, R.string.please_save_as_file_first);
             return;
         }
@@ -158,7 +158,7 @@ public class RunDialog extends AbstractDialog {
 
                 return;
         }
-        if(it != null) {
+        if (it != null) {
             if (it.resolveActivity(context.getPackageManager()) != null) {
                 try {
                     getMainActivity().startActivity(it);
@@ -194,7 +194,7 @@ public class RunDialog extends AbstractDialog {
             }
         });
         getDialogBuilder().adapter(adapter, new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false))
-        .title(R.string.chooser_browser)
-        .show();
+                .title(R.string.chooser_browser)
+                .show();
     }
 }

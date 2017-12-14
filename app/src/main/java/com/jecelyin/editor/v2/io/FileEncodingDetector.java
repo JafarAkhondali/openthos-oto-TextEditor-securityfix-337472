@@ -54,7 +54,7 @@ public class FileEncodingDetector {
         } catch (Exception e) {
             L.e(e);
         }
-        if(TextUtils.isEmpty(encoding)) {
+        if (TextUtils.isEmpty(encoding)) {
             encoding = DEFAULT_ENCODING;
         }
 

@@ -46,7 +46,7 @@ public class L {
             stack = stackTrace[i];
             if (clsName.equals(stack.getClassName())) {
                 foundL = true;
-            } else if(foundL) {
+            } else if (foundL) {
                 currentFileLinePosition = i;
                 break;
             }
@@ -83,19 +83,20 @@ public class L {
     }
 
     public static int v(String tag, String msg) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.v(tag, msg);
     }
 
     public static int v(String tag, String msg, Throwable tr) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.v(tag, msg, tr);
     }
 
     /**
      * 非格式化的字符串，避免有%等字符时出错
+     *
      * @param msg
      * @return
      */
@@ -104,13 +105,13 @@ public class L {
     }
 
     public static int d(String tag, String msg) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.d(tag, msg);
     }
 
     public static int d(String tag, String msg, Throwable tr) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.d(tag, msg, tr);
     }
@@ -124,13 +125,13 @@ public class L {
     }
 
     public static int i(String tag, String msg) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.i(tag, msg);
     }
 
     public static int i(String tag, String msg, Throwable tr) {
-        if(!debug)
+        if (!debug)
             return 0;
         return Log.i(tag, msg, tr);
     }
@@ -161,6 +162,7 @@ public class L {
 
     /**
      * 非格式化的字符串，避免有%等字符时出错
+     *
      * @param msg
      * @return
      */
@@ -187,8 +189,8 @@ public class L {
 
         final StringBuilder sb = new StringBuilder();
         sb.append("Tag: ").append(tag).append("\n")
-          .append("Msg: ").append(msg).append("\n")
-          .append("Stacktrace:\n").append(Log.getStackTraceString(t)).append("\n\n");
+                .append("Msg: ").append(msg).append("\n")
+                .append("Stacktrace:\n").append(Log.getStackTraceString(t)).append("\n\n");
 
         new Thread(new Runnable() {
             @Override
@@ -200,7 +202,7 @@ public class L {
                 } catch (Exception e) {
                     Log.e("log-to-sqlite-error", e.getMessage(), e);
                 } finally {
-                    if(db != null)
+                    if (db != null)
                         db.close();
                 }
             }

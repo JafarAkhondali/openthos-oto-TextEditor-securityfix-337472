@@ -44,7 +44,7 @@ public class MenuManager {
 
     @SuppressWarnings("ResourceType")
     public static void init(Context context) {
-        int[] attrs = new int[] {
+        int[] attrs = new int[]{
                 R.attr.toolbarIconNormalColor,
                 R.attr.toolbarIconDisabledColor,
                 R.attr.menuIconNormalColor,

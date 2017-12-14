@@ -70,12 +70,12 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     /**
-     *
      * @param file 一个路径或标题
      */
     public void newEditor(@Nullable File file, int line, int column, String encoding) {
         newEditor(true, file, line, column, encoding);
     }
+
     public void newEditor(boolean notify, @Nullable File file, int line, int column, String encoding) {
         list.add(new EditorDelegate(list.size(), file, line, column, encoding));
         if (notify)
@@ -94,6 +94,7 @@ public class EditorAdapter extends ViewPagerAdapter {
 
     /**
      * 当View被创建或是内存不足重建时，如果不更新list的内容，就会链接到旧的View
+     *
      * @param index
      * @param editorView
      */
@@ -123,8 +124,8 @@ public class EditorAdapter extends ViewPagerAdapter {
 
     public int countNoFileEditor() {
         int count = 0;
-        for(EditorDelegate f : list) {
-            if(f.getPath() == null) {
+        for (EditorDelegate f : list) {
+            if (f.getPath() == null) {
                 count++;
             }
         }
@@ -135,7 +136,7 @@ public class EditorAdapter extends ViewPagerAdapter {
         int size = list.size();
         TabInfo[] arr = new TabInfo[size];
         EditorDelegate f;
-        for (int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             f = list.get(i);
             arr[i] = new TabInfo(f.getTitle(), f.getPath(), f.isChanged());
         }
@@ -146,7 +147,7 @@ public class EditorAdapter extends ViewPagerAdapter {
     public boolean removeEditor(final int position, final TabCloseListener listener) {
         EditorDelegate f = list.get(position);
 
-        if(f.isChanged()) {
+        if (f.isChanged()) {
             new SaveConfirmDialog(context, f.getTitle(), new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(MaterialDialog dialog, DialogAction which) {
@@ -205,7 +206,7 @@ public class EditorAdapter extends ViewPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return ((EditorView)object).isRemoved() ? POSITION_NONE : POSITION_UNCHANGED;
+        return ((EditorView) object).isRemoved() ? POSITION_NONE : POSITION_UNCHANGED;
     }
 
     public ClusterCommand makeClusterCommand() {
@@ -238,7 +239,7 @@ public class EditorAdapter extends ViewPagerAdapter {
     public void restoreState(Parcelable state, ClassLoader loader) {
         if (!(state instanceof SavedState))
             return;
-        EditorDelegate.SavedState[] ss = ((SavedState)state).states;
+        EditorDelegate.SavedState[] ss = ((SavedState) state).states;
         list.clear();
         for (int i = 0; i < ss.length; i++) {
             list.add(new EditorDelegate(ss[i]));
@@ -251,6 +252,7 @@ public class EditorAdapter extends ViewPagerAdapter {
 
         protected SavedState() {
         }
+
         protected SavedState(Parcel in) {
 //            states = in.readParcelableArray();
             states = in.createTypedArray(EditorDelegate.SavedState.CREATOR);
