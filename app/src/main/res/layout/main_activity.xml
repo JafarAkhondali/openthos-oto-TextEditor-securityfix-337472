@@ -9,46 +9,55 @@
         <!-- auto add StatusBarView to here for StatusBarUtil -->
         <LinearLayout
             android:id="@+id/mainLayout"
-            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/menu_layout"
+                style="@style/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"/>
 
             <com.jecelyin.editor.v2.widget.EditorToolbar
                 android:id="@+id/toolbar"
                 style="@style/Toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="70dp"/>
 
             <com.jecelyin.editor.v2.widget.BottomDrawerLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
+
                 <include
                     layout="@layout/loading_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"/>
 
                 <com.jecelyin.editor.v2.view.TabViewPager
                     android:id="@+id/tab_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <com.jecelyin.editor.v2.widget.SymbolBarLayout
                     android:id="@+id/symbolBarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:visibility="gone"
-                    android:background="?android:attr/windowBackground" />
+                    android:background="?android:attr/windowBackground"
+                    android:visibility="gone"/>
             </com.jecelyin.editor.v2.widget.BottomDrawerLayout>
 
         </LinearLayout>
     </FrameLayout>
 
-    <include layout="@layout/main_tab_layout" />
+    <include layout="@layout/main_tab_layout"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/menuNavView"
@@ -60,7 +69,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/menuRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </android.support.design.widget.NavigationView>
 
 

@@ -37,13 +37,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
@@ -100,6 +105,7 @@ public class MainActivity extends BaseActivity
     private static final int RC_SETTINGS = 5;
 
     Toolbar mToolbar;
+    LinearLayout mMenuLayout;
     LinearLayout mLoadingLayout;
     TabViewPager mTabPager;
     RecyclerView mMenuRecyclerView;
@@ -116,6 +122,10 @@ public class MainActivity extends BaseActivity
     private MenuManager menuManager;
     private FolderChooserDialog.FolderCallback findFolderCallback;
     private long mExitTime;
+
+    private PopupWindow mPopupWindow;
+    private PopupWindow mLastPopupWindow;
+    private TextView mPopTextView;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -172,6 +182,7 @@ public class MainActivity extends BaseActivity
         L.d(TAG, "onCreate");
         CrashDbHelper.getInstance(this).close(); //初始化一下
 
+        mMenuLayout = (LinearLayout) findViewById(R.id.menu_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mLoadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
         mTabPager = (TabViewPager) findViewById(R.id.tab_pager);
@@ -187,6 +198,14 @@ public class MainActivity extends BaseActivity
                 insertText(text);
             }
         });
+
+        mPopTextView = new TextView(this);
+        mPopTextView.setTextColor(Color.WHITE);
+        mPopTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+        mPopTextView.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_size));
+        mPopupWindow = new PopupWindow(mPopTextView,
+                70, WindowManager.LayoutParams.WRAP_CONTENT);
+        mLastPopupWindow = mPopupWindow;
 
         if (!AppUtils.verifySign(getContext())) {
             UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
@@ -316,8 +335,8 @@ public class MainActivity extends BaseActivity
         List<MenuItemInfo> menuItemInfos = MenuFactory.getInstance(this).getToolbarIcon();
         for (MenuItemInfo item : menuItemInfos) {
             MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, item.getItemId(), Menu.NONE, item.getTitleResId());
-            menuItem.setIcon(MenuManager.makeToolbarNormalIcon(res, item.getIconResId()));
-
+//          menuItem.setIcon(MenuManager.makeToolbarNormalIcon(res, item.getIconResId()));
+            menuItem.setActionView(getMenuView(item));
             //menuItem.setShortcut()
             menuItem.setOnMenuItemClickListener(this);
             menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -328,6 +347,61 @@ public class MainActivity extends BaseActivity
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         tabManager = new TabManager(this);
+    }
+
+    private View getMenuView(final MenuItemInfo itemInfo) {
+        View view = mMenuLayout.findViewWithTag(itemInfo.getItemId());
+        if (view == null) {
+            if (itemInfo.getItemId() == 0) {
+                view = new ImageView(this);
+                view.setTag(itemInfo.getItemId());
+                view.setLayoutParams(new LinearLayout.LayoutParams(2, 40));
+                view.setBackgroundColor(Color.RED);
+            } else {
+                view = new ImageView(this);
+                Drawable drawable = MenuManager.makeToolbarNormalIcon(getResources(), itemInfo.getIconResId());
+                ((ImageView) view).setImageDrawable(drawable);
+                view.setTag(itemInfo.getItemId());
+                view.setLayoutParams(new LinearLayout.LayoutParams(50, 40));
+                view.setPadding(10, 0, 10, 0);
+                view.setOnHoverListener(new View.OnHoverListener() {
+                    @Override
+                    public boolean onHover(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_HOVER_ENTER:
+                                showPopWindow(v, getString(itemInfo.getTitleResId()), true);
+                                break;
+                            case MotionEvent.ACTION_HOVER_EXIT:
+                                showPopWindow(v, getString(itemInfo.getTitleResId()), false);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onMenuClick(itemInfo.getItemId());
+                    }
+                });
+            }
+        }
+        return view;
+    }
+
+    private void showPopWindow(View view, String text, boolean isShow) {
+        if (isShow) {
+            if (mLastPopupWindow != null) {
+                mLastPopupWindow.dismiss();
+            }
+            mPopTextView.setText(text);
+            mPopupWindow.showAsDropDown(view,-10,0);
+        } else {
+            if (mPopTextView.getText().toString().equals(text)) {
+                mPopupWindow.dismiss();
+            }
+            mLastPopupWindow = mPopupWindow;
+        }
     }
 
     @Override
@@ -414,18 +488,36 @@ public class MainActivity extends BaseActivity
         if (menuItem.isEnabled() == enable) {
             return;
         }
-        Drawable icon = menuItem.getIcon();
+        View view = menuItem.getActionView();
         if (!enable) {
+            view.setClickable(false);
             menuItem.setEnabled(false);
-            menuItem.setIcon(MenuManager.makeToolbarDisabledIcon(icon));
+            ((ImageView) view).setImageDrawable(
+                    MenuManager.makeToolbarDisabledIcon(((ImageView) view).getDrawable()));
         } else {
+            view.setClickable(true);
             menuItem.setEnabled(true);
             if (menuItem.getGroupId() == MenuDef.GROUP_TOOLBAR) {
-                menuItem.setIcon(MenuManager.makeToolbarNormalIcon(icon));
+                ((ImageView) view).setImageDrawable(
+                        MenuManager.makeToolbarNormalIcon(((ImageView) view).getDrawable()));
             } else {
-                menuItem.setIcon(MenuManager.makeMenuNormalIcon(icon));
+                ((ImageView) view).setImageDrawable(
+                        MenuManager.makeMenuNormalIcon(((ImageView) view).getDrawable()));
             }
         }
+
+//        Drawable icon = menuItem.getIcon();
+//        if (!enable) {
+//            menuItem.setEnabled(false);
+//            menuItem.setIcon(MenuManager.makeToolbarDisabledIcon(icon));
+//        } else {
+//            menuItem.setEnabled(true);
+//            if (menuItem.getGroupId() == MenuDef.GROUP_TOOLBAR) {
+//                menuItem.setIcon(MenuManager.makeToolbarNormalIcon(icon));
+//            } else {
+//                menuItem.setIcon(MenuManager.makeMenuNormalIcon(icon));
+//            }
+//        }
     }
 
     @Override
