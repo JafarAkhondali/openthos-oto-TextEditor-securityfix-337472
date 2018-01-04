@@ -21,6 +21,7 @@ package com.jecelyin.editor.v2.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -86,13 +87,32 @@ public class GroupMenuListAdapter extends BaseAdapter {
         }
     }
 
-    private class ViewHolder {
+    private class ViewHolder implements View.OnHoverListener {
         private ImageView icon;
         private TextView text;
 
         public ViewHolder(View view) {
             icon = (ImageView) view.findViewById(R.id.img_icon);
             text = (TextView) view.findViewById(R.id.menu_item_text);
+            view.setOnHoverListener(this);
+        }
+
+        @Override
+        public boolean onHover(View v, MotionEvent event) {
+            ViewHolder holder = (ViewHolder) v.getTag();
+            switch (event.getAction()){
+                case MotionEvent.ACTION_HOVER_ENTER:
+                    v.setBackgroundColor(
+                            mContext.getResources().getColor(android.R.color.holo_blue_bright));
+                    holder.text.setSelected(true);
+                    break;
+                case MotionEvent.ACTION_HOVER_EXIT:
+                    v.setBackgroundColor(
+                            mContext.getResources().getColor(R.color.gray));
+                    holder.text.setSelected(false);
+                    break;
+            }
+            return false;
         }
     }
 }

@@ -205,14 +205,14 @@ public class MainActivity extends BaseActivity
                 70, WindowManager.LayoutParams.WRAP_CONTENT);
         mLastPopupWindow = mPopupWindow;
 
-        if (!AppUtils.verifySign(getContext())) {
-            UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
-                @Override
-                public void onOkClick() {
-                    SysUtils.startWebView(getContext(), "https://github.com/jecelyin/920-text-editor-v2/releases");
-                }
-            });
-        }
+//        if (!AppUtils.verifySign(getContext())) {
+//            UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
+//                @Override
+//                public void onOkClick() {
+//                    SysUtils.startWebView(getContext(), "https://github.com/jecelyin/920-text-editor-v2/releases");
+//                }
+//            });
+//        }
 
         setStatusBarColor(mDrawerLayout);
 

@@ -21,7 +21,9 @@ package com.jecelyin.editor.v2.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -84,25 +86,31 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
         mListener = listener;
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
         private TextView menuText;
 
         public ViewHolder(View itemView) {
             super(itemView);
             menuText = (TextView) itemView.findViewById(R.id.menu_item_text);
-            menuText.setOnClickListener(this);
+            menuText.setOnTouchListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-            v.setSelected(true);
-            if (lastView != null && lastView != v) {
-                lastView.setSelected(false);
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.setSelected(true);
+                    if (lastView != null && lastView != v) {
+                        lastView.setSelected(false);
+                    }
+                    lastView = v;
+                    Log.i("ljh", "click");
+                    MenuDialog menuDialog = MenuDialog.getInstance(mContext);
+                    menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.get((Integer) v.getTag())), v);
+                    menuDialog.setOnMenuItemClickListener(mListener);
+                    break;
             }
-            lastView = v;
-            MenuDialog menuDialog = MenuDialog.getInstance(mContext);
-            menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.get((Integer) v.getTag())), v);
-            menuDialog.setOnMenuItemClickListener(mListener);
+            return false;
         }
     }
 }
