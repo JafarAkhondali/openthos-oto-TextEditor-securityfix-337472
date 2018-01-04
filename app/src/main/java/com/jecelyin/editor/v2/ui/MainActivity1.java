@@ -37,7 +37,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -57,6 +56,7 @@ import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.azeesoft.lib.colorpicker.Stools;
 import com.jecelyin.android.file_explorer.FileExplorerActivity;
 import com.jecelyin.common.utils.CrashDbHelper;
+import com.jecelyin.common.utils.DBHelper;
 import com.jecelyin.common.utils.IOUtils;
 import com.jecelyin.common.utils.L;
 import com.jecelyin.common.utils.SysUtils;
@@ -64,10 +64,8 @@ import com.jecelyin.common.utils.UIUtils;
 import com.jecelyin.editor.v2.BaseActivity;
 import com.jecelyin.editor.v2.Pref;
 import com.jecelyin.editor.v2.R;
-import com.jecelyin.editor.v2.adapter.GroupMenuAdapter;
 import com.jecelyin.editor.v2.common.Command;
 import com.jecelyin.editor.v2.common.SaveListener;
-import com.jecelyin.editor.v2.dialog.MenuItemClickListener;
 import com.jecelyin.editor.v2.task.CheckUpgradeTask;
 import com.jecelyin.editor.v2.task.ClusterCommand;
 import com.jecelyin.editor.v2.task.LocalTranslateTask;
@@ -80,7 +78,6 @@ import com.jecelyin.editor.v2.ui.dialog.RunDialog;
 import com.jecelyin.editor.v2.ui.dialog.WrapCharDialog;
 import com.jecelyin.editor.v2.ui.settings.SettingsActivity;
 import com.jecelyin.editor.v2.utils.AppUtils;
-import com.jecelyin.common.utils.DBHelper;
 import com.jecelyin.editor.v2.view.TabViewPager;
 import com.jecelyin.editor.v2.view.menu.MenuDef;
 import com.jecelyin.editor.v2.view.menu.MenuFactory;
@@ -95,12 +92,12 @@ import java.util.List;
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
-public class MainActivity extends BaseActivity
+public class MainActivity1 extends BaseActivity
         implements MenuItem.OnMenuItemClickListener
         , FolderChooserDialog.FolderCallback
         , SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = MainActivity.class.getName();
+    private static final String TAG = MainActivity1.class.getName();
     private static final int RC_OPEN_FILE = 1;
     private final static int RC_SAVE = 3;
     private static final int RC_PERMISSION_STORAGE = 2;
@@ -128,9 +125,6 @@ public class MainActivity extends BaseActivity
     private PopupWindow mPopupWindow;
     private PopupWindow mLastPopupWindow;
     private TextView mPopTextView;
-    private RecyclerView mGroupMenu;
-    private RecyclerView mCommonMenu;
-    private RecyclerView mFileName;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -150,7 +144,7 @@ public class MainActivity extends BaseActivity
             UIUtils.showConfirmDialog(this, null, getString(R.string.need_to_enable_read_storage_permissions), new UIUtils.OnClickCallback() {
                 @Override
                 public void onOkClick() {
-                    ActivityCompat.requestPermissions(MainActivity.this, permissions, RC_PERMISSION_STORAGE);
+                    ActivityCompat.requestPermissions(MainActivity1.this, permissions, RC_PERMISSION_STORAGE);
                 }
 
                 @Override
@@ -159,7 +153,7 @@ public class MainActivity extends BaseActivity
                 }
             });
         } else {
-            ActivityCompat.requestPermissions(MainActivity.this, permissions, RC_PERMISSION_STORAGE);
+            ActivityCompat.requestPermissions(MainActivity1.this, permissions, RC_PERMISSION_STORAGE);
         }
     }
 
@@ -182,12 +176,19 @@ public class MainActivity extends BaseActivity
         pref = Pref.getInstance(this);
         MenuManager.init(this);
 
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.main_activity1);
 
         L.d(TAG, "onCreate");
         CrashDbHelper.getInstance(this).close(); //初始化一下
 
-        initView();
+        mMenuLayout = (LinearLayout) findViewById(R.id.menu_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mLoadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
+        mTabPager = (TabViewPager) findViewById(R.id.tab_pager);
+        mMenuRecyclerView = (RecyclerView) findViewById(R.id.menuRecyclerView);
+        mDrawerLayout = (TranslucentDrawerLayout) findViewById(R.id.drawer_layout);
+        mTabRecyclerView = (RecyclerView) findViewById(R.id.tabRecyclerView);
+        mVersionTextView = (TextView) findViewById(R.id.versionTextView);
 
         mSymbolBarLayout = (SymbolBarLayout) findViewById(R.id.symbolBarLayout);
         mSymbolBarLayout.setOnSymbolCharClickListener(new SymbolBarLayout.OnSymbolCharClickListener() {
@@ -241,38 +242,6 @@ public class MainActivity extends BaseActivity
                 }, 3000);
             }
         }
-
-        initData();
-    }
-
-    private void initView() {
-        mMenuLayout = (LinearLayout) findViewById(R.id.menu_layout);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mLoadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
-        mTabPager = (TabViewPager) findViewById(R.id.tab_pager);
-        mMenuRecyclerView = (RecyclerView) findViewById(R.id.menuRecyclerView);
-        mDrawerLayout = (TranslucentDrawerLayout) findViewById(R.id.drawer_layout);
-        mTabRecyclerView = (RecyclerView) findViewById(R.id.file_name);
-        mVersionTextView = (TextView) findViewById(R.id.versionTextView);
-
-        mGroupMenu = (RecyclerView) findViewById(R.id.group_menu);
-        mCommonMenu = (RecyclerView) findViewById(R.id.common_menu);
-        mFileName = (RecyclerView) findViewById(R.id.file_name);
-    }
-
-    public void initData() {
-        mGroupMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mCommonMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mFileName.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        GroupMenuAdapter adapter = new GroupMenuAdapter(this);
-        adapter.setOnMenuItemClickListener(new MenuItemClickListener() {
-            @Override
-            public void onMenuItemClick(int id) {
-                onMenuClick(id);
-            }
-        });
-        mGroupMenu.setAdapter(adapter);
     }
 
     private void bindPreferences() {
@@ -341,13 +310,13 @@ public class MainActivity extends BaseActivity
 
     private void initUI() {
         mMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mTabRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mTabRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDrawerLayout.setEnabled(true);
 
         initToolbar();
 
         if (menuManager == null)
-            menuManager = new MenuManager(this);
+//            menuManager = new MenuManager(this);
 
         //系统可能会随时杀掉后台运行的Activity，如果这一切发生，那么系统就会调用onCreate方法，而不调用onNewIntent方法
         processIntent();
@@ -376,7 +345,7 @@ public class MainActivity extends BaseActivity
         menuItem.setOnMenuItemClickListener(this);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        tabManager = new TabManager(this);
+//        tabManager = new TabManager(this);
     }
 
     private View getMenuView(final MenuItemInfo itemInfo) {
@@ -425,7 +394,7 @@ public class MainActivity extends BaseActivity
                 mLastPopupWindow.dismiss();
             }
             mPopTextView.setText(text);
-            mPopupWindow.showAsDropDown(view, -10, 0);
+            mPopupWindow.showAsDropDown(view,-10,0);
         } else {
             if (mPopTextView.getText().toString().equals(text)) {
                 mPopupWindow.dismiss();
@@ -507,7 +476,7 @@ public class MainActivity extends BaseActivity
 
     /**
      * @param menuResId
-     * @param status    {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_NORMAL}, {@link com.jecelyin.editor.v2.view.menu.MenuDef#STATUS_DISABLED}
+     * @param status    {@link MenuDef#STATUS_NORMAL}, {@link MenuDef#STATUS_DISABLED}
      */
     public void setMenuStatus(@IdRes int menuResId, int status) {
         MenuItem menuItem = mToolbar.getMenu().findItem(menuResId);
@@ -556,7 +525,7 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    public void onMenuClick(int id) {
+    private void onMenuClick(int id) {
         Command.CommandEnum commandEnum;
 
         closeMenu();

@@ -16,19 +16,12 @@
  * limitations under the License.
  */
 
-package com.jecelyin.editor.v2;
-
-import com.jecelyin.common.app.JecApp;
+package com.jecelyin.editor.v2.dialog;
 
 /**
- * @author Jecelyin Peng <jecelyin@gmail.com>
+ * Created by ljh on 18-1-4.
  */
 
-public class BaseActivity extends FullScreenActivity {
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ((JecApp) getApplication()).watch(this);
-    }
+public interface MenuItemClickListener {
+    void onMenuItemClick(int id);
 }

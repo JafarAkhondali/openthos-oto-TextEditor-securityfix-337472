@@ -154,21 +154,18 @@ public class MenuFactory {
         return list;
     }
 
-    public List<MenuItemInfo> getMenuItemInfos(){
-        MenuGroup[] groups = MenuGroup.values();
-        List<MenuItemInfo> menuItems = new ArrayList<MenuItemInfo>();
+    public List<MenuItemInfo> getMenuItemInfos() {
+        return menuItemInfos;
+    }
 
-        for (MenuGroup group : groups) {
-            if (group.getNameResId() == 0)
-                continue; //top group
-            menuItems.add(new MenuItemInfo(group, 0, Command.CommandEnum.NONE, 0, 0));
-            for (MenuItemInfo menuItemInfo : menuItemInfos) {
-                if (menuItemInfo.getGroup() == group) {
-                    menuItems.add(menuItemInfo);
-                }
+    public List<MenuItemInfo> getMenuItemInfos(MenuGroup group) {
+        List<MenuItemInfo> list = new ArrayList<>();
+        for (MenuItemInfo itemInfo : menuItemInfos) {
+            if (itemInfo.getGroup() == group) {
+                list.add(itemInfo);
             }
         }
-        return menuItems;
+        return list;
     }
 
     public Command.CommandEnum idToCommandEnum(int id) {

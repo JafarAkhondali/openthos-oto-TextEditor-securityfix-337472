@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto"
-    package="com.jecelyin.editor.v2" >
+          package="com.jecelyin.editor.v2"
+          android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- check new version and ftp/ssh/... and submit crash -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
+        android:name=".MainApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:name=".MainApp"
-        android:theme="@style/DefaultTheme" >
+        android:theme="@style/DefaultTheme">
         <!-- Enables the Android Pay API -->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
-            android:value="true" />
+            android:value="true"/>
         <!--
         add android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         for fix:
@@ -29,10 +30,10 @@
         -->
         <activity
             android:name="com.jecelyin.common.app.CrashReportDialogActivity"
-            android:theme="@style/DefaultTheme"
-            android:launchMode="singleInstance"
             android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"/>
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/DefaultTheme"/>
 
         <!--
         1. standard
@@ -53,54 +54,55 @@
         -->
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleTask"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|layoutDirection">
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|layoutDirection"
+            android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.MONKEY" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.MONKEY"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="file" />
-                <data android:scheme="content" />
-                <data android:mimeType="application/x-*" />
-                <data android:mimeType="application/xml" />
-                <data android:mimeType="application/postscript" />
-                <data android:mimeType="application/plain" />
-                <data android:mimeType="application/x-tcl" />
-                <data android:mimeType="application/x-javascript" />
-                <data android:mimeType="application/inf" />
-                <data android:mimeType="application/octet-stream" />
-                <data android:mimeType="text/*" />
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="application/x-*"/>
+                <data android:mimeType="application/xml"/>
+                <data android:mimeType="application/postscript"/>
+                <data android:mimeType="application/plain"/>
+                <data android:mimeType="application/x-tcl"/>
+                <data android:mimeType="application/x-javascript"/>
+                <data android:mimeType="application/inf"/>
+                <data android:mimeType="application/octet-stream"/>
+                <data android:mimeType="text/*"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SEND"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="text/*" />
+                <data android:mimeType="text/*"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.googlecode.android_scripting.action.EDIT_SCRIPT" />
+                <action android:name="com.googlecode.android_scripting.action.EDIT_SCRIPT"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.AboutActivity" />
-        <activity android:name=".ui.BrowserActivity" />
-        <activity android:name=".ui.FeedbackActivity" />
+        <activity android:name=".ui.settings.SettingsActivity"/>
+        <activity android:name=".ui.AboutActivity"/>
+        <activity android:name=".ui.BrowserActivity"/>
+        <activity android:name=".ui.FeedbackActivity"/>
 
     </application>
 
