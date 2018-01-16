@@ -2283,7 +2283,7 @@ var TextInput = function(parentNode, host) {
     
     
 
-    var syncComposition = lang.delayedCall(onCompositionUpdate, 50);
+    var syncComposition = lang.delayedCall(onCompositionUpdate, 0);
 
     event.addListener(text, "compositionstart", onCompositionStart);
     if (useragent.isGecko) {

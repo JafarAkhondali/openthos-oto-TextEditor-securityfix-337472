@@ -600,13 +600,14 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 .callback(callback).build());
     }
 
-    @Override
+
+    /*@Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         final InputConnection ic = super.onCreateInputConnection(outAttrs);
         if (ic == null)
             return null;
         inputConnectionHacker = new InputConnectionHacker(ic, this);
         return inputConnectionHacker;
-    }
+    }*/
 
 }
