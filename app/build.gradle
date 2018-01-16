@@ -15,7 +15,7 @@ android {
         applicationId "com.jecelyin.editor.v2s"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 33
+        versionCode 35
         versionName "v2"
 //        buildConfigField "String", "GOOGLE_BILLING_KEY", "\"" + GOOGLE_BILLING_KEY + "\""
     }
