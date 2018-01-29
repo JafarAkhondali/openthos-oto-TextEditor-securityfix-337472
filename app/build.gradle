@@ -8,11 +8,11 @@ apply plugin: 'com.android.application'
 //def GOOGLE_BILLING_KEY = properties.getProperty('GOOGLE_BILLING_KEY')
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.jecelyin.editor.v2s"
+        applicationId "com.smaster.editor.v2s"//applicationId "com.jecelyin.editor.v2s"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 35
@@ -124,7 +124,7 @@ dependencies {
     compile project(':file_explorer')
     compile project(':styles')
     //避免AS找不到相关文件（可以编译通过）
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:design:25.0.0'
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
