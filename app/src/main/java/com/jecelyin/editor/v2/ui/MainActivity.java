@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -37,7 +36,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -57,6 +55,7 @@ import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.azeesoft.lib.colorpicker.Stools;
 import com.jecelyin.android.file_explorer.FileExplorerActivity;
 import com.jecelyin.common.utils.CrashDbHelper;
+import com.jecelyin.common.utils.DBHelper;
 import com.jecelyin.common.utils.IOUtils;
 import com.jecelyin.common.utils.L;
 import com.jecelyin.common.utils.SysUtils;
@@ -79,8 +78,6 @@ import com.jecelyin.editor.v2.ui.dialog.LangListDialog;
 import com.jecelyin.editor.v2.ui.dialog.RunDialog;
 import com.jecelyin.editor.v2.ui.dialog.WrapCharDialog;
 import com.jecelyin.editor.v2.ui.settings.SettingsActivity;
-import com.jecelyin.editor.v2.utils.AppUtils;
-import com.jecelyin.common.utils.DBHelper;
 import com.jecelyin.editor.v2.view.TabViewPager;
 import com.jecelyin.editor.v2.view.menu.MenuDef;
 import com.jecelyin.editor.v2.view.menu.MenuFactory;
@@ -141,6 +138,9 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    /**
+     * 动态获取权限
+     * */
     private void requestWriteExternalStoragePermission() {
         final String[] permissions = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE
@@ -181,14 +181,10 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         pref = Pref.getInstance(this);
         MenuManager.init(this);
-
         setContentView(R.layout.main_activity);
-
-        L.d(TAG, "onCreate");
+        L.d(TAG, "Smaster-->onCreate");
         CrashDbHelper.getInstance(this).close(); //初始化一下
-
         initView();
-
         mSymbolBarLayout = (SymbolBarLayout) findViewById(R.id.symbolBarLayout);
         mSymbolBarLayout.setOnSymbolCharClickListener(new SymbolBarLayout.OnSymbolCharClickListener() {
             @Override
@@ -332,50 +328,47 @@ public class MainActivity extends BaseActivity
         if (parent != null) {
             parent.removeView(mLoadingLayout);
         }
-
-//                inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mTabPager.setVisibility(View.VISIBLE);
-
         initUI();
     }
 
     private void initUI() {
         mMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mTabRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mTabRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+                                          LinearLayoutManager.HORIZONTAL, false));
         mDrawerLayout.setEnabled(true);
-
+        /**
+         * 根据需求添加的文件导航栏。
+         * 文件名　× ＋
+         * */
         initToolbar();
-
         if (menuManager == null)
             menuManager = new MenuManager(this);
-
         //系统可能会随时杀掉后台运行的Activity，如果这一切发生，那么系统就会调用onCreate方法，而不调用onNewIntent方法
         processIntent();
     }
 
     private void initToolbar() {
-
-
-        Resources res = getResources();
-
-        mToolbar.setNavigationIcon(R.drawable.ic_drawer_raw);
+        //Resources res = getResources();
+        //mToolbar.setNavigationIcon(R.drawable.ic_drawer_raw);
         mToolbar.setNavigationContentDescription(R.string.tab);
-
         Menu menu = mToolbar.getMenu();
         List<MenuItemInfo> menuItemInfos = MenuFactory.getInstance(this).getToolbarIcon();
         for (MenuItemInfo item : menuItemInfos) {
-            MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, item.getItemId(), Menu.NONE, item.getTitleResId());
-//          menuItem.setIcon(MenuManager.makeToolbarNormalIcon(res, item.getIconResId()));
+            MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, item.getItemId(),
+                                         Menu.NONE, item.getTitleResId());
+            //menuItem.setIcon(MenuManager.makeToolbarNormalIcon(res, item.getIconResId()));
             menuItem.setActionView(getMenuView(item));
             //menuItem.setShortcut()
             menuItem.setOnMenuItemClickListener(this);
             menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
-        MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, R.id.m_menu, Menu.NONE, getString(R.string.more_menu));
-        menuItem.setIcon(R.drawable.ic_right_menu);
+        MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, R.id.m_menu, Menu.NONE,
+                                     getString(R.string.more_menu));
+        //menuItem.setIcon(R.drawable.ic_right_menu);
         menuItem.setOnMenuItemClickListener(this);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
         tabManager = new TabManager(this);
     }
 
@@ -536,18 +529,18 @@ public class MainActivity extends BaseActivity
             }
         }
 
-//        Drawable icon = menuItem.getIcon();
-//        if (!enable) {
-//            menuItem.setEnabled(false);
-//            menuItem.setIcon(MenuManager.makeToolbarDisabledIcon(icon));
-//        } else {
-//            menuItem.setEnabled(true);
-//            if (menuItem.getGroupId() == MenuDef.GROUP_TOOLBAR) {
-//                menuItem.setIcon(MenuManager.makeToolbarNormalIcon(icon));
-//            } else {
-//                menuItem.setIcon(MenuManager.makeMenuNormalIcon(icon));
-//            }
-//        }
+        //        Drawable icon = menuItem.getIcon();
+        //        if (!enable) {
+        //            menuItem.setEnabled(false);
+        //            menuItem.setIcon(MenuManager.makeToolbarDisabledIcon(icon));
+        //        } else {
+        //            menuItem.setEnabled(true);
+        //            if (menuItem.getGroupId() == MenuDef.GROUP_TOOLBAR) {
+        //                menuItem.setIcon(MenuManager.makeToolbarNormalIcon(icon));
+        //            } else {
+        //                menuItem.setIcon(MenuManager.makeMenuNormalIcon(icon));
+        //            }
+        //        }
     }
 
     @Override
@@ -556,20 +549,21 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    /**
+     *
+     * */
     public void onMenuClick(int id) {
         Command.CommandEnum commandEnum;
-
         closeMenu();
-
         switch (id) {
             case R.id.m_new:
                 tabManager.newTab();
                 break;
             case R.id.m_open:
-//                if (L.debug) {
-//                    SpeedActivity.startActivity(this);
-//                    break;
-//                }
+                //if (L.debug) {
+                //    SpeedActivity.startActivity(this);
+                //    break;
+                //}
                 FileExplorerActivity.startPickFileActivity(this, null, RC_OPEN_FILE);
                 break;
             case R.id.m_goto_line:

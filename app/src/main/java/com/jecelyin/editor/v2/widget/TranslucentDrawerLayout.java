@@ -93,6 +93,8 @@ import java.util.List;
  * <p>For more information about how to use DrawerLayout, read <a
  * href="{@docRoot}training/implementing-navigation/nav-drawer.html">Creating a Navigation
  * Drawer</a>.</p>
+ *
+ * 抽屉视图
  */
 public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutImpl {
     private static final String TAG = "DrawerLayout";

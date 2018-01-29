@@ -53,7 +53,7 @@ public class MenuFactory {
         groups.put(MenuGroup.TOP, topList);
         Integer[] toolbarIcons = Pref.getInstance(context).getToolbarIcons();
         if (toolbarIcons == null) {
-//            toolbarIcons = new Integer[]{R.id.m_new, R.id.m_open, R.id.m_save, R.id.m_undo, R.id.m_redo};
+            //toolbarIcons = new Integer[]{R.id.m_new, R.id.m_open, R.id.m_save, R.id.m_undo, R.id.m_redo};
             int min = Math.min(SHOW_MENU_NUM, menuItemInfos.size());
             toolbarIcons = new Integer[min];
             for (int i = 0; i < min; i++) {
@@ -104,6 +104,10 @@ public class MenuFactory {
         return false;
     }
 
+    /**
+     * 顶部弹出的菜单项
+     * 新建/打开　...
+     * */
     private void initAllMenuItem() {
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_new, Command.CommandEnum.NONE, R.drawable.m_new, R.string.new_file));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_open, Command.CommandEnum.OPEN, R.drawable.m_open, R.string.open));
@@ -112,15 +116,15 @@ public class MenuFactory {
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_save_as, Command.CommandEnum.SAVE_AS, R.drawable.m_save_as, R.string.save_as));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_history, Command.CommandEnum.NONE, R.drawable.m_history, R.string.recent_files));
 
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_cut, Command.CommandEnum.CUT, R.drawable.m_cut, R.string.cut));
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_copy, Command.CommandEnum.COPY, R.drawable.m_copy, R.string.copy));
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_paste, Command.CommandEnum.PASTE, R.drawable.m_paste, R.string.paste));
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_select_all, Command.CommandEnum.SELECT_ALL, R.drawable.m_select_all, R.string.select_all));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_cut, Command.CommandEnum.CUT, R.drawable.m_cut, R.string.cut));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_copy, Command.CommandEnum.COPY, R.drawable.m_copy, R.string.copy));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_paste, Command.CommandEnum.PASTE, R.drawable.m_paste, R.string.paste));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_select_all, Command.CommandEnum.SELECT_ALL, R.drawable.m_select_all, R.string.select_all));
 
         menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_undo, Command.CommandEnum.UNDO, R.drawable.m_undo, R.string.undo));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_redo, Command.CommandEnum.REDO, R.drawable.m_redo, R.string.redo));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_wrap, Command.CommandEnum.CONVERT_WRAP_CHAR, R.drawable.m_wrap, R.string.line_separator));
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT,  R.id.m_duplication,    Command.CommandEnum.DUPLICATION,       R.drawable.m_duplication, R.string.duplication));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT,  R.id.m_duplication,    Command.CommandEnum.DUPLICATION,       R.drawable.m_duplication, R.string.duplication));
 
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FIND, R.id.m_find_replace, Command.CommandEnum.FIND, R.drawable.m_find, R.string.find_or_replace));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FIND, R.id.m_goto_top, Command.CommandEnum.GOTO_TOP, R.drawable.m_jump_to_start, R.string.jump_to_start));
@@ -132,7 +136,7 @@ public class MenuFactory {
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_theme, Command.CommandEnum.THEME, R.drawable.m_theme, R.string.change_theme));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_fullscreen, Command.CommandEnum.FULL_SCREEN, R.drawable.m_fullscreen, R.string.fullscreen_mode));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_info, Command.CommandEnum.DOC_INFO, R.drawable.m_info, R.string.document_info));
-//        menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW,  R.id.m_symbol,         Command.CommandEnum.NONE, R.drawable.m_symbol, R.string.symbol));
+        //menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW,  R.id.m_symbol,         Command.CommandEnum.NONE, R.drawable.m_symbol, R.string.symbol));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_readonly, Command.CommandEnum.READONLY_MODE, R.drawable.m_readonly, R.string.read_only));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_highlight, Command.CommandEnum.NONE, R.drawable.m_highlight, R.string.highlight_language));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.VIEW, R.id.m_encoding, Command.CommandEnum.NONE, R.drawable.m_encoding, R.string.encoding));

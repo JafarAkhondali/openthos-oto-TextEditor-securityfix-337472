@@ -55,12 +55,12 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 onTabMenuViewsClick(v);
             }
         });
-//        tabAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onChanged() {
-//                mainActivity.tabDrawable.setText(String.valueOf(tabAdapter.getItemCount()));
-//            }
-//        });
+        //tabAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        //    @Override
+        //    public void onChanged() {
+        //        mainActivity.tabDrawable.setText(String.valueOf(tabAdapter.getItemCount()));
+        //    }
+        //});
         mainActivity.mTabRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(activity.getContext()).build());
         mainActivity.mTabRecyclerView.setAdapter(tabAdapter);
 
@@ -73,13 +73,20 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
             }
         });
         mainActivity.mTabPager.setOnPageChangeListener(this);
-//        setCurrentTab(0); //fix can't set last open tab
+        //setCurrentTab(0); //fix can't set last open tab
     }
 
+    /**
+     * 横向Tab的点击事件的实现
+     *
+     * */
     private void onTabMenuViewsClick(View v) {
         switch (v.getId()) {
             case R.id.close_image_view:
                 closeTab((int) v.getTag());
+                break;
+            case R.id.add_image_view:
+                newTab();
                 break;
             default:
                 int position = (int) v.getTag();

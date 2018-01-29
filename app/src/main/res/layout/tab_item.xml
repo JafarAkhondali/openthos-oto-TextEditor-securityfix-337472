@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="?attr/tabBackground"
-              android:orientation="horizontal"
-              android:paddingLeft="@dimen/padding_five">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/tabBackground"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/padding_five">
 
     <TextView
         android:id="@+id/title_text_view"
@@ -15,7 +16,7 @@
         android:layout_marginRight="@dimen/padding_five"
         android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="14sp"/>
+        android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/file_text_view"
@@ -25,13 +26,27 @@
         android:layout_marginRight="@dimen/padding_five"
         android:textColor="?android:attr/textColorSecondary"
         android:visibility="gone"
-        android:textSize="12sp"/>
+        android:textSize="10sp"/>
+
+    <ImageView
+        android:id="@+id/add_image_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="center"
+        android:layout_gravity="center"
+        android:src="@drawable/add_close_view"/>
 
     <ImageView
         android:id="@+id/close_image_view"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginRight="@dimen/padding_five"
         android:scaleType="center"
-        android:src="@drawable/tab_close"/>
+        android:src="@drawable/round_close"/>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        />
 </LinearLayout>

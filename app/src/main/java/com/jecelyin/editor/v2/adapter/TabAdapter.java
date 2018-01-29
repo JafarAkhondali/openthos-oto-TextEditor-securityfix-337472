@@ -38,7 +38,8 @@ public class TabAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.tab_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).
+                              inflate(R.layout.tab_item, parent, false));
     }
 
     @Override
@@ -46,20 +47,19 @@ public class TabAdapter extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         TabInfo tabInfo = getItem(position);
 
-//        if (position == currentTab) {
-//            viewHolder.itemView.setBackgroundResource(R.drawable.drawer_tab_item_background);
-//        } else {
-//            viewHolder.itemView.setBackgroundResource(R.drawable.white_selectable_item_background);
-//        }
+        //if (position == currentTab) {
+        //    viewHolder.itemView.setBackgroundResource(R.drawable.drawer_tab_item_background);
+        //} else {
+        //    viewHolder.itemView.setBackgroundResource(R.drawable.white_selectable_item_background);
+        //}
         viewHolder.itemView.setSelected(position == currentTab);
-
         viewHolder.mTitleTextView.setText((tabInfo.hasChanged() ? "* " : "") + tabInfo.getTitle());
         viewHolder.mFileTextView.setText(tabInfo.getPath());
 
         if (onClickListener != null) {
             viewHolder.mCloseImageView.setTag(position);
             viewHolder.mCloseImageView.setOnClickListener(onClickListener);
-
+            viewHolder.mAddImageView.setOnClickListener(onClickListener);
             viewHolder.itemView.setTag(position);
             viewHolder.itemView.setOnClickListener(onClickListener);
         }
@@ -94,12 +94,14 @@ public class TabAdapter extends RecyclerView.Adapter {
         TextView mTitleTextView;
         TextView mFileTextView;
         ImageView mCloseImageView;
+        ImageView mAddImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.title_text_view);
             mFileTextView = (TextView) itemView.findViewById(R.id.file_text_view);
             mCloseImageView = (ImageView) itemView.findViewById(R.id.close_image_view);
+            mAddImageView = (ImageView) itemView.findViewById(R.id.add_image_view);
         }
     }
 
