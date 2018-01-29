@@ -23,3 +23,13 @@ captures
 .gradle
 
 tools/assets/ace/node_modules
+
+# android 3.0 config
+app/build.gradle
+build.gradle
+common/build.gradle
+common/src/main/res/drawable-v21/ic_close_btn.xml
+common/src/main/res/drawable/abc_ic_clear_material.xml
+file_explorer/build.gradle
+gradle/wrapper/gradle-wrapper.properties
+styles/build.gradle
