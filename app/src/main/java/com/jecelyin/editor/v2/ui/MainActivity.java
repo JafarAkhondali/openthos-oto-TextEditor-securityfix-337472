@@ -550,7 +550,7 @@ public class MainActivity extends BaseActivity
     }
 
     /**
-     *
+     * 菜单中的item的触发实现
      * */
     public void onMenuClick(int id) {
         Command.CommandEnum commandEnum;

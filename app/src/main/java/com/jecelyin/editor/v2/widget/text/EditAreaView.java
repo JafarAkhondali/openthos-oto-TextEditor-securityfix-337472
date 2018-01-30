@@ -28,9 +28,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.ActionMode;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
@@ -105,7 +104,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         ws.setDomStorageEnabled(true);
         ws.setAppCacheMaxSize(1024 * 1024 * 80);
         ws.setAppCachePath(context.getCacheDir().getPath());
-//        ws.setAllowFileAccess(true);
+        //ws.setAllowFileAccess(true);
         ws.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         addJavascriptInterface(new JavascriptApi(), "AndroidEditor");
@@ -198,7 +197,6 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     private class JavascriptApi {
-
         @JavascriptInterface
         public void returnValue(long id, String value) {
             ValueCallback<String> callback = callbackMap.get(id);
@@ -333,7 +331,8 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     private class EditorViewChromeClient extends WebChromeClient {
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-            L.d("CONSOLE", consoleMessage.message() + " (#" + consoleMessage.lineNumber() + " " + consoleMessage.sourceId() + ")");
+            L.d("CONSOLE", consoleMessage.message() + " (#" +
+                    consoleMessage.lineNumber() + " " + consoleMessage.sourceId() + ")");
             return true;
         }
     }
@@ -408,7 +407,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
 
-// Gets the clipboard as text.
+        // Gets the clipboard as text.
         CharSequence pasteData = item.getText();
         if (pasteData == null)
             return false;
@@ -491,7 +490,8 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     public void hideSoftInput() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().
+                                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
@@ -536,7 +536,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     public void getSelectedText(JsCallback<String> callback) {
-//        execCommand(new EditorCommand.Builder("getSelectedText").callback(callback).build());
+        //execCommand(new EditorCommand.Builder("getSelectedText").callback(callback).build());
         callback.onCallback(getSelectedText());
     }
 
@@ -572,7 +572,8 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         return modeName;
     }
 
-    public void doFind(String findText, String replaceText, boolean caseSensitive, boolean wholeWordOnly, boolean regex) {
+    public void doFind(String findText, String replaceText, boolean caseSensitive,
+                                        boolean wholeWordOnly, boolean regex) {
         execCommand(new EditorCommand.Builder("doFind")
                 .put("findText", findText)
                 .put("replaceText", replaceText)
@@ -600,6 +601,15 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 .callback(callback).build());
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if (event.getButtonState() == MotionEvent.BUTTON_SECONDARY
+                && action == MotionEvent.ACTION_DOWN) {
+            //Toast.makeText(getContext(), "button secondary", Toast.LENGTH_LONG).show();
+        }
+        return super.onTouchEvent(event);
+    }
 
     /*@Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {

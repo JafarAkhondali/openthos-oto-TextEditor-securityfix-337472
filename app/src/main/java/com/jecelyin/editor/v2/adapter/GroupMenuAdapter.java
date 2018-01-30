@@ -19,27 +19,22 @@
 package com.jecelyin.editor.v2.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jecelyin.editor.v2.R;
 import com.jecelyin.editor.v2.dialog.MenuDialog;
 import com.jecelyin.editor.v2.dialog.MenuItemClickListener;
 import com.jecelyin.editor.v2.view.menu.MenuFactory;
 import com.jecelyin.editor.v2.view.menu.MenuGroup;
-import com.jecelyin.editor.v2.view.menu.MenuItemInfo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ljh on 18-1-3.
@@ -65,7 +60,8 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.group_menu_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.group_menu_item,
+                                                  parent, false);
         return new ViewHolder(view);
     }
 
@@ -74,7 +70,7 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
         ViewHolder holder = (ViewHolder) viewHolder;
         MenuGroup menuGroup = mMenuGroups.get(position);
         holder.menuText.setText(mContext.getResources().getString(menuGroup.getNameResId()));
-        holder.menuText.setTag(position);
+        holder.menuText.setTag(position);//setTag
     }
 
     @Override
@@ -86,31 +82,34 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
         mListener = listener;
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView menuText;
-
         public ViewHolder(View itemView) {
             super(itemView);
             menuText = (TextView) itemView.findViewById(R.id.menu_item_text);
-            menuText.setOnTouchListener(this);
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.setSelected(true);
-                    if (lastView != null && lastView != v) {
-                        lastView.setSelected(false);
+            menuText.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            //v.setSelected(true);
+                            //if (lastView !=null && lastView != v) {
+                            //    lastView.setSelected(false);
+                            //}
+                            //lastView = v;
+                            MenuDialog menuDialog = MenuDialog.getInstance(mContext);
+                            if (menuDialog.isShowing()) {
+                                menuDialog.dismiss();
+                            } else {
+                                menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.
+                                                             get((Integer) v.getTag())), v);//getTag
+                            }
+                            menuDialog.setOnMenuItemClickListener(mListener);
+                            break;
                     }
-                    lastView = v;
-                    Log.i("ljh", "click");
-                    MenuDialog menuDialog = MenuDialog.getInstance(mContext);
-                    menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.get((Integer) v.getTag())), v);
-                    menuDialog.setOnMenuItemClickListener(mListener);
-                    break;
-            }
-            return false;
+                    return false;
+                }
+            });
         }
     }
 }

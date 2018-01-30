@@ -96,7 +96,7 @@ public class MenuDialog extends Dialog implements AdapterView.OnItemClickListene
         dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.format = PixelFormat.TRANSPARENT;
-        lp.dimAmount = 0f;
+        lp.dimAmount = 0.0f;
         lp.x = location[0];
         lp.y = location[1] + view.getMeasuredHeight();
         dialogWindow.setAttributes(lp);
@@ -110,7 +110,6 @@ public class MenuDialog extends Dialog implements AdapterView.OnItemClickListene
             maxWidth = Math.max(views.getMeasuredWidth(), maxWidth);
             height = height + views.getMeasuredHeight();
         }
-
         mMenuList.setLayoutParams(new LinearLayout.LayoutParams(maxWidth, height));
     }
 
