@@ -107,6 +107,7 @@ public class MenuFactory {
     /**
      * 顶部弹出的菜单项
      * 新建/打开　...
+     * Smaster
      * */
     private void initAllMenuItem() {
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_new, Command.CommandEnum.NONE, R.drawable.m_new, R.string.new_file));

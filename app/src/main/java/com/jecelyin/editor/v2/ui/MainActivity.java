@@ -19,6 +19,7 @@
 package com.jecelyin.editor.v2.ui;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -48,6 +49,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -201,14 +203,14 @@ public class MainActivity extends BaseActivity
                 70, WindowManager.LayoutParams.WRAP_CONTENT);
         mLastPopupWindow = mPopupWindow;
 
-//        if (!AppUtils.verifySign(getContext())) {
-//            UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
-//                @Override
-//                public void onOkClick() {
-//                    SysUtils.startWebView(getContext(), "https://github.com/jecelyin/920-text-editor-v2/releases");
-//                }
-//            });
-//        }
+        //if (!AppUtils.verifySign(getContext())) {
+        //   UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
+        //                @Override
+        //                public void onOkClick() {
+        //                    SysUtils.startWebView(getContext(), "https://github.com/jecelyin/920-text-editor-v2/releases");
+        //       }
+        //   });
+        //}
 
         setStatusBarColor(mDrawerLayout);
 
@@ -273,7 +275,7 @@ public class MainActivity extends BaseActivity
 
     private void bindPreferences() {
         mDrawerLayout.setKeepScreenOn(pref.isKeepScreenOn());
-//        mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
+        //mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
 
         onSharedPreferenceChanged(null, Pref.KEY_PREF_ENABLE_DRAWERS);
         pref.registerOnSharedPreferenceChangeListener(this);
@@ -306,7 +308,7 @@ public class MainActivity extends BaseActivity
                 mDrawerLayout.setDrawerLockMode(pref.isEnabledDrawers() ? TranslucentDrawerLayout.LOCK_MODE_UNDEFINED : TranslucentDrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
                 break;
             case Pref.KEY_READ_ONLY:
-//                mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
+                //mSymbolBarLayout.setVisibility(pref.isReadOnly() ? View.GONE : View.VISIBLE);
                 break;
         }
     }
@@ -551,20 +553,25 @@ public class MainActivity extends BaseActivity
 
     /**
      * 菜单中的item的触发实现
+     * Smaster
      * */
     public void onMenuClick(int id) {
         Command.CommandEnum commandEnum;
         closeMenu();
         switch (id) {
-            case R.id.m_new:
+            case R.id.m_new://新建
                 tabManager.newTab();
                 break;
-            case R.id.m_open:
+            case R.id.m_open://打开
                 //if (L.debug) {
                 //    SpeedActivity.startActivity(this);
                 //    break;
                 //}
-                FileExplorerActivity.startPickFileActivity(this, null, RC_OPEN_FILE);
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.openthos.filemanager",
+                                             "com.openthos.filemanager.PickerActivity"));
+                startActivityForResult(intent, 000);
+                //FileExplorerActivity.startPickFileActivity(this, null, RC_OPEN_FILE);
                 break;
             case R.id.m_goto_line:
                 new GotoLineDialog(this).show();
@@ -587,7 +594,6 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.m_menu:
                 hideSoftInput();
-
                 mDrawerLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -622,7 +628,7 @@ public class MainActivity extends BaseActivity
             case R.id.m_readonly:
                 boolean readOnly = !pref.isReadOnly();
                 pref.setReadOnly(readOnly);
-//                mDrawerLayout.setHideBottomDrawer(readOnly);
+                //mDrawerLayout.setHideBottomDrawer(readOnly);
                 doClusterCommand(new Command(Command.CommandEnum.READONLY_MODE));
                 break;
             case R.id.m_encoding:
@@ -642,9 +648,9 @@ public class MainActivity extends BaseActivity
                         });
                         colorPickerDialog.show();
                     } catch (IllegalArgumentException e) {
-//                        java.lang.IllegalArgumentException: Unknown color
-//                        at android.graphics.Color.parseColor(Color.java)
-//                        at com.azeesoft.lib.colorpicker.ColorPickerDialog.getLastColor(ColorPickerDialog.java:508)
+                    //java.lang.IllegalArgumentException: Unknown color
+                        //at android.graphics.Color.parseColor(Color.java)
+                    //at com.azeesoft.lib.colorpicker.ColorPickerDialog.getLastColor(ColorPickerDialog.java:508)
                         Stools.saveLastColor(this, "#000000");
                     }
 
@@ -772,6 +778,7 @@ public class MainActivity extends BaseActivity
                 openFile(FileExplorerActivity.getFile(data), FileExplorerActivity.getFileEncoding(data), 0, 0);
                 break;
             case RC_SAVE:
+                Toast.makeText(getContext(), "RC_SAVE", Toast.LENGTH_LONG).show();
                 String file = FileExplorerActivity.getFile(data);
                 String encoding = FileExplorerActivity.getFileEncoding(data);
                 tabManager.getEditorAdapter().getCurrentEditorDelegate().saveTo(new File(file), encoding);

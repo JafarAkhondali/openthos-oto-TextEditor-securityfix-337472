@@ -619,5 +619,4 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         inputConnectionHacker = new InputConnectionHacker(ic, this);
         return inputConnectionHacker;
     }*/
-
 }
