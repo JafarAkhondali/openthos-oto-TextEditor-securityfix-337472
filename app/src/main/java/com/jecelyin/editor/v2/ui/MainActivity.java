@@ -211,9 +211,7 @@ public class MainActivity extends BaseActivity
         //       }
         //   });
         //}
-
         setStatusBarColor(mDrawerLayout);
-
         bindPreferences();
         setScreenOrientation();
 
@@ -315,7 +313,6 @@ public class MainActivity extends BaseActivity
 
     private void setScreenOrientation() {
         int orgi = pref.getScreenOrientation();
-
         if (Pref.SCREEN_ORIENTATION_AUTO == orgi) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         } else if (Pref.SCREEN_ORIENTATION_LANDSCAPE == orgi) {
@@ -576,7 +573,7 @@ public class MainActivity extends BaseActivity
             case R.id.m_goto_line:
                 new GotoLineDialog(this).show();
                 break;
-            case R.id.m_history:
+            case R.id.m_history://最近打开
                 RecentFilesManager rfm = new RecentFilesManager(this);
                 rfm.setOnFileItemClickListener(new RecentFilesManager.OnFileItemClickListener() {
                     @Override
@@ -602,7 +599,7 @@ public class MainActivity extends BaseActivity
                 }, 200);
 
                 break;
-            case R.id.m_save_all:
+            case R.id.m_save_all://全部保存
                 commandEnum = Command.CommandEnum.SAVE;
                 Command command = new Command(commandEnum);
                 command.args.putBoolean(EditorDelegate.KEY_CLUSTER, true);
@@ -653,7 +650,6 @@ public class MainActivity extends BaseActivity
                     //at com.azeesoft.lib.colorpicker.ColorPickerDialog.getLastColor(ColorPickerDialog.java:508)
                         Stools.saveLastColor(this, "#000000");
                     }
-
                 }
                 break;
             case R.id.m_datetime:
@@ -740,7 +736,6 @@ public class MainActivity extends BaseActivity
 
     public void doCommand(Command command) {
         clusterCommand = null;
-
         EditorDelegate editorDelegate = getCurrentEditorDelegate();
         if (editorDelegate != null) {
             editorDelegate.doCommand(command);
@@ -857,7 +852,6 @@ public class MainActivity extends BaseActivity
     public void setSymbolVisibility(boolean b) {
         if (pref.isReadOnly())
             return;
-//        mSymbolBarLayout.setVisibility(b ? View.VISIBLE : View.GONE);
+        //mSymbolBarLayout.setVisibility(b ? View.VISIBLE : View.GONE);
     }
-
 }

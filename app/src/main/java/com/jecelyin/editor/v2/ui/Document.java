@@ -185,9 +185,7 @@ public class Document implements ReadFileListener {
     public void onSaveSuccess(File file, String encoding) {
         this.file = file;
         this.encoding = encoding;
-
         editorDelegate.resetTextChange();
-
         editorDelegate.noticeDocumentChanged();
     }
 

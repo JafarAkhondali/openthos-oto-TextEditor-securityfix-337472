@@ -29,6 +29,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.jecelyin.common.utils.UIUtils;
@@ -36,7 +37,6 @@ import com.jecelyin.editor.v2.Pref;
 import com.jecelyin.editor.v2.R;
 import com.jecelyin.editor.v2.common.Command;
 import com.jecelyin.editor.v2.common.OnVisibilityChangedListener;
-import com.jecelyin.editor.v2.common.SaveListener;
 import com.jecelyin.editor.v2.ui.dialog.DocumentInfoDialog;
 import com.jecelyin.editor.v2.ui.dialog.FinderDialog;
 import com.jecelyin.editor.v2.utils.AppUtils;
@@ -212,7 +212,7 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
         mEditText.getLineText(0, 50, new JsCallback<String>() {
             @Override
             public void onCallback(String data) {
-                getMainActivity().startPickPathActivity(document.getPath(), data, document.getEncoding());
+               getMainActivity().startPickPathActivity(document.getPath(), data, document.getEncoding());
             }
         });
 
@@ -293,9 +293,11 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
                 mEditText.setReadOnly(readOnly);
                 ((MainActivity) context).doNextCommand();
                 break;
-            case SAVE:
-                if (!readonly)
-                    document.save(command.args.getBoolean(KEY_CLUSTER, false), (SaveListener) command.object);
+            case SAVE:  //文件菜单下的保存
+                Toast.makeText(getContext(), "SAVE", Toast.LENGTH_LONG).show();
+                //if (!readonly)
+                //    document.save(command.args.getBoolean(KEY_CLUSTER, false), (SaveListener) command.object);
+                document.saveAs();
                 break;
             case SAVE_AS:
                 document.saveAs();
@@ -379,7 +381,6 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
     public void onVisibilityChanged(int visibility) {
         if (visibility != View.VISIBLE)
             return;
-
         noticeMenuChanged();
     }
 

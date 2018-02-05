@@ -34,7 +34,7 @@ public class ModeList {
     }
 
     public static Mode[] modes = new Mode[]{
-//BEGIN-REPLACE
+        //BEGIN-REPLACE
         new Mode("ABAP", "ace/mode/abap"),
         new Mode("ABC", "ace/mode/abc"),
         new Mode("ActionScript", "ace/mode/actionscript"),

@@ -42,7 +42,6 @@ import com.jecelyin.android.file_explorer.adapter.PathButtonAdapter;
 import com.jecelyin.android.file_explorer.databinding.FileExplorerFragmentBinding;
 import com.jecelyin.android.file_explorer.io.JecFile;
 import com.jecelyin.android.file_explorer.io.LocalFile;
-import com.jecelyin.android.file_explorer.io.RootFile;
 import com.jecelyin.android.file_explorer.listener.FileListResultListener;
 import com.jecelyin.android.file_explorer.listener.OnClipboardPasteFinishListener;
 import com.jecelyin.android.file_explorer.util.FileListSorter;
@@ -67,7 +66,10 @@ import java.util.List;
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
-public class FileListPagerFragment extends JecFragment implements SwipeRefreshLayout.OnRefreshListener, OnItemClickListener, FileExplorerView, ExplorerContext, SharedPreferences.OnSharedPreferenceChangeListener {
+public class FileListPagerFragment extends JecFragment implements
+                                           SwipeRefreshLayout.OnRefreshListener, OnItemClickListener,
+                                           FileExplorerView, ExplorerContext,
+                                           SharedPreferences.OnSharedPreferenceChangeListener {
     private FileListItemAdapter adapter;
     private JecFile path;
     private FileExplorerFragmentBinding binding;
@@ -301,7 +303,6 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
 
     private void switchToPath(JecFile file) {
         path = file;
-
         onRefresh();
     }
 

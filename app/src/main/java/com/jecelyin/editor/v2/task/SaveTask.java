@@ -94,7 +94,6 @@ public class SaveTask {
             @Override
             public void onSuccess() {
                 writing = false;
-
                 if (documentWR.get() == null || contextWR.get() == null || editorDelegateWR.get() == null)
                     return;
                 documentWR.get().onSaveSuccess(file, encoding);
@@ -121,6 +120,5 @@ public class SaveTask {
                 fileWriter.write(data);
             }
         });
-
     }
 }

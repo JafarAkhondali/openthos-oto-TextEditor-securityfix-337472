@@ -322,7 +322,6 @@ public class FileExplorerActivity extends FullScreenActivity implements View.OnC
     public void onClipboardDataChanged() {
         if (pasteMenu == null)
             return;
-
         pasteMenu.setVisible(getFileClipboard().canPaste());
     }
 }
