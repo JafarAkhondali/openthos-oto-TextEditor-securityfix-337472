@@ -37,6 +37,7 @@ import com.jecelyin.editor.v2.Pref;
 import com.jecelyin.editor.v2.R;
 import com.jecelyin.editor.v2.common.Command;
 import com.jecelyin.editor.v2.common.OnVisibilityChangedListener;
+import com.jecelyin.editor.v2.common.SaveListener;
 import com.jecelyin.editor.v2.ui.dialog.DocumentInfoDialog;
 import com.jecelyin.editor.v2.ui.dialog.FinderDialog;
 import com.jecelyin.editor.v2.utils.AppUtils;
@@ -295,9 +296,9 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
                 break;
             case SAVE:  //文件菜单下的保存
                 Toast.makeText(getContext(), "SAVE", Toast.LENGTH_LONG).show();
-                //if (!readonly)
-                //    document.save(command.args.getBoolean(KEY_CLUSTER, false), (SaveListener) command.object);
-                document.saveAs();
+                if (!readonly)
+                    document.save(command.args.getBoolean(KEY_CLUSTER, false), (SaveListener) command.object);
+                //document.saveAs();
                 break;
             case SAVE_AS:
                 document.saveAs();
