@@ -26,26 +26,42 @@
         android:layout_height="wrap_content"
         android:background="?attr/listItemBackground"
         android:minHeight="72dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:layout_gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
         <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:layout_marginRight="16dp">
 
-            <com.jecelyin.android.file_explorer.widget.IconImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.jecelyin.android.file_explorer.widget.IconImageView
                 android:id="@+id/iconImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:scaleType="fitCenter"
-                app:riv_corner_radius="360dp"
-                app:riv_mutate_background="true"
+                android:src="@drawable/folder"
                 />
+
+<!--
+            <ImageView
+                android:id="@+id/iconImageView"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/folder" />
+-->
 
             <TextView
                 android:id="@+id/extTextView"
@@ -87,7 +103,8 @@
                 android:layout_marginTop="5dp"
                 android:text="@{item.date}"
                 android:textColor="?android:attr/textColorSecondary"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/secondLineTextView"

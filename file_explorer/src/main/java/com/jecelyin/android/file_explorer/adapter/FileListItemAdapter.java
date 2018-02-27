@@ -174,7 +174,8 @@ public class FileListItemAdapter extends RecyclerView.Adapter<BindingViewHolder<
         int color, icon;
         if (path.isDirectory()) {
             color = R.color.type_folder;
-            icon = R.drawable.file_type_folder;
+//            icon = R.drawable.file_type_folder;
+            icon = R.drawable.folder;
 
         } else if (mimeTypes.isImageFile(path)) {
             color = R.color.type_media;

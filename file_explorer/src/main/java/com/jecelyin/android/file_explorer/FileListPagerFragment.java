@@ -28,6 +28,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -114,6 +115,7 @@ public class FileListPagerFragment extends JecFragment implements
         });
 
         binding.pathScrollView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        //binding.pathScrollView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         pathAdapter = new PathButtonAdapter();
         pathAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -132,9 +134,12 @@ public class FileListPagerFragment extends JecFragment implements
         binding.pathScrollView.setAdapter(pathAdapter);
 
         binding.explorerSwipeRefreshLayout.setOnRefreshListener(this);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
         binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).margin(getResources().getDimensionPixelSize(R.dimen.file_list_item_divider_left_margin), 0).build());
+        binding.recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(
+                getContext()).margin(getResources().getDimensionPixelSize(
+                        R.dimen.file_list_item_divider_left_margin), 40).build());
         binding.explorerSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
