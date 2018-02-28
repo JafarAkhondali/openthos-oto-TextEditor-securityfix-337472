@@ -2,12 +2,12 @@
     <PreferenceCategory
         android:title="@string/editor">
 
-        <com.jecelyin.editor.v2.preference.FontSizePreference
+        <com.openthos.editor.v2.preference.FontSizePreference
             android:key="pref_font_size"
             android:title="@string/font_size"
             android:summary="@string/default_value"
              />
-        <com.jecelyin.editor.v2.preference.CursorWidthPreference
+        <com.openthos.editor.v2.preference.CursorWidthPreference
             android:key="pref_cursor_width"
             android:title="@string/cursor_width"
             android:summary="@string/default_value"
@@ -50,7 +50,7 @@
             android:title="@string/auto_capitalize" />
 
 
-        <com.jecelyin.editor.v2.preference.SymbolBarPreference
+        <com.openthos.editor.v2.preference.SymbolBarPreference
             android:key="pref_symbol"
             android:title="@string/custom_symbol_list"
             android:negativeButtonText="@string/reset"
@@ -91,7 +91,7 @@
             android:title="@string/keep_backup_file"
             android:summary="@string/keep_backup_file_summary"/>
 
-        <com.jecelyin.editor.v2.preference.JecListPreference
+        <com.openthos.editor.v2.preference.JecListPreference
             android:key="pref_screen_orientation"
             android:entryValues="@array/screen_orientation_values"
             android:entries="@array/screen_orientation"

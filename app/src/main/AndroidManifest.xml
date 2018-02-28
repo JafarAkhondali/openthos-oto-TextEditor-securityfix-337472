@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.jecelyin.editor.v2"
+          package="com.openthos.editor.v2"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
-        android:name=".MainApp"
+        android:name="com.openthos.editor.v2.MainApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/texteditor"
@@ -29,7 +29,7 @@
         Caused by: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
         -->
         <activity
-            android:name="com.jecelyin.common.app.CrashReportDialogActivity"
+            android:name="com.openthos.common.app.CrashReportDialogActivity"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true"
             android:launchMode="singleInstance"
@@ -53,7 +53,7 @@
         在一个新栈中创建该Activity实例，并让多个应用共享改栈中的该Activity实例。一旦改模式的Activity的实例存在于某个栈中，任何应用再激活改Activity时都会重用该栈中的实例，其效果相当于多个应用程序共享一个应用，不管谁激活该Activity都会进入同一个应用中。
         -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.openthos.editor.v2.ui.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|layoutDirection"
             android:launchMode="singleTask">
             <intent-filter>
@@ -99,10 +99,10 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity"/>
-        <activity android:name=".ui.AboutActivity"/>
-        <activity android:name=".ui.BrowserActivity"/>
-        <activity android:name=".ui.FeedbackActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.settings.SettingsActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.AboutActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.BrowserActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.FeedbackActivity"/>
 
     </application>
 

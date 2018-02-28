@@ -18,7 +18,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="item" type="com.jecelyin.android.file_explorer.model.FileItemModel" />
+        <variable name="item" type="com.openthos.android.file_explorer.model.FileItemModel" />
     </data>
 
     <LinearLayout
@@ -37,47 +37,35 @@
             android:gravity="center"
             android:layout_marginRight="16dp">
 
-            <com.jecelyin.android.file_explorer.widget.IconImageView
+            <com.openthos.android.file_explorer.widget.IconImageView
                 android:id="@+id/iconImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:paddingTop="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/folder"
                 />
 
-<!--
-            <ImageView
-                android:id="@+id/iconImageView"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="1dp"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@drawable/folder" />
--->
+            <!--
+                        <ImageView
+                            android:id="@+id/iconImageView"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:src="@drawable/folder" />
+            -->
 
-            <TextView
-                android:id="@+id/extTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@{item.ext}"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
         </FrameLayout>
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="244dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
 
@@ -91,7 +79,7 @@
                 android:singleLine="true"
                 android:text="@{item.name}"
                 android:textColor="?android:attr/textColorPrimary"
-                android:textSize="17sp" />
+                android:textSize="17sp"/>
 
 
             <TextView
@@ -116,9 +104,21 @@
                 android:layout_toRightOf="@id/dateTextView"
                 android:text="@{item.secondLine}"
                 android:textColor="?android:attr/textColorSecondary"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/extTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{item.ext}"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </layout>
