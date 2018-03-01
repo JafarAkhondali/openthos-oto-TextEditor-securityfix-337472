@@ -62,7 +62,7 @@ import com.openthos.common.utils.IOUtils;
 import com.openthos.common.utils.L;
 import com.openthos.common.utils.SysUtils;
 import com.openthos.common.utils.UIUtils;
-import com.openthos.editor.v2.BaseActivity;
+import com.openthos.editor.v2.ui.activity.BaseActivity;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.GroupMenuAdapter;
@@ -79,7 +79,7 @@ import com.openthos.editor.v2.ui.dialog.InsertDateTimeDialog;
 import com.openthos.editor.v2.ui.dialog.LangListDialog;
 import com.openthos.editor.v2.ui.dialog.RunDialog;
 import com.openthos.editor.v2.ui.dialog.WrapCharDialog;
-import com.openthos.editor.v2.ui.settings.SettingsActivity;
+import com.openthos.editor.v2.ui.activity.SettingsActivity;
 import com.openthos.editor.v2.view.TabViewPager;
 import com.openthos.editor.v2.view.menu.MenuDef;
 import com.openthos.editor.v2.view.menu.MenuFactory;
@@ -113,7 +113,6 @@ public class MainActivity extends BaseActivity
     RecyclerView mTabRecyclerView;
     RecyclerView mMenuRecyclerView;
     TranslucentDrawerLayout mDrawerLayout;
-    TextView mVersionTextView;
 
     SymbolBarLayout mSymbolBarLayout;
 

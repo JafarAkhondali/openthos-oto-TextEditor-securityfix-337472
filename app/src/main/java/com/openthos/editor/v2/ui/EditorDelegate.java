@@ -45,7 +45,7 @@ import com.openthos.editor.v2.view.EditorView;
 import com.openthos.editor.v2.view.menu.MenuDef;
 import com.openthos.editor.v2.widget.text.EditAreaView;
 import com.openthos.editor.v2.widget.text.JsCallback;
-import com.openthos.editor.v2.widget.text.OnTextChangeListener;
+import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 
 import java.io.File;
 

@@ -24,7 +24,7 @@ import com.openthos.common.listeners.OnResultCallback;
 import com.openthos.common.utils.IOUtils;
 import com.openthos.common.utils.RootShellRunner;
 import com.openthos.common.utils.SysUtils;
-import com.openthos.editor.v2.MainApp;
+import com.openthos.editor.v2.app.MainApp;
 
 import java.io.BufferedWriter;
 import java.io.File;

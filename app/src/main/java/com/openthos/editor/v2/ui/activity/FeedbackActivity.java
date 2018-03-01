@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.ui;
+package com.openthos.editor.v2.ui.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,7 +38,6 @@ import com.openthos.common.task.TaskResult;
 import com.openthos.common.utils.CrashDbHelper;
 import com.openthos.common.utils.SysUtils;
 import com.openthos.common.utils.UIUtils;
-import com.openthos.editor.v2.BaseActivity;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.databinding.FeedbackActivityBinding;
 

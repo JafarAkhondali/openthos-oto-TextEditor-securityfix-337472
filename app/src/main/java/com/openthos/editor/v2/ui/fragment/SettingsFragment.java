@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.ui.settings;
+package com.openthos.editor.v2.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,8 +33,8 @@ import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.preference.JecListPreference;
-import com.openthos.editor.v2.ui.BrowserActivity;
-import com.openthos.editor.v2.ui.FeedbackActivity;
+import com.openthos.editor.v2.ui.activity.BrowserActivity;
+import com.openthos.editor.v2.ui.activity.FeedbackActivity;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>

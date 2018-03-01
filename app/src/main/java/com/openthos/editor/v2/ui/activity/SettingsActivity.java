@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.ui.settings;
+package com.openthos.editor.v2.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,8 +25,8 @@ import android.preference.PreferenceActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.openthos.editor.v2.BaseActivity;
 import com.openthos.editor.v2.R;
+import com.openthos.editor.v2.ui.fragment.SettingsFragment;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>

@@ -16,19 +16,35 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2;
+package com.openthos.editor.v2.app;
 
 import com.openthos.common.app.JecApp;
-import com.openthos.common.app.JecFragment;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 
-public class BaseFragment extends JecFragment {
+public class MainApp extends JecApp {
+    private RefWatcher refWatcher;
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((JecApp) getContext()).watch(this);
+    protected void installMonitor() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
+//        if(!BlockCanaryEx.isInSamplerProcess(this)) {
+//            BlockCanaryEx.install(new Config(this));
+//        }
+    }
+
+    @Override
+    public void watch(Object object) {
+        if (refWatcher != null)
+            refWatcher.watch(object);
     }
 }

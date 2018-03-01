@@ -46,6 +46,7 @@ import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.ThemeList;
+import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 import com.openthos.editor.v2.ui.MainActivity;
 
 import java.io.InputStream;

@@ -11,7 +11,23 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
-        android:name="com.openthos.editor.v2.MainApp"
+        android:name="com.openthos.editor.v2.app.MainApp"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/texteditor"
@@ -99,9 +115,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.openthos.editor.v2.ui.settings.SettingsActivity"/>
-        <activity android:name="com.openthos.editor.v2.ui.BrowserActivity"/>
-        <activity android:name="com.openthos.editor.v2.ui.FeedbackActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.activity.SettingsActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.activity.BrowserActivity"/>
+        <activity android:name="com.openthos.editor.v2.ui.activity.FeedbackActivity"/>
 
     </application>
 

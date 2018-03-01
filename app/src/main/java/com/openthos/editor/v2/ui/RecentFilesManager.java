@@ -37,7 +37,7 @@ public class RecentFilesManager implements MaterialDialog.ListCallback, Material
     private OnFileItemClickListener onFileItemClickListener;
     private ArrayList<DBHelper.RecentFileItem> list;
 
-    static interface OnFileItemClickListener {
+    interface OnFileItemClickListener {
         void onClick(DBHelper.RecentFileItem item);
     }
 

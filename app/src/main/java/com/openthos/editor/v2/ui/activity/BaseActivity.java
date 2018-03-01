@@ -16,12 +16,20 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.widget.text;
+package com.openthos.editor.v2.ui.activity;
+
+import com.openthos.common.app.JecApp;
+import com.openthos.editor.v2.FullScreenActivity;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 
-public interface OnTextChangeListener {
-    void onTextChanged();
+public class BaseActivity extends FullScreenActivity {
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ((JecApp) getApplication()).watch(this);
+    }
 }

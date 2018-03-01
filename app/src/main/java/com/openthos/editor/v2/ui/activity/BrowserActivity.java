@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.ui;
+package com.openthos.editor.v2.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +35,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.openthos.common.utils.SysUtils;
-import com.openthos.editor.v2.BaseActivity;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.databinding.BrowserActivityBinding;
 
