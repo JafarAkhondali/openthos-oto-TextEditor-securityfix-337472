@@ -31,9 +31,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.openthos.common.adapter.ViewPagerAdapter;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.bean.Command;
+import com.openthos.editor.v2.bean.TabInfo;
 import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.interfaces.TabCloseListener;
-import com.openthos.editor.v2.bean.TabInfo;
 import com.openthos.editor.v2.task.ClusterCommand;
 import com.openthos.editor.v2.ui.EditorDelegate;
 import com.openthos.editor.v2.ui.MainActivity;
@@ -44,13 +44,18 @@ import com.openthos.editor.v2.widget.text.JsCallback;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 public class EditorAdapter extends ViewPagerAdapter {
     private final Context context;
-    private ArrayList<EditorDelegate> list = new ArrayList<>();
+    /**
+     * 数据源就是编辑的区域，
+     * EditorDelegate就类似一个编辑区域的模型类。
+     * */
+    private List<EditorDelegate> mEditorDelegatesList = new ArrayList<>();
     private int currentPosition;
 
     public EditorAdapter(Context context) {
@@ -59,14 +64,44 @@ public class EditorAdapter extends ViewPagerAdapter {
 
     @Override
     public View getView(int position, ViewGroup pager) {
-        EditorView view = (EditorView) LayoutInflater.from(context).inflate(R.layout.editor, pager, false);
+        EditorView view = (EditorView) LayoutInflater.from(context)
+                                       .inflate(R.layout.editor, pager, false);
         setEditorView(position, view);
         return view;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return mEditorDelegatesList.size();
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+        currentPosition = position;
+        setEditorView(position, (EditorView) object);
+    }
+
+    @Override
+    public Parcelable saveState() {
+        SavedState ss = new SavedState();
+        ss.states = new EditorDelegate.SavedState[mEditorDelegatesList.size()];
+        for (int i = mEditorDelegatesList.size() - 1; i >= 0; i--) {
+            ss.states[i] = (EditorDelegate.SavedState) mEditorDelegatesList.get(i).onSaveInstanceState();
+        }
+        return ss;
+    }
+
+    @Override
+    public void restoreState(Parcelable state, ClassLoader loader) {
+        if (!(state instanceof SavedState))
+            return;
+        EditorDelegate.SavedState[] ss = ((SavedState) state).states;
+        mEditorDelegatesList.clear();
+        for (int i = 0; i < ss.length; i++) {
+            mEditorDelegatesList.add(new EditorDelegate(ss[i]));
+        }
+        notifyDataSetChanged();
     }
 
     /**
@@ -77,18 +112,18 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     public void newEditor(boolean notify, @Nullable File file, int line, int column, String encoding) {
-        list.add(new EditorDelegate(list.size(), file, line, column, encoding));
+        mEditorDelegatesList.add(new EditorDelegate(mEditorDelegatesList.size(), file, line, column, encoding));
         if (notify)
             notifyDataSetChanged();
     }
 
     public void newEditor(String title, @Nullable CharSequence content) {
-        list.add(new EditorDelegate(list.size(), title, content));
+        mEditorDelegatesList.add(new EditorDelegate(mEditorDelegatesList.size(), title, content));
         notifyDataSetChanged();
     }
 
     public void newEditor(ExtGrep grep) {
-        list.add(new EditorDelegate(list.size(), context.getString(R.string.find_title, grep.getRegex()), grep));
+        mEditorDelegatesList.add(new EditorDelegate(mEditorDelegatesList.size(), context.getString(R.string.find_title, grep.getRegex()), grep));
         notifyDataSetChanged();
     }
 
@@ -100,31 +135,23 @@ public class EditorAdapter extends ViewPagerAdapter {
      */
     public void setEditorView(int index, EditorView editorView) {
         if (index >= getCount()) {
-//            AppUtils.showException(context, "setEditorView", new Exception());
             return;
         }
-        EditorDelegate delegate = list.get(index);
+        EditorDelegate delegate = mEditorDelegatesList.get(index);
         if (delegate != null)
             delegate.setEditorView(editorView);
-//        notifyDataSetChanged();  //不管是创建，还是重建，这里都不应该刷新
-    }
-
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-        currentPosition = position;
-        setEditorView(position, (EditorView) object);
+            //notifyDataSetChanged();  //不管是创建，还是重建，这里都不应该刷新
     }
 
     public EditorDelegate getCurrentEditorDelegate() {
-        if (list == null || list.isEmpty() || currentPosition >= list.size())
+        if (mEditorDelegatesList == null || mEditorDelegatesList.isEmpty() || currentPosition >= mEditorDelegatesList.size())
             return null;
-        return list.get(currentPosition);
+        return mEditorDelegatesList.get(currentPosition);
     }
 
     public int countNoFileEditor() {
         int count = 0;
-        for (EditorDelegate f : list) {
+        for (EditorDelegate f : mEditorDelegatesList) {
             if (f.getPath() == null) {
                 count++;
             }
@@ -133,19 +160,18 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     public TabInfo[] getTabInfoList() {
-        int size = list.size();
+        int size = mEditorDelegatesList.size();
         TabInfo[] arr = new TabInfo[size];
         EditorDelegate f;
         for (int i = 0; i < size; i++) {
-            f = list.get(i);
+            f = mEditorDelegatesList.get(i);
             arr[i] = new TabInfo(f.getTitle(), f.getPath(), f.isChanged());
         }
-
         return arr;
     }
 
     public boolean removeEditor(final int position, final TabCloseListener listener) {
-        EditorDelegate f = list.get(position);
+        EditorDelegate f = mEditorDelegatesList.get(position);
 
         if (f.isChanged()) {
             new SaveConfirmDialog(context, f.getTitle(), new MaterialDialog.SingleButtonCallback() {
@@ -175,7 +201,7 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     private void doRemove(final int position, final TabCloseListener listener) {
-        EditorDelegate f = list.get(position);
+        EditorDelegate f = mEditorDelegatesList.get(position);
 
         final String encoding = f.getEncoding();
         final String path = f.getPath();
@@ -197,9 +223,9 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     private void remove(int position) {
-        if (list.isEmpty() || list.size() <= position)
+        if (mEditorDelegatesList.isEmpty() || mEditorDelegatesList.size() <= position)
             return;
-        EditorDelegate delegate = list.remove(position);
+        EditorDelegate delegate = mEditorDelegatesList.remove(position);
         delegate.setRemoved();
         notifyDataSetChanged();
     }
@@ -210,41 +236,19 @@ public class EditorAdapter extends ViewPagerAdapter {
     }
 
     public ClusterCommand makeClusterCommand() {
-        return new ClusterCommand(new ArrayList<>(list));
+        return new ClusterCommand(new ArrayList<>(mEditorDelegatesList));
     }
 
     public boolean removeAll(TabCloseListener tabCloseListener) {
-        int position = list.size() - 1;
+        int position = mEditorDelegatesList.size() - 1;
         return position < 0 || removeEditor(position, tabCloseListener);
     }
 
     public EditorDelegate getItem(int i) {
         //TabManager调用时，可能程序已经退出，updateToolbar时就不需要做处理了
-        if (i >= list.size())
+        if (i >= mEditorDelegatesList.size())
             return null;
-        return list.get(i);
-    }
-
-    @Override
-    public Parcelable saveState() {
-        SavedState ss = new SavedState();
-        ss.states = new EditorDelegate.SavedState[list.size()];
-        for (int i = list.size() - 1; i >= 0; i--) {
-            ss.states[i] = (EditorDelegate.SavedState) list.get(i).onSaveInstanceState();
-        }
-        return ss;
-    }
-
-    @Override
-    public void restoreState(Parcelable state, ClassLoader loader) {
-        if (!(state instanceof SavedState))
-            return;
-        EditorDelegate.SavedState[] ss = ((SavedState) state).states;
-        list.clear();
-        for (int i = 0; i < ss.length; i++) {
-            list.add(new EditorDelegate(ss[i]));
-        }
-        notifyDataSetChanged();
+        return mEditorDelegatesList.get(i);
     }
 
     public static class SavedState implements Parcelable {

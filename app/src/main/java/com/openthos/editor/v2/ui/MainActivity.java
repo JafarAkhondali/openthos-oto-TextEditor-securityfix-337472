@@ -108,14 +108,14 @@ public class MainActivity extends BaseActivity
     Toolbar mToolbar;
     LinearLayout mMenuLayout;
     LinearLayout mLoadingLayout;
+    private TabManager tabManager;
     TabViewPager mTabPager;
+    RecyclerView mTabRecyclerView;
     RecyclerView mMenuRecyclerView;
     TranslucentDrawerLayout mDrawerLayout;
-    RecyclerView mTabRecyclerView;
     TextView mVersionTextView;
-    SymbolBarLayout mSymbolBarLayout;
 
-    private TabManager tabManager;
+    SymbolBarLayout mSymbolBarLayout;
 
     private Pref pref;
     private ClusterCommand clusterCommand;
@@ -248,12 +248,12 @@ public class MainActivity extends BaseActivity
         mTabPager = (TabViewPager) findViewById(R.id.tab_pager);
         mMenuRecyclerView = (RecyclerView) findViewById(R.id.menuRecyclerView);
         mDrawerLayout = (TranslucentDrawerLayout) findViewById(R.id.drawer_layout);
-        mTabRecyclerView = (RecyclerView) findViewById(R.id.file_name);
+        mTabRecyclerView = (RecyclerView) findViewById(R.id.tab_file_name);
         mVersionTextView = (TextView) findViewById(R.id.versionTextView);
 
         mGroupMenu = (RecyclerView) findViewById(R.id.group_menu);
         mCommonMenu = (RecyclerView) findViewById(R.id.common_menu);
-        mFileName = (RecyclerView) findViewById(R.id.file_name);
+        mFileName = (RecyclerView) findViewById(R.id.tab_file_name);
     }
 
     public void initData() {

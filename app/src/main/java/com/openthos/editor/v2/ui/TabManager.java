@@ -41,28 +41,23 @@ import java.util.ArrayList;
  */
 public class TabManager implements TabViewPager.OnPageChangeListener {
     private final MainActivity mainActivity;
-    private final TabAdapter tabAdapter;
-    private EditorAdapter editorAdapter;
+    private final TabAdapter mTabAdapter;
+    private EditorAdapter mEditorAdapter;
     private boolean exitApp;
 
     public TabManager(MainActivity activity) {
         this.mainActivity = activity;
-
-        this.tabAdapter = new TabAdapter();
-        tabAdapter.setOnClickListener(new View.OnClickListener() {
+        this.mTabAdapter = new TabAdapter();
+        mTabAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onTabMenuViewsClick(v);
             }
         });
-        //tabAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-        //    @Override
-        //    public void onChanged() {
-        //        mainActivity.tabDrawable.setText(String.valueOf(tabAdapter.getItemCount()));
-        //    }
-        //});
-        mainActivity.mTabRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(activity.getContext()).build());
-        mainActivity.mTabRecyclerView.setAdapter(tabAdapter);
+
+        mainActivity.mTabRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.
+                                                         Builder(activity.getContext()).build());
+        mainActivity.mTabRecyclerView.setAdapter(mTabAdapter);
 
         initEditor();
 
@@ -97,8 +92,16 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     private void initEditor() {
-        editorAdapter = new EditorAdapter(mainActivity);
-        mainActivity.mTabPager.setAdapter(editorAdapter); //优先，避免TabAdapter获取不到正确的CurrentItem
+        mEditorAdapter = new EditorAdapter(mainActivity);
+        /**优先，避免TabAdapter获取不到正确的CurrentItem
+         * <com.openthos.editor.v2.view.TabViewPager
+         * android:id="@+id/tab_pager"
+         * android:layout_width="match_parent"
+         * android:layout_height="match_parent"
+         * android:visibility="gone"/>
+         *  在main_activity.xml中
+         * */
+        mainActivity.mTabPager.setAdapter(mEditorAdapter);
 
         if (Pref.getInstance(mainActivity).isOpenLastFiles()) {
             ArrayList<DBHelper.RecentFileItem> recentFiles = DBHelper.getInstance(mainActivity).getRecentFiles(true);
@@ -108,45 +111,46 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 f = new File(item.path);
                 if (!f.isFile())
                     continue;
-                editorAdapter.newEditor(false, f, item.line, item.column, item.encoding);
-                setCurrentTab(editorAdapter.getCount() - 1); //fixme: auto load file, otherwise click other tab will crash by search result
+                mEditorAdapter.newEditor(false, f, item.line, item.column, item.encoding);
+                setCurrentTab(mEditorAdapter.getCount() - 1); //fixme: auto load file, otherwise click other tab will crash by search result
             }
-            editorAdapter.notifyDataSetChanged();
+            mEditorAdapter.notifyDataSetChanged();
             updateTabList();
 
             int lastTab = Pref.getInstance(mainActivity).getLastTab();
             setCurrentTab(lastTab);
         }
 
-        editorAdapter.registerDataSetObserver(new DataSetObserver() {
+        mEditorAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 updateTabList();
 
-                if (!exitApp && editorAdapter.getCount() == 0) {
+                if (!exitApp && mEditorAdapter.getCount() == 0) {
                     newTab();
                 }
             }
         });
 
-        if (editorAdapter.getCount() == 0)
-            editorAdapter.newEditor(mainActivity.getString(R.string.new_filename, editorAdapter.countNoFileEditor() + 1), null);
+        if (mEditorAdapter.getCount() == 0)
+            mEditorAdapter.newEditor(mainActivity.getString(R.string.new_filename, mEditorAdapter.countNoFileEditor() + 1), null);
     }
 
     public void newTab() {
-        editorAdapter.newEditor(mainActivity.getString(R.string.new_filename, editorAdapter.getCount() + 1), null);
-        setCurrentTab(editorAdapter.getCount() - 1);
+        mEditorAdapter.newEditor(mainActivity.getString(R.string.new_filename,
+                                            mEditorAdapter.getCount() + 1), null);
+        setCurrentTab(mEditorAdapter.getCount() - 1);//索引是从０开始,自然最后的索引是: getCount - 1
     }
 
     public boolean newTab(CharSequence content) {
-        editorAdapter.newEditor(mainActivity.getString(R.string.new_filename, editorAdapter.getCount() + 1), content);
-        setCurrentTab(editorAdapter.getCount() - 1);
+        mEditorAdapter.newEditor(mainActivity.getString(R.string.new_filename, mEditorAdapter.getCount() + 1), content);
+        setCurrentTab(mEditorAdapter.getCount() - 1);
         return true;
     }
 
     public boolean newTab(ExtGrep grep) {
-        editorAdapter.newEditor(grep);
-        setCurrentTab(editorAdapter.getCount() - 1);
+        mEditorAdapter.newEditor(grep);
+        setCurrentTab(mEditorAdapter.getCount() - 1);
         return true;
     }
 
@@ -155,9 +159,9 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public boolean newTab(File path, int line, int column, String encoding) {
-        int count = editorAdapter.getCount();
+        int count = mEditorAdapter.getCount();
         for (int i = 0; i < count; i++) {
-            EditorDelegate fragment = editorAdapter.getItem(i);
+            EditorDelegate fragment = mEditorAdapter.getItem(i);
             if (fragment.getPath() == null)
                 continue;
             if (fragment.getPath().equals(path.getPath())) {
@@ -165,21 +169,21 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 return false;
             }
         }
-        editorAdapter.newEditor(path, line, column, encoding);
+        mEditorAdapter.newEditor(path, line, column, encoding);
         setCurrentTab(count);
         return true;
     }
 
     public void setCurrentTab(final int index) {
         mainActivity.mTabPager.setCurrentItem(index);
-        tabAdapter.setCurrentTab(index);
+        mTabAdapter.setCurrentTab(index);
         updateToolbar();
     }
 
     public int getTabCount() {
-        if (tabAdapter == null)
+        if (mTabAdapter == null)
             return 0;
-        return tabAdapter.getItemCount();
+        return mTabAdapter.getItemCount();
     }
 
     public int getCurrentTab() {
@@ -187,7 +191,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public void closeTab(int position) {
-        editorAdapter.removeEditor(position, new TabCloseListener() {
+        mEditorAdapter.removeEditor(position, new TabCloseListener() {
             @Override
             public void onClose(String path, String encoding, int line, int column) {
                 DBHelper.getInstance(mainActivity).updateRecentFile(path, false);
@@ -195,13 +199,13 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 if (getTabCount() != 0) {
                     setCurrentTab(currentTab); //设置title等等
                 }
-//                tabAdapter.setCurrentTab(currentTab);
+                //mTabAdapter.setCurrentTab(currentTab);
             }
         });
     }
 
     public EditorAdapter getEditorAdapter() {
-        return editorAdapter;
+        return mEditorAdapter;
     }
 
     @Override
@@ -211,7 +215,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
 
     @Override
     public void onPageSelected(int position) {
-        tabAdapter.setCurrentTab(position);
+        mTabAdapter.setCurrentTab(position);
     }
 
     @Override
@@ -220,12 +224,12 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     private void updateTabList() {
-        tabAdapter.setTabInfoList(editorAdapter.getTabInfoList());
-        tabAdapter.notifyDataSetChanged();
+        mTabAdapter.setTabInfoList(mEditorAdapter.getTabInfoList());
+        mTabAdapter.notifyDataSetChanged();
     }
 
     public void updateEditorView(int index, EditorView editorView) {
-        editorAdapter.setEditorView(index, editorView);
+        mEditorAdapter.setEditorView(index, editorView);
     }
 
     public void onDocumentChanged(int index) {
@@ -234,7 +238,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     private void updateToolbar() {
-        EditorDelegate delegate = editorAdapter.getItem(getCurrentTab());
+        EditorDelegate delegate = mEditorAdapter.getItem(getCurrentTab());
         if (delegate == null)
             return;
         mainActivity.mToolbar.setTitle(delegate.getToolbarText());
@@ -246,7 +250,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
         if (mainActivity.mTabPager != null) {
             Pref.getInstance(mainActivity).setLastTab(getCurrentTab());
         }
-        return editorAdapter.removeAll(new TabCloseListener() {
+        return mEditorAdapter.removeAll(new TabCloseListener() {
             @Override
             public void onClose(String path, String encoding, int line, int column) {
                 DBHelper.getInstance(mainActivity).updateRecentFile(path, encoding, line, column);
@@ -254,7 +258,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 if (count == 0) {
                     mainActivity.finish();
                 } else {
-                    editorAdapter.removeAll(this);
+                    mEditorAdapter.removeAll(this);
                 }
             }
         });

@@ -109,10 +109,10 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
         mEditText.setCustomSelectionActionModeCallback(new EditorSelectionActionModeCallback());
 
         //还原文本时，onTextChange事件触发高亮
-//        if (savedState.editorState != null) {
-//            document.onRestoreInstanceState(savedState);
-//            mEditText.onRestoreInstanceState(savedState.editorState);
-//        } else
+        //if (savedState.editorState != null) {
+        //    document.onRestoreInstanceState(savedState);
+        //    mEditText.onRestoreInstanceState(savedState.editorState);
+        //} else
         if (savedState.file != null) {
             document.loadFile(savedState.file, savedState.encoding);
         } else if (!TextUtils.isEmpty(savedState.text)) {
@@ -157,7 +157,7 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
 
         noticeDocumentChanged();
 
-        if (!"com.jecelyin.editor.v2".equals(context.getPackageName())) {
+        if (!"com.openthos.editor.v2".equals(context.getPackageName())) {
             mEditText.setEnabled(false);
         }
         loaded = true;
