@@ -1,5 +1,5 @@
 
-package com.openthos.editor.v2.io;
+package com.openthos.editor.v2.utils.io;
 
 /**
  * Created by jecelyin on 16/3/13.

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.io;
+package com.openthos.editor.v2.utils.io;
 
 import android.content.Context;
 import android.os.AsyncTask;

@@ -11,7 +11,7 @@ import com.openthos.common.task.TaskResult;
 import com.openthos.common.utils.L;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.io.FileEncodingDetector;
+import com.openthos.editor.v2.utils.io.FileEncodingDetector;
 
 import java.io.BufferedReader;
 import java.io.File;

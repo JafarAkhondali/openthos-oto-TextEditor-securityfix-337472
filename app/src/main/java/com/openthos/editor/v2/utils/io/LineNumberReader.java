@@ -1,5 +1,5 @@
 
-package com.openthos.editor.v2.io;
+package com.openthos.editor.v2.utils.io;
 
 import java.io.IOException;
 import java.io.Reader;

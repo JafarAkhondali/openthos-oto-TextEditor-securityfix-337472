@@ -27,7 +27,7 @@ import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.common.ReadFileListener;
 import com.openthos.editor.v2.common.SaveListener;
-import com.openthos.editor.v2.io.FileReader;
+import com.openthos.editor.v2.utils.io.FileReader;
 import com.openthos.editor.v2.task.SaveTask;
 
 import java.io.File;
