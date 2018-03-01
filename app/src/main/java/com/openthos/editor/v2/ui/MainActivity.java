@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity
     LinearLayout mMenuLayout;
     LinearLayout mLoadingLayout;
     private TabManager tabManager;
-    TabViewPager mTabPager;
+    TabViewPager mTabViewPager;
     RecyclerView mTabRecyclerView;
     RecyclerView mMenuRecyclerView;
     TranslucentDrawerLayout mDrawerLayout;
@@ -203,6 +203,9 @@ public class MainActivity extends BaseActivity
                 70, WindowManager.LayoutParams.WRAP_CONTENT);
         mLastPopupWindow = mPopupWindow;
 
+        /**
+         * 注释掉的代码是githup　账号的验证；
+         * */
         //if (!AppUtils.verifySign(getContext())) {
         //   UIUtils.showConfirmDialog(getContext(), getString(R.string.verify_sign_failure), new UIUtils.OnClickCallback() {
         //                @Override
@@ -219,7 +222,7 @@ public class MainActivity extends BaseActivity
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
 
         final String version = SysUtils.getVersionName(this);
-        mVersionTextView.setText(version);
+        //mVersionTextView.setText(version);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
@@ -245,11 +248,11 @@ public class MainActivity extends BaseActivity
         mMenuLayout = (LinearLayout) findViewById(R.id.menu_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mLoadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
-        mTabPager = (TabViewPager) findViewById(R.id.tab_pager);
+        mTabViewPager = (TabViewPager) findViewById(R.id.tab_pager);
         mMenuRecyclerView = (RecyclerView) findViewById(R.id.menuRecyclerView);
         mDrawerLayout = (TranslucentDrawerLayout) findViewById(R.id.drawer_layout);
         mTabRecyclerView = (RecyclerView) findViewById(R.id.tab_file_name);
-        mVersionTextView = (TextView) findViewById(R.id.versionTextView);
+        //mVersionTextView = (TextView) findViewById(R.id.versionTextView);
 
         mGroupMenu = (RecyclerView) findViewById(R.id.group_menu);
         mCommonMenu = (RecyclerView) findViewById(R.id.common_menu);
@@ -328,7 +331,7 @@ public class MainActivity extends BaseActivity
             parent.removeView(mLoadingLayout);
         }
         //inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        mTabPager.setVisibility(View.VISIBLE);
+        mTabViewPager.setVisibility(View.VISIBLE);
         initUI();
     }
 

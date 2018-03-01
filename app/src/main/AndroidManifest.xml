@@ -100,7 +100,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.openthos.editor.v2.ui.settings.SettingsActivity"/>
-        <activity android:name="com.openthos.editor.v2.ui.AboutActivity"/>
         <activity android:name="com.openthos.editor.v2.ui.BrowserActivity"/>
         <activity android:name="com.openthos.editor.v2.ui.FeedbackActivity"/>
 

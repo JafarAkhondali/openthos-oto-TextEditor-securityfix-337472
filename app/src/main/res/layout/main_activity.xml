@@ -91,8 +91,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <include layout="@layout/main_tab_layout"/>
-
     <android.support.design.widget.NavigationView
         android:id="@+id/menuNavView"
         android:layout_width="210dp"

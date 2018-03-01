@@ -67,7 +67,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
                 mainActivity.mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        mainActivity.mTabPager.setOnPageChangeListener(this);
+        mainActivity.mTabViewPager.setOnPageChangeListener(this);
         //setCurrentTab(0); //fix can't set last open tab
     }
 
@@ -101,7 +101,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
          * android:visibility="gone"/>
          *  在main_activity.xml中
          * */
-        mainActivity.mTabPager.setAdapter(mEditorAdapter);
+        mainActivity.mTabViewPager.setAdapter(mEditorAdapter);
 
         if (Pref.getInstance(mainActivity).isOpenLastFiles()) {
             ArrayList<DBHelper.RecentFileItem> recentFiles = DBHelper.getInstance(mainActivity).getRecentFiles(true);
@@ -175,7 +175,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public void setCurrentTab(final int index) {
-        mainActivity.mTabPager.setCurrentItem(index);
+        mainActivity.mTabViewPager.setCurrentItem(index);
         mTabAdapter.setCurrentTab(index);
         updateToolbar();
     }
@@ -187,7 +187,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public int getCurrentTab() {
-        return mainActivity.mTabPager.getCurrentItem();
+        return mainActivity.mTabViewPager.getCurrentItem();
     }
 
     public void closeTab(int position) {
@@ -247,7 +247,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     public boolean closeAllTabAndExitApp() {
         EditorDelegate.setDisableAutoSave(true);
         exitApp = true;
-        if (mainActivity.mTabPager != null) {
+        if (mainActivity.mTabViewPager != null) {
             Pref.getInstance(mainActivity).setLastTab(getCurrentTab());
         }
         return mEditorAdapter.removeAll(new TabCloseListener() {

@@ -33,7 +33,6 @@ import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.preference.JecListPreference;
-import com.openthos.editor.v2.ui.AboutActivity;
 import com.openthos.editor.v2.ui.BrowserActivity;
 import com.openthos.editor.v2.ui.FeedbackActivity;
 
@@ -96,8 +95,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         Intent it;
         switch (preference.getKey()) {
             case "pref_about":
-                it = new Intent(getActivity(), AboutActivity.class);
-                startActivity(it);
+                //it = new Intent(getActivity(), AboutActivity.class);
+                //startActivity(it);
                 break;
             case "pref_translate":
                 UIUtils.OnClickCallback callback = new UIUtils.OnClickCallback() {
