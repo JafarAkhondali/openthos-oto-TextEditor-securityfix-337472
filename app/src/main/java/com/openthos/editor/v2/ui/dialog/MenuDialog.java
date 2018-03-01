@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.dialog;
+package com.openthos.editor.v2.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -33,6 +33,7 @@ import android.widget.ListView;
 
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.GroupMenuListAdapter;
+import com.openthos.editor.v2.interfaces.MenuItemClickListener;
 import com.openthos.editor.v2.view.menu.MenuItemInfo;
 
 import java.util.ArrayList;

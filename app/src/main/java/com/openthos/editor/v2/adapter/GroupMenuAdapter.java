@@ -27,8 +27,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.dialog.MenuDialog;
-import com.openthos.editor.v2.dialog.MenuItemClickListener;
+import com.openthos.editor.v2.ui.dialog.MenuDialog;
+import com.openthos.editor.v2.interfaces.MenuItemClickListener;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 import com.openthos.editor.v2.view.menu.MenuGroup;
 

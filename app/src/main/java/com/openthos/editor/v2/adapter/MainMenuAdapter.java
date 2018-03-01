@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import com.openthos.common.widget.CheckableImageView;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 import com.openthos.editor.v2.ui.MenuManager;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 import com.openthos.editor.v2.view.menu.MenuGroup;

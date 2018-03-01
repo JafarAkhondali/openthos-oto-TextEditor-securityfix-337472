@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.common;
+package com.openthos.editor.v2.interfaces;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
-public interface SaveListener {
-    void onSaved();
+public interface TabCloseListener {
+    void onClose(String path, String encoding, int line, int column);
 }

@@ -26,7 +26,7 @@ import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.EditorAdapter;
 import com.openthos.editor.v2.adapter.TabAdapter;
-import com.openthos.editor.v2.common.TabCloseListener;
+import com.openthos.editor.v2.interfaces.TabCloseListener;
 import com.openthos.common.utils.DBHelper;
 import com.openthos.editor.v2.utils.ExtGrep;
 import com.openthos.editor.v2.view.EditorView;

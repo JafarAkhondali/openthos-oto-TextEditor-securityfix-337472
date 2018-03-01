@@ -25,7 +25,7 @@ import com.openthos.common.utils.L;
 import com.openthos.common.utils.StringUtils;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>

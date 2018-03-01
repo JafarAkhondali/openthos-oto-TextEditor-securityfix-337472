@@ -27,7 +27,7 @@ import com.openthos.common.utils.L;
 import com.openthos.common.utils.RootShellRunner;
 import com.openthos.common.utils.SysUtils;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.ReadFileListener;
+import com.openthos.editor.v2.interfaces.ReadFileListener;
 
 import java.io.File;
 import java.io.FileInputStream;

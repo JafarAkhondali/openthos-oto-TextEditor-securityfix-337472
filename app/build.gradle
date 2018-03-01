@@ -12,9 +12,9 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        //applicationId "com.smaster.editor.v2s"
+        applicationId "com.smaster.editor.v2s"
         //applicationId "com.jecelyin.editor.v2"
-        applicationId "com.openthos.editor.v2"
+        //applicationId "com.openthos.editor.v2"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 37

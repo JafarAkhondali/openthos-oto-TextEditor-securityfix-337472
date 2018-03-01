@@ -23,7 +23,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 import com.openthos.editor.v2.ui.ModeList;
 
 /**

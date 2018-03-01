@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.dialog;
+package com.openthos.editor.v2.interfaces;
 
 /**
- * Created by ljh on 18-1-4.
+ * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 
-public interface MenuItemClickListener {
-    void onMenuItemClick(int id);
+public interface OnVisibilityChangedListener {
+    void onVisibilityChanged(int visibility);
 }

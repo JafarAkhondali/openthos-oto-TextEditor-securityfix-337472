@@ -25,8 +25,8 @@ import com.openthos.common.utils.RootShellRunner;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.ReadFileListener;
-import com.openthos.editor.v2.common.SaveListener;
+import com.openthos.editor.v2.interfaces.ReadFileListener;
+import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.utils.io.FileReader;
 import com.openthos.editor.v2.task.SaveTask;
 

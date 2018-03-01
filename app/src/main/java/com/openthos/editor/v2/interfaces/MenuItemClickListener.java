@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.common;
+package com.openthos.editor.v2.interfaces;
 
 /**
- * @author Jecelyin Peng <jecelyin@gmail.com>
+ * Created by ljh on 18-1-4.
  */
-public interface TabCloseListener {
-    void onClose(String path, String encoding, int line, int column);
+
+public interface MenuItemClickListener {
+    void onMenuItemClick(int id);
 }

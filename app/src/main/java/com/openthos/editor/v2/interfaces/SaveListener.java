@@ -16,13 +16,11 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.common;
+package com.openthos.editor.v2.interfaces;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
-public interface ReadFileListener {
-    void onStart();
-
-    void onDone(StringBuilder stringBuilder, String encoding, Throwable throwable);
+public interface SaveListener {
+    void onSaved();
 }

@@ -26,7 +26,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>

@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.TabInfo;
+import com.openthos.editor.v2.bean.TabInfo;
 
 /**
  * @author Jecelyin Peng <jecelyin@gmail.com>

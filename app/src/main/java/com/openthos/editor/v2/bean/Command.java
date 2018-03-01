@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.openthos.editor.v2.common;
+package com.openthos.editor.v2.bean;
 
 import android.os.Bundle;
 

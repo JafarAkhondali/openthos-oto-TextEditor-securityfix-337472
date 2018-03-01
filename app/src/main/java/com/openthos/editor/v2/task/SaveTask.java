@@ -24,7 +24,7 @@ import com.openthos.common.utils.L;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.SaveListener;
+import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.utils.io.FileWriter;
 import com.openthos.editor.v2.ui.Document;
 import com.openthos.editor.v2.ui.EditorDelegate;

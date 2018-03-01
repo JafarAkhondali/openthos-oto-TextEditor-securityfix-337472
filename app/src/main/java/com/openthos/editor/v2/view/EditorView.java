@@ -24,7 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.OnVisibilityChangedListener;
+import com.openthos.editor.v2.interfaces.OnVisibilityChangedListener;
 import com.openthos.editor.v2.widget.text.EditAreaView;
 
 /**

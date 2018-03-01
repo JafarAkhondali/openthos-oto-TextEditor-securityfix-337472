@@ -22,7 +22,7 @@ import android.content.Context;
 
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

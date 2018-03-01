@@ -18,7 +18,7 @@
 
 package com.openthos.editor.v2.task;
 
-import com.openthos.editor.v2.common.Command;
+import com.openthos.editor.v2.bean.Command;
 import com.openthos.editor.v2.ui.EditorDelegate;
 
 import java.util.ArrayList;
