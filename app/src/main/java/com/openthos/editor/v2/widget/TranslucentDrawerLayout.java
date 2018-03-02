@@ -1053,7 +1053,7 @@ public class TranslucentDrawerLayout extends ViewGroup implements DrawerLayoutIm
 //
 //        if (widthMode != MeasureSpec.EXACTLY || heightMode != MeasureSpec.EXACTLY) {
 //            if (isInEditMode()) {
-//                // Don't crash the layout editor. Consume all of the space if specified
+//                // Don't crash the layout editor_area. Consume all of the space if specified
 //                // or pick a magic number from thin air otherwise.
 //                // TODO Better communication with tools of this bogus state.
 //                // It will crash on a real device.

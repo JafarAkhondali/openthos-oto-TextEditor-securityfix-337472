@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 //apply plugin: 'blockcanaryex'
 
 //Properties properties = new Properties()
-//properties.load(file('../../keystore/920-text-editor-v2.gradle.properties').newDataInputStream())
+//properties.load(file('../../keystore/920-text-editor_area-v2.gradle.properties').newDataInputStream())
 //def KEYSTORE_ALIAS = properties.getProperty('KEYSTORE_ALIAS')
 //def KEYSTORE_PASSWORD = properties.getProperty('KEYSTORE_PASSWORD')
 //def GOOGLE_BILLING_KEY = properties.getProperty('GOOGLE_BILLING_KEY')
@@ -12,9 +12,9 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        applicationId "com.smaster.editor.v2s"
-        //applicationId "com.jecelyin.editor.v2"
-        //applicationId "com.openthos.editor.v2"
+        applicationId "com.smaster.editor_area.v2s"
+        //applicationId "com.jecelyin.editor_area.v2"
+        //applicationId "com.openthos.editor_area.v2"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 37
@@ -26,13 +26,13 @@ android {
 //        debug {
 //            keyAlias KEYSTORE_ALIAS
 //            keyPassword KEYSTORE_PASSWORD
-//            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
+//            storeFile file('../../keystore/920-text-editor_area-v2.keystore.jks')
 //            storePassword KEYSTORE_PASSWORD
 //        }
 //        release {
 //            keyAlias KEYSTORE_ALIAS
 //            keyPassword KEYSTORE_PASSWORD
-//            storeFile file('../../keystore/920-text-editor-v2.keystore.jks')
+//            storeFile file('../../keystore/920-text-editor_area-v2.keystore.jks')
 //            storePassword KEYSTORE_PASSWORD
 //        }
 //    }

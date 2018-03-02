@@ -157,7 +157,7 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
 
         noticeDocumentChanged();
 
-        if (!"com.openthos.editor.v2".equals(context.getPackageName())) {
+        if (!"com.openthos.editor_area.v2".equals(context.getPackageName())) {
             mEditText.setEnabled(false);
         }
         loaded = true;

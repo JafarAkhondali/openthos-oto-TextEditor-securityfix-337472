@@ -94,7 +94,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     private void initEditor() {
         mEditorAdapter = new EditorAdapter(mainActivity);
         /**优先，避免TabAdapter获取不到正确的CurrentItem
-         * <com.openthos.editor.v2.view.TabViewPager
+         * <com.openthos.editor_area.v2.view.TabViewPager
          * android:id="@+id/tab_pager"
          * android:layout_width="match_parent"
          * android:layout_height="match_parent"

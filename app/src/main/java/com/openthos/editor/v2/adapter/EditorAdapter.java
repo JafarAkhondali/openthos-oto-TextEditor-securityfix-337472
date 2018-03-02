@@ -65,7 +65,7 @@ public class EditorAdapter extends ViewPagerAdapter {
     @Override
     public View getView(int position, ViewGroup pager) {
         EditorView view = (EditorView) LayoutInflater.from(context)
-                                       .inflate(R.layout.editor, pager, false);
+                                       .inflate(R.layout.editor_area, pager, false);
         setEditorView(position, view);
         return view;
     }

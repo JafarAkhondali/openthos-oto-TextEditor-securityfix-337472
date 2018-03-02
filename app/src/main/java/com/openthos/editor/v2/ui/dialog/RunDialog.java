@@ -91,7 +91,7 @@ public class RunDialog extends AbstractDialog {
 
             handleDialog(dlg);
         } catch (Exception e) {
-            // android.view.WindowLeaked: Activity com.jecelyin.editor.v2.ui.MainActivity has leaked window com.android.internal.policy.impl.PhoneWindow$DecorView{65c348b8 V.E..... R......D 0,0-684,914} that was originally added here
+            // android.view.WindowLeaked: Activity com.jecelyin.editor_area.v2.ui.MainActivity has leaked window com.android.internal.policy.impl.PhoneWindow$DecorView{65c348b8 V.E..... R......D 0,0-684,914} that was originally added here
         }
     }
 
