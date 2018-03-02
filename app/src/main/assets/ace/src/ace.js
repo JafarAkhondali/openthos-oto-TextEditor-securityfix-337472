@@ -16722,7 +16722,7 @@ left: 0;\
 }\
 .ace_print-margin {\
 position: absolute;\
-height: 100%;\
+height: 0%;\
 }\
 .ace_text-input {\
 position: absolute;\
