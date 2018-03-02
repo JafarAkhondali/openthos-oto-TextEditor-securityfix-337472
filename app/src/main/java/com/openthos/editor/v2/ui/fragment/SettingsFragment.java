@@ -20,7 +20,6 @@ package com.openthos.editor.v2.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -118,10 +117,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case "pref_feedback":
                 FeedbackActivity.startActivity(getActivity(), null);
                 break;
-            case "pref_donate":
+            /*case "pref_donate":
                 it = new Intent(Intent.ACTION_VIEW, Uri.parse("https://jecelyin.github.io/donate/?project=920%20Text%20Editor"));
                 startActivity(it);
-                break;
+                break;*/
         }
         return true;
     }

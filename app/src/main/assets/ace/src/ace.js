@@ -15917,6 +15917,7 @@ var SelectHandleDrawables = function(cursor) {
         this.selectHandleRight.style.display = "none";
         this.selectHandleRight.src = "img/text_select_handle_right.png";
         this.element.appendChild(this.selectHandleRight);
+        console.log("Smaster");
     };
 
     this.showMidSelectHandle = function() {

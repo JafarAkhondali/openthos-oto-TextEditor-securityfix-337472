@@ -116,7 +116,7 @@ public class Pref implements SharedPreferences.OnSharedPreferenceChangeListener 
 
         //init variable
         map = new HashMap<>();
-        map.put(KEY_FONT_SIZE, 13);
+        map.put(KEY_FONT_SIZE, 18);
         map.put(KEY_CURSOR_WIDTH, 2);
         map.put(KEY_TOUCH_TO_ADJUST_TEXT_SIZE, false);
         map.put(KEY_WORD_WRAP, true);
