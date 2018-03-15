@@ -27,8 +27,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.ui.dialog.MenuDialog;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
+import com.openthos.editor.v2.ui.dialog.MenuDialog;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 import com.openthos.editor.v2.view.menu.MenuGroup;
 
@@ -45,11 +45,13 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<MenuGroup> mMenuGroups;
     private View lastView;
+    private MenuDialog menuDialog;
 
     public GroupMenuAdapter(Context context) {
         mContext = context;
         mMenuFactory = MenuFactory.getInstance(context);
         mMenuGroups = new ArrayList<>();
+        menuDialog = MenuDialog.getInstance(mContext);
         for (MenuGroup group : MenuGroup.values()) {
             if (group.getNameResId() != 0) {
                 mMenuGroups.add(group);
@@ -96,12 +98,13 @@ public class GroupMenuAdapter extends RecyclerView.Adapter {
                             //    lastView.setSelected(false);
                             //}
                             //lastView = v;
-                            MenuDialog menuDialog = MenuDialog.getInstance(mContext);
                             if (menuDialog.isShowing()) {
                                 menuDialog.dismiss();
                             } else {
-                                menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.
-                                                             get((Integer) v.getTag())), v);//getTag
+                                /*menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.
+                                                             get((Integer) v.getTag())), v);*///getTag
+                                menuDialog.show(mMenuFactory.getMenuItemInfos(true,
+                                        mMenuGroups.get((Integer) v.getTag()), true), v);
                             }
                             menuDialog.setOnMenuItemClickListener(mListener);
                             break;

@@ -114,6 +114,31 @@ public class MenuDialog extends Dialog implements AdapterView.OnItemClickListene
         mMenuList.setLayoutParams(new LinearLayout.LayoutParams(maxWidth, height));
     }
 
+    public void showLocationDialog(List<MenuItemInfo> data, int x, int y) {
+        Window dialogWindow = getWindow();
+        dialogWindow.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.format = PixelFormat.TRANSLUCENT;
+        lp.dimAmount = 0.0f;
+        lp.x = x;
+        lp.y = y;
+        lp.width = 150;
+        dialogWindow.setAttributes(lp);
+        show();
+        mAdapter.refresh(data);
+
+        int maxWidth = 0;
+        int height = 0;
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            View views = mAdapter.getView(i, null, null);
+            views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            maxWidth = Math.max(views.getMeasuredWidth(), maxWidth);
+            height = height + views.getMeasuredHeight();
+        }
+        mMenuList.setLayoutParams(new LinearLayout.LayoutParams(maxWidth, height));
+    }
+
     @Override
     public void dismiss() {
         if (mSelectView != null) {

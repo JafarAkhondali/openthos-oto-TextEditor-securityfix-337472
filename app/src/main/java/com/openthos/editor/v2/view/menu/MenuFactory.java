@@ -117,13 +117,13 @@ public class MenuFactory {
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_save_as, Command.CommandEnum.SAVE_AS, R.drawable.m_save_as, R.string.save_as));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.FILE, R.id.m_history, Command.CommandEnum.NONE, R.drawable.m_history, R.string.recent_files));
 
-        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_cut, Command.CommandEnum.CUT, R.drawable.m_cut, R.string.cut));
-        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_copy, Command.CommandEnum.COPY, R.drawable.m_copy, R.string.copy));
-        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_paste, Command.CommandEnum.PASTE, R.drawable.m_paste, R.string.paste));
-        //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_select_all, Command.CommandEnum.SELECT_ALL, R.drawable.m_select_all, R.string.select_all));
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_cut, Command.CommandEnum.CUT, R.drawable.m_cut, R.string.cut));//7
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_copy, Command.CommandEnum.COPY, R.drawable.m_copy, R.string.copy));//8
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_paste, Command.CommandEnum.PASTE, R.drawable.m_paste, R.string.paste));//9
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_select_all, Command.CommandEnum.SELECT_ALL, R.drawable.m_select_all, R.string.select_all));//10
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_undo, Command.CommandEnum.UNDO, R.drawable.m_undo, R.string.undo));//11
+        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_redo, Command.CommandEnum.REDO, R.drawable.m_redo, R.string.redo));//12
 
-        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_undo, Command.CommandEnum.UNDO, R.drawable.m_undo, R.string.undo));
-        menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_redo, Command.CommandEnum.REDO, R.drawable.m_redo, R.string.redo));
         menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT, R.id.m_wrap, Command.CommandEnum.CONVERT_WRAP_CHAR, R.drawable.m_wrap, R.string.line_separator));
         //menuItemInfos.add(new MenuItemInfo(MenuGroup.EDIT,  R.id.m_duplication,    Command.CommandEnum.DUPLICATION,       R.drawable.m_duplication, R.string.duplication));
 
@@ -163,12 +163,29 @@ public class MenuFactory {
         return menuItemInfos;
     }
 
-    public List<MenuItemInfo> getMenuItemInfos(MenuGroup group) {
+    public List<MenuItemInfo> getMenuItemInfos(boolean isMenu, MenuGroup group, boolean isArea) {
         List<MenuItemInfo> list = new ArrayList<>();
-        for (MenuItemInfo itemInfo : menuItemInfos) {
-            if (itemInfo.getGroup() == group) {
-                list.add(itemInfo);
+        int num = 0;
+        for (MenuItemInfo itemInfo : menuItemInfos) { //根据这里的不同重用adapter
+            num ++;
+            if (isMenu) {
+                if (itemInfo.getGroup() == group) {
+                    list.add(itemInfo);
+                }
+            } else {
+                if (isArea) {
+                    if (num > 6 && num <= 12 && num != 10) {// 7 8 9 11 12
+                        list.add(itemInfo);
+                    }
+                } else {
+                    if (num >= 9 && num <= 12) {// 9 10 11 12
+                        list.add(itemInfo);
+                    }
+                }
             }
+            /*if (itemInfo.getGroup() == group) {
+                list.add(itemInfo);
+            }*/
         }
         return list;
     }

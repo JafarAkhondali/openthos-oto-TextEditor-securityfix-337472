@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +39,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.openthos.common.utils.IOUtils;
@@ -46,8 +48,11 @@ import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.ThemeList;
+import com.openthos.editor.v2.interfaces.MenuItemClickListener;
 import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 import com.openthos.editor.v2.ui.MainActivity;
+import com.openthos.editor.v2.ui.dialog.MenuDialog;
+import com.openthos.editor.v2.view.menu.MenuFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,7 +64,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Jecelyin Peng <jecelyin@gmail.com>
  */
 public class EditAreaView extends WebView implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private final Pref pref;
+    private Pref pref;
     private ArrayList<EditorCommand> cmdQueue = new ArrayList<>();
     private boolean pageLoaded;
     private AtomicLong cmdID = new AtomicLong(0);
@@ -72,9 +77,20 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     private boolean textChanged;
     private InputConnectionHacker inputConnectionHacker;
     private String selectedText;
+    private MenuItemClickListener mListener;
 
-    public EditAreaView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    private Boolean mIsShow = false;
+
+    public EditAreaView(Context context) {
+        super(context);
+    }
+
+    public EditAreaView(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, android.R.attr.webViewStyle);
+    }
+
+    public EditAreaView(Context context, AttributeSet attrs, int defstyle) {
+        super(context, attrs, defstyle);
 
         if (L.debug) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -85,10 +101,13 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         setLongClickable(false);
         setOnLongClickListener(new OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public boolean onLongClick(View v) {//鼠标右键
                 return true;
             }
         });
+
+        setVerticalScrollBarEnabled(false);
+        setHorizontalScrollBarEnabled(false);
 
         WebSettings ws = getSettings();
         ws.setDefaultZoom(WebSettings.ZoomDensity.FAR);
@@ -105,10 +124,9 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         ws.setDomStorageEnabled(true);
         ws.setAppCacheMaxSize(1024 * 1024 * 80);
         ws.setAppCachePath(context.getCacheDir().getPath());
-        //ws.setAllowFileAccess(true);
         ws.setCacheMode(WebSettings.LOAD_DEFAULT);
 
-        addJavascriptInterface(new JavascriptApi(), "AndroidEditor");
+        addJavascriptInterface(new JavascriptApi(), "AndroidEditor");//交互用的
 
         setWebViewClient(new EditorViewClient());
         setWebChromeClient(new EditorViewChromeClient());
@@ -198,6 +216,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     private class JavascriptApi {
+
         @JavascriptInterface
         public void returnValue(long id, String value) {
             ValueCallback<String> callback = callbackMap.get(id);
@@ -205,6 +224,11 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 callback.onReceiveValue(value);
                 callbackMap.remove(id);
             }
+        }
+
+        @JavascriptInterface
+        public void showActionView(boolean isShow) {
+            mIsShow = isShow;
         }
 
         @JavascriptInterface
@@ -218,7 +242,8 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                     if (actionMode != null) {
                         actionMode.finish();
                     }
-                    actionMode = startActionMode(actionModeCallback);
+                    //actionMode = startActionMode(actionModeCallback);
+                    actionMode.finish();//禁止ActionBar弹出；
                 }
             });
         }
@@ -326,7 +351,6 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 execCommand(command);
             }
         }
-
     }
 
     private class EditorViewChromeClient extends WebChromeClient {
@@ -605,9 +629,66 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+        int x = (int) event.getRawX();
+        int y = (int) event.getRawY();
+
         if (event.getButtonState() == MotionEvent.BUTTON_SECONDARY
                 && action == MotionEvent.ACTION_DOWN) {
-            //Toast.makeText(getContext(), "button secondary", Toast.LENGTH_LONG).show();
+            if (mIsShow) {
+                //MenuEditorDialog menuDialog = MenuEditorDialog.getInstance(getContext(), this);
+                MenuDialog menuDialog = MenuDialog.getInstance(getContext());
+                menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
+                ).getMenuItemInfos(false, null, true), x, y);
+                //menuDialog.showLocationDialog(x, y);
+                menuDialog.setOnMenuItemClickListener(new MenuItemClickListener() {
+                    @Override
+                    public void onMenuItemClick(int id) {
+                        Log.i("Smaster -->", "id:::" + id);
+                        switch (id) {
+                            case 2131755024://剪切
+                                cut();
+                                break;
+                            case 2131755023://复制
+                                copy();
+                                break;
+                            case 2131755041://粘贴
+                                paste();
+                                break;
+                            case 2131755052://撤销
+                                undo();
+                                break;
+                            case 2131755043://重做
+                                redo();
+                                break;
+                        }
+                    }
+                });
+            } else {
+                MenuDialog menuDialog = MenuDialog.getInstance(getContext());
+                menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
+                ).getMenuItemInfos(false, null, false), x, y);
+                menuDialog.setOnMenuItemClickListener(new MenuItemClickListener() {
+                    @Override
+                    public void onMenuItemClick(int id) {
+                        Log.i("Smaster-->", "id:::" + id);
+                        switch (id) {
+                            case 2131755041://粘贴
+                                paste();
+                                break;
+                            case 2131755048://全选
+                                selectAll();
+                                mIsShow = true;
+                                break;
+                            case 2131755052://撤销
+                                undo();
+                                break;
+                            case 2131755043://重做
+                                redo();
+                                break;
+                        }
+                    }
+                });
+            }
         }
         return super.onTouchEvent(event);
     }

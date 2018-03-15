@@ -289,7 +289,7 @@ function Bridge(editor) {
 (function () {
     this.bindEditorEventToJava = function () {
         var self = this;
-        this.editor.on("change", function (data) {
+        this.editor.on("change", function (data) {//文字改变执行
             if (self.loading)
                 return;
             var len = self.editor.session.getDocument().getTextLength();
@@ -308,15 +308,16 @@ function Bridge(editor) {
                 return;
             self.selected = selected;
 
-            if (s) {
-                self.showActionMode();
+            if (s) {　　//ｓ文本选中的区域
+                  //self.showActionMode();
+                  AndroidEditor.showActionView(true);
             } else {
+                AndroidEditor.showActionView(false);
                 self.hideActionMode();
             }
-
         });
         var Range = require("ace/range").Range;
-        this.editor.getSelection().on("changeCursor", function () {
+        this.editor.getSelection().on("changeCursor", function () {//光标放到文本处就　执行
             try {
                 var cursor = self.editor.getSelection().getCursor();
                 var range = new Range(cursor.row, Math.max(0, cursor.column - 30), cursor.row, cursor.column);
@@ -324,14 +325,21 @@ function Bridge(editor) {
                 AndroidEditor.updateCursorBeforeText(text);
             } catch (e) { }
         });
-        this.editor.on("onLongTouch", function () {
-            self.showActionMode();
+
+        this.editor.on("onLongTouch", function () { //长按
+        /*
+         * Smaster
+         * 长按鼠标　弹出ActionBar.
+         **/
+            //self.showActionMode();
         });
+
         this.editor.on("onClick", function () {
             if (self.hasSelection())
                 return;
             self.hideActionMode();
         });
+
         this.editor.renderer.scrollBar.on("startScroll", function () {
             AndroidEditor.onScrollStart();
         });
