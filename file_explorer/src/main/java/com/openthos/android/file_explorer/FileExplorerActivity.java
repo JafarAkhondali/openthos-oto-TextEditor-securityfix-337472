@@ -73,12 +73,19 @@ public class FileExplorerActivity extends FullScreenActivity implements View.OnC
 
     public static void startPickPathActivity(Activity activity, String destFile, String filename,
                                                                 String encoding, int requestCode) {
-        Intent it = new Intent(activity, FileExplorerActivity.class);
-        it.putExtra("mode", MODE_PICK_PATH);
-        it.putExtra("dest_file", destFile);
-        it.putExtra("filename", filename);
-        it.putExtra("encoding", encoding);
-        activity.startActivityForResult(it, requestCode);
+//        Intent it = new Intent(activity, FileExplorerActivity.class);
+//        it.putExtra("mode", MODE_PICK_PATH);
+//        it.putExtra("dest_file", destFile);
+//        it.putExtra("filename", filename);
+//        it.putExtra("encoding", encoding);
+//        activity.startActivityForResult(it, requestCode);
+        Intent intent = new Intent("android.intent.action.FILE_SELECTOR");
+        intent.putExtra("mode", MODE_PICK_PATH);
+        intent.putExtra("type", "save");
+        intent.putExtra("dest_file", destFile);
+        intent.putExtra("filename", filename);
+        intent.putExtra("encoding", encoding);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     @NonNull

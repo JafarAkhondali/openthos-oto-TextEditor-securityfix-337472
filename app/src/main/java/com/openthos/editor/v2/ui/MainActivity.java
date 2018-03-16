@@ -19,7 +19,6 @@
 package com.openthos.editor.v2.ui;
 
 import android.Manifest;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -49,7 +48,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -62,16 +60,17 @@ import com.openthos.common.utils.IOUtils;
 import com.openthos.common.utils.L;
 import com.openthos.common.utils.SysUtils;
 import com.openthos.common.utils.UIUtils;
-import com.openthos.editor.v2.ui.activity.BaseActivity;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.GroupMenuAdapter;
 import com.openthos.editor.v2.bean.Command;
-import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
+import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.task.CheckUpgradeTask;
 import com.openthos.editor.v2.task.ClusterCommand;
 import com.openthos.editor.v2.task.LocalTranslateTask;
+import com.openthos.editor.v2.ui.activity.BaseActivity;
+import com.openthos.editor.v2.ui.activity.SettingsActivity;
 import com.openthos.editor.v2.ui.dialog.ChangeThemeDialog;
 import com.openthos.editor.v2.ui.dialog.CharsetsDialog;
 import com.openthos.editor.v2.ui.dialog.GotoLineDialog;
@@ -79,7 +78,6 @@ import com.openthos.editor.v2.ui.dialog.InsertDateTimeDialog;
 import com.openthos.editor.v2.ui.dialog.LangListDialog;
 import com.openthos.editor.v2.ui.dialog.RunDialog;
 import com.openthos.editor.v2.ui.dialog.WrapCharDialog;
-import com.openthos.editor.v2.ui.activity.SettingsActivity;
 import com.openthos.editor.v2.view.TabViewPager;
 import com.openthos.editor.v2.view.menu.MenuDef;
 import com.openthos.editor.v2.view.menu.MenuFactory;
@@ -566,10 +564,9 @@ public class MainActivity extends BaseActivity
                 //    SpeedActivity.startActivity(this);
                 //    break;
                 //}
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.openthos.filemanager",
-                                             "com.openthos.filemanager.PickerActivity"));
-                startActivityForResult(intent, 000);
+                Intent intent = new Intent("android.intent.action.FILE_SELECTOR");
+                intent.putExtra("type", "open");
+                startActivityForResult(intent, RC_OPEN_FILE);
                 //FileExplorerActivity.startPickFileActivity(this, null, RC_OPEN_FILE);
                 break;
             case R.id.m_goto_line:
@@ -770,13 +767,16 @@ public class MainActivity extends BaseActivity
             return;
         switch (requestCode) {
             case RC_OPEN_FILE:
-                if (data == null)
+                if (data == null) {
                     break;
-                openFile(FileExplorerActivity.getFile(data), FileExplorerActivity.getFileEncoding(data), 0, 0);
+                }
+                //openFile(FileExplorerActivity.getFile(data), FileExplorerActivity.
+                //        getFileEncoding(data), 0, 0);
+                openFile(data.getStringExtra("path"));
                 break;
-            case RC_SAVE:
-                Toast.makeText(getContext(), "RC_SAVE", Toast.LENGTH_LONG).show();
-                String file = FileExplorerActivity.getFile(data);
+            case RC_SAVE://另存为
+                String file = data.getStringExtra("path");
+                //Log.i("Smaster::::", "file::::" + file);
                 String encoding = FileExplorerActivity.getFileEncoding(data);
                 tabManager.getEditorAdapter().getCurrentEditorDelegate().saveTo(new File(file), encoding);
                 break;

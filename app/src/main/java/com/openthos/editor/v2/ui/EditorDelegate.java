@@ -29,13 +29,13 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.bean.Command;
+import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 import com.openthos.editor.v2.interfaces.OnVisibilityChangedListener;
 import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.ui.dialog.DocumentInfoDialog;
@@ -45,7 +45,6 @@ import com.openthos.editor.v2.view.EditorView;
 import com.openthos.editor.v2.view.menu.MenuDef;
 import com.openthos.editor.v2.widget.text.EditAreaView;
 import com.openthos.editor.v2.widget.text.JsCallback;
-import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 
 import java.io.File;
 
@@ -295,10 +294,8 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
                 ((MainActivity) context).doNextCommand();
                 break;
             case SAVE:  //文件菜单下的保存
-                Toast.makeText(getContext(), "SAVE", Toast.LENGTH_LONG).show();
                 if (!readonly)
                     document.save(command.args.getBoolean(KEY_CLUSTER, false), (SaveListener) command.object);
-                //document.saveAs();
                 break;
             case SAVE_AS:
                 document.saveAs();
