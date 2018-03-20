@@ -1457,6 +1457,8 @@ exports.capture = function(el, eventHandler, releaseCaptureHandler) {
     exports.addListener(document, "mousemove", eventHandler, true);
     exports.addListener(document, "mouseup", onMouseUp, true);
     exports.addListener(document, "dragstart", onMouseUp, true);
+
+
     
     return onMouseUp;
 };
@@ -1464,7 +1466,7 @@ exports.capture = function(el, eventHandler, releaseCaptureHandler) {
 exports.addTouchMoveListener = function (el, callback) {
     if ("ontouchmove" in el) {
         var startx, starty;
-        exports.addListener(el, "touchstart", function (e) {
+        exports.addListener(el, "touchstart", function (e) { //Smaster
             var touchObj = e.changedTouches[0];
             startx = touchObj.clientX;
             starty = touchObj.clientY;
@@ -1671,7 +1673,8 @@ exports.addCommandKeyListener = function(el, callback) {
         var lastDefaultPrevented = null;
 
         addListener(el, "keydown", function(e) {
-            if (AndroidEditor) {
+           if (AndroidEditor) {
+                console.log("Smaster ::shiftKey::");
                 var shiftKey = AndroidEditor.isShiftPressed();
                 var altKey = AndroidEditor.isAltPressed();
                 var ctrlKey = AndroidEditor.isCtrlPressed();
@@ -3706,6 +3709,7 @@ var auchorRow, auchorColumn;
 var diffX = 0, diffY = 0;
 
 function SelectDrawableEventHandler(defaultHandler, mouseHandler) {
+    console.log("Smaster --> mouseHandler");
     this.editor = mouseHandler.editor;
     var selectHandleDrawables = this.editor.renderer.$cursorLayer.selectHandleDrawables;
 
@@ -3806,7 +3810,7 @@ function DefaultHandlers(mouseHandler) {
 
     this.pinch = new Pinch(editor);
 
-    this.mousedown = this.onMouseDown.bind(mouseHandler);
+    this.mousedown = this.onMouseDown.bind(mouseHandler);//注释掉shift失效
     editor.setDefaultHandler("mousedown", this.mousedown);
     this.onDoubleClickHandler = this.onDoubleClick.bind(mouseHandler);
     editor.setDefaultHandler("tripleclick", this.onTripleClick.bind(mouseHandler));
@@ -3828,7 +3832,7 @@ function DefaultHandlers(mouseHandler) {
 
     mouseHandler.selectByLines = this.extendSelectionBy.bind(mouseHandler, "getLineRange");
     mouseHandler.selectByWords = this.extendSelectionBy.bind(mouseHandler, "getWordRange");
-    new SelectDrawableEventHandler(this, mouseHandler);
+    new SelectDrawableEventHandler(this, mouseHandler);  //Smaster 注释掉　拖拽失败
 
     this.fastScroller = new FastScroller(function (left, top, zoom) {
         editor.session.setScrollLeft(left);
@@ -4396,8 +4400,8 @@ var AUTOSCROLL_DELAY = 200;
 var SCROLL_CURSOR_DELAY = 200;
 var SCROLL_CURSOR_HYSTERESIS = 5;
 
-function DragdropHandler(mouseHandler) {
-
+function DragdropHandler(mouseHandler) { //Smaster
+    console.log("Smaster --> drag");
     var editor = mouseHandler.editor;
 
     var blankImage = dom.createElement("img");
@@ -4424,6 +4428,7 @@ function DragdropHandler(mouseHandler) {
     var cursorPointOnCaretMoved;
 
     this.onDragStart = function(e) {
+        console.log("Smaster -->拖放事件开始");
         if (this.cancelDrag || !mouseTarget.draggable) {
             var self = this;
             setTimeout(function(){
@@ -4453,6 +4458,7 @@ function DragdropHandler(mouseHandler) {
 
     this.onDragEnd = function(e) {
         mouseTarget.draggable = false;
+        console.log("Smaster -->拖放事件结束");
         isInternal = false;
         this.setState(null);
         if (!editor.getReadOnly()) {
@@ -4608,6 +4614,7 @@ function DragdropHandler(mouseHandler) {
     }
 
     function addDragMarker() {
+        console.log("Smaster --> add Drag");
         range = editor.selection.toOrientedRange();
         dragSelectionMarker = editor.session.addMarker(range, "ace_selection", editor.getSelectionStyle());
         editor.clearSelection();
@@ -5299,6 +5306,7 @@ var MouseHandler = function(editor) {
             return;
 
         this.editor._emit(name, new MouseEvent(e, this.editor));
+        console.log("Smaster----> onMouseMove");
     };
 
     this.onMouseWheel = function(name, e) {
@@ -5365,7 +5373,6 @@ var MouseHandler = function(editor) {
         if (useragent.isOldIE && ev.domEvent.type == "dblclick") {
             return setTimeout(function() {onCaptureEnd(ev);});
         }
-
         self.$onCaptureMouseMove = onMouseMove;
         self.releaseMouse = event.capture(this.editor.container, onMouseMove, onCaptureEnd);
         var timerId = setInterval(onCaptureInterval, 20);
@@ -12966,7 +12973,7 @@ var Editor = function(renderer, session) {
     this.commands.on("exec", this.$historyTracker);
 
     this.$initOperationListeners();
-    
+
     this._$emitInputEvent = lang.delayedCall(function() {
         this._signal("input", {});
         if (this.session && this.session.bgTokenizer)
@@ -18672,6 +18679,7 @@ function onMouseDown(e) {
     var ev = e.domEvent;
     var alt = ev.altKey;
     var shift = ev.shiftKey;
+    console.log("Smaster----->" + shift);
     var ctrl = ev.ctrlKey;
     var accel = e.getAccelKey();
     var button = e.getButton();
@@ -18683,7 +18691,7 @@ function onMouseDown(e) {
         e.editor.textInput.onContextMenu(e.domEvent);
         return;
     }
-    
+
     if (!ctrl && !alt && !accel) {
         if (button === 0 && e.editor.inMultiSelectMode)
             e.editor.exitMultiSelectMode();
@@ -18713,7 +18721,7 @@ function onMouseDown(e) {
     var selectionMode;
     if (editor.$mouseHandler.$enableJumpToDef) {
         if (ctrl && alt || accel && alt)
-            selectionMode = shift ? "block" : "add";
+            selectionMode = shift ? "block" : "add";//false -> add and true -> block
         else if (alt && editor.$blockSelectEnabled)
             selectionMode = "block";
     } else {
@@ -18730,9 +18738,9 @@ function onMouseDown(e) {
         editor.$mouseHandler.cancelContextMenu();
     }
 
-    if (selectionMode == "add") {
+    if (selectionMode == "add") { //shift == false
         if (!isMultiSelect && inSelection)
-            return; // dragging
+            return; // dragging  Smaster
 
         if (!isMultiSelect) {
             var range = selection.toOrientedRange();
@@ -18768,7 +18776,7 @@ function onMouseDown(e) {
             editor.inVirtualSelectionMode = false;
         });
 
-    } else if (selectionMode == "block") {
+    } else if (selectionMode == "block") { //shift == true
         e.stop();
         editor.inVirtualSelectionMode = true;        
         var initialRange;
@@ -18802,7 +18810,7 @@ function onMouseDown(e) {
         }
         
         if (shift)
-            screenAnchor = session.documentToScreenPosition(selection.lead);            
+            screenAnchor = session.documentToScreenPosition(selection.lead);
         else
             selection.moveToPosition(pos);
         editor.$blockScrolling--;
