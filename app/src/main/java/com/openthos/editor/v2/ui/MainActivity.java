@@ -62,7 +62,7 @@ import com.openthos.common.utils.SysUtils;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.adapter.GroupMenuAdapter;
+import com.openthos.editor.v2.adapter.TopMenuAdapter;
 import com.openthos.editor.v2.bean.Command;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
 import com.openthos.editor.v2.interfaces.SaveListener;
@@ -261,7 +261,7 @@ public class MainActivity extends BaseActivity
         mCommonMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mFileName.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        GroupMenuAdapter adapter = new GroupMenuAdapter(this);
+        TopMenuAdapter adapter = new TopMenuAdapter(this);
         adapter.setOnMenuItemClickListener(new MenuItemClickListener() {
             @Override
             public void onMenuItemClick(int id) {

@@ -39,7 +39,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.openthos.common.utils.IOUtils;
@@ -51,7 +50,7 @@ import com.openthos.editor.v2.ThemeList;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
 import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 import com.openthos.editor.v2.ui.MainActivity;
-import com.openthos.editor.v2.ui.dialog.MenuDialog;
+import com.openthos.editor.v2.ui.dialog.TopMenuDialog;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 
 import java.io.InputStream;
@@ -636,7 +635,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                 && action == MotionEvent.ACTION_DOWN) {
             if (mIsShow) {
                 //MenuEditorDialog menuDialog = MenuEditorDialog.getInstance(getContext(), this);
-                MenuDialog menuDialog = MenuDialog.getInstance(getContext());
+                TopMenuDialog menuDialog = TopMenuDialog.getInstance(getContext());
                 menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
                 ).getMenuItemInfos(false, null, true), x, y);
                 //menuDialog.showLocationDialog(x, y);
@@ -664,7 +663,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                     }
                 });
             } else {
-                MenuDialog menuDialog = MenuDialog.getInstance(getContext());
+                TopMenuDialog menuDialog = TopMenuDialog.getInstance(getContext());
                 menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
                 ).getMenuItemInfos(false, null, false), x, y);
                 menuDialog.setOnMenuItemClickListener(new MenuItemClickListener() {

@@ -43,23 +43,23 @@ import java.util.List;
  * Created by ljh on 18-1-3.
  */
 
-public class MenuDialog extends Dialog implements AdapterView.OnItemClickListener {
+public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickListener {
 
-    private static MenuDialog mMenuDialog;
+    private static TopMenuDialog mMenuDialog;
     private ListView mMenuList;
     private GroupMenuListAdapter mAdapter;
     private List<MenuItemInfo> mDatas;
     private View mSelectView;
     private MenuItemClickListener mListener;
 
-    public static MenuDialog getInstance(Context context) {
+    public static TopMenuDialog getInstance(Context context) {
         if (mMenuDialog == null) {
-            mMenuDialog = new MenuDialog(context);
+            mMenuDialog = new TopMenuDialog(context);
         }
         return mMenuDialog;
     }
 
-    public MenuDialog(@NonNull Context context) {
+    public TopMenuDialog(@NonNull Context context) {
         super(context, R.style.MenuDialogStyle);
         mDatas = new ArrayList<>();
         mAdapter = new GroupMenuListAdapter(context, mDatas);

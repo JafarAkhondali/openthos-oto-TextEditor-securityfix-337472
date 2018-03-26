@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
-import com.openthos.editor.v2.ui.dialog.MenuDialog;
+import com.openthos.editor.v2.ui.dialog.TopMenuDialog;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 import com.openthos.editor.v2.view.menu.MenuGroup;
 
@@ -39,19 +39,19 @@ import java.util.List;
  * Created by ljh on 18-1-3.
  */
 
-public class GroupMenuAdapter extends RecyclerView.Adapter {
+public class TopMenuAdapter extends RecyclerView.Adapter {
     private final MenuFactory mMenuFactory;
     private MenuItemClickListener mListener;
     private Context mContext;
     private List<MenuGroup> mMenuGroups;
     private View lastView;
-    private MenuDialog menuDialog;
+    private TopMenuDialog menuDialog;
 
-    public GroupMenuAdapter(Context context) {
+    public TopMenuAdapter(Context context) {
         mContext = context;
         mMenuFactory = MenuFactory.getInstance(context);
         mMenuGroups = new ArrayList<>();
-        menuDialog = MenuDialog.getInstance(mContext);
+        menuDialog = TopMenuDialog.getInstance(mContext);
         for (MenuGroup group : MenuGroup.values()) {
             if (group.getNameResId() != 0) {
                 mMenuGroups.add(group);
