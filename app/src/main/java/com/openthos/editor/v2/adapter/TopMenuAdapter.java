@@ -20,11 +20,15 @@ package com.openthos.editor.v2.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.interfaces.MenuItemClickListener;
@@ -34,6 +38,7 @@ import com.openthos.editor.v2.view.menu.MenuGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Created by ljh on 18-1-3.
@@ -52,6 +57,7 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
         mMenuFactory = MenuFactory.getInstance(context);
         mMenuGroups = new ArrayList<>();
         menuDialog = TopMenuDialog.getInstance(mContext);
+        menuDialog.setCanceledOnTouchOutside(true);
         for (MenuGroup group : MenuGroup.values()) {
             if (group.getNameResId() != 0) {
                 mMenuGroups.add(group);
@@ -85,33 +91,51 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView menuText;
+
         public ViewHolder(View itemView) {
             super(itemView);
             menuText = (TextView) itemView.findViewById(R.id.menu_item_text);
-            menuText.setOnTouchListener(new View.OnTouchListener() {
+            MenuTouchListener menuTouchListener = new MenuTouchListener();
+            menuText.setOnTouchListener(menuTouchListener);
+
+            menuText.setOnHoverListener(new View.OnHoverListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                public boolean onHover(View v, MotionEvent event) {
                     switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            //v.setSelected(true);
-                            //if (lastView !=null && lastView != v) {
-                            //    lastView.setSelected(false);
-                            //}
-                            //lastView = v;
-                            if (menuDialog.isShowing()) {
-                                menuDialog.dismiss();
-                            } else {
-                                /*menuDialog.show(mMenuFactory.getMenuItemInfos(mMenuGroups.
-                                                             get((Integer) v.getTag())), v);*///getTag
-                                menuDialog.show(mMenuFactory.getMenuItemInfos(true,
-                                        mMenuGroups.get((Integer) v.getTag()), true), v);
-                            }
-                            menuDialog.setOnMenuItemClickListener(mListener);
+                        case MotionEvent.ACTION_HOVER_ENTER:
+                            v.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
+                            //menuDialog.show(mMenuFactory.getMenuItemInfos(true,
+                            //            mMenuGroups.get((Integer) v.getTag()), true), v);
+                            break;
+                        case MotionEvent.ACTION_HOVER_EXIT:
+                            v.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                             break;
                     }
                     return false;
                 }
             });
+        }
+    }
+
+    private class MenuTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (v == null) {
+                return false;
+            }
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (menuDialog.isShowing()) {
+                        menuDialog.dismiss();
+                    }
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    menuDialog.show(mMenuFactory.getMenuItemInfos(true,
+                            mMenuGroups.get((Integer) v.getTag()), true), v);
+                    menuDialog.setOnMenuItemClickListener(mListener);
+                    return true;
+            }
+            return false;
         }
     }
 }

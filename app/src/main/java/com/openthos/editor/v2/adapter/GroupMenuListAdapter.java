@@ -103,12 +103,12 @@ public class GroupMenuListAdapter extends BaseAdapter {
             switch (event.getAction()){
                 case MotionEvent.ACTION_HOVER_ENTER:
                     v.setBackgroundColor(
-                            mContext.getResources().getColor(android.R.color.holo_blue_bright));
+                            mContext.getResources().getColor(R.color.gray));
                     holder.text.setSelected(true);
                     break;
                 case MotionEvent.ACTION_HOVER_EXIT:
                     v.setBackgroundColor(
-                            mContext.getResources().getColor(R.color.gray));
+                            mContext.getResources().getColor(R.color.white));
                     holder.text.setSelected(false);
                     break;
             }
