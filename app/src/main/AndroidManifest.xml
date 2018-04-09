@@ -12,22 +12,6 @@
 
     <application
         android:name="com.openthos.editor.v2.app.MainApp"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/texteditor"

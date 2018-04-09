@@ -24,6 +24,18 @@ captures
 
 tools/assets/ace/node_modules
 
+# IntelliJ IDEA project files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+out/
+
+# OS auto gen
+Thumbs.db
+.DS_Store
+
 # android 3.0 config
 app/build.gradle
 build.gradle
