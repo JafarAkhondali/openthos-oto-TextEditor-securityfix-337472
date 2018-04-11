@@ -39,7 +39,7 @@ public class TabAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).
-                              inflate(R.layout.tab_item, parent, false));
+                inflate(R.layout.tab_item, parent, false));
     }
 
     @Override
@@ -62,6 +62,12 @@ public class TabAdapter extends RecyclerView.Adapter {
             viewHolder.mAddImageView.setOnClickListener(onClickListener);
             viewHolder.itemView.setTag(position);
             viewHolder.itemView.setOnClickListener(onClickListener);
+
+            if (getItemCount() == 1 || position == getItemCount() - 1) {
+                viewHolder.mAddImageView.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.mAddImageView.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -127,7 +127,6 @@ public class MainActivity extends BaseActivity
     private MenuListView mMenuList;
     private RecyclerView mGroupMenu;
     private RecyclerView mCommonMenu;
-    private RecyclerView mFileName;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -261,18 +260,16 @@ public class MainActivity extends BaseActivity
         mTabViewPager = (TabViewPager) findViewById(R.id.tab_pager);
         mMenuRecyclerView = (RecyclerView) findViewById(R.id.menuRecyclerView);
         mDrawerLayout = (TranslucentDrawerLayout) findViewById(R.id.drawer_layout);
-        mTabRecyclerView = (RecyclerView) findViewById(R.id.tab_file_name);
         //mVersionTextView = (TextView) findViewById(R.id.versionTextView);
 
         mGroupMenu = (RecyclerView) findViewById(R.id.group_menu);
         mCommonMenu = (RecyclerView) findViewById(R.id.common_menu);
-        mFileName = (RecyclerView) findViewById(R.id.tab_file_name);
+        mTabRecyclerView = (RecyclerView) findViewById(R.id.tab_file_name);
     }
 
     public void initData() {
         mGroupMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mCommonMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mFileName.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mMenuList.setParentView(mFrameLayout);
 
         TopMenuAdapter adapter = new TopMenuAdapter(this);

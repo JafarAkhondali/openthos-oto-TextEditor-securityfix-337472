@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/tabBackground"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/padding_five">
+    android:padding="@dimen/padding_three">
 
     <TextView
         android:id="@+id/title_text_view"
@@ -25,16 +25,8 @@
         android:layout_marginLeft="@dimen/padding_five"
         android:layout_marginRight="@dimen/padding_five"
         android:textColor="?android:attr/textColorSecondary"
-        android:visibility="gone"
-        android:textSize="10sp"/>
-
-    <ImageView
-        android:id="@+id/add_image_view"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:scaleType="center"
-        android:layout_gravity="center"
-        android:src="@drawable/add_close_view"/>
+        android:textSize="10sp"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/close_image_view"
@@ -43,6 +35,14 @@
         android:layout_marginRight="@dimen/padding_five"
         android:scaleType="center"
         android:src="@drawable/round_close"/>
+
+    <ImageView
+        android:id="@+id/add_image_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:src="@drawable/add_close_view"/>
 
     <View
         android:layout_width="2dp"

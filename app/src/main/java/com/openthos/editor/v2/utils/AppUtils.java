@@ -21,7 +21,6 @@ package com.openthos.editor.v2.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Base64;
-import android.util.Log;
 
 import com.openthos.common.utils.L;
 import com.openthos.common.utils.SysUtils;
@@ -44,7 +43,6 @@ public class AppUtils {
             MessageDigest md = MessageDigest.getInstance("SHA");
             md.update(signature);
             final String currentSignature = Base64.encodeToString(md.digest(), Base64.DEFAULT);
-            Log.i("ljh", currentSignature);
             return rightSign.equals(currentSignature);
         } catch (Exception e) {
             L.e(e);
