@@ -91,9 +91,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
-/**
- * @author Jecelyin Peng <jecelyin@gmail.com>
- */
 public class MainActivity extends BaseActivity
         implements MenuItem.OnMenuItemClickListener
         , FolderChooserDialog.FolderCallback

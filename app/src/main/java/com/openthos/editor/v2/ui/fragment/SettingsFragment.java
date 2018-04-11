@@ -27,6 +27,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceScreen;
 
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
@@ -87,6 +88,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         findPreference("pref_translate").setOnPreferenceClickListener(this);
         findPreference("pref_feedback").setOnPreferenceClickListener(this);
 //        findPreference("pref_donate").setOnPreferenceClickListener(this);
+
+        //取消以下内容：屏幕方向（锁定横屏）自动检查更新（不检查）意见反馈 翻译本应用 关于
+        PreferenceScreen preferenceScreen = getPreferenceScreen();
+        preferenceScreen.removePreference(findPreference("pref_auto_check_updates"));
+        preferenceScreen.removePreference(findPreference("pref_feedback"));
+        preferenceScreen.removePreference(findPreference("pref_translate"));
+        preferenceScreen.removePreference(findPreference("pref_about"));
+
+        ((PreferenceGroup) findPreference("other"))
+                .removePreference(findPreference("pref_screen_orientation"));
     }
 
     @Override

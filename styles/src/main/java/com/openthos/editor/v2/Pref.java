@@ -133,9 +133,9 @@ public class Pref implements SharedPreferences.OnSharedPreferenceChangeListener 
         map.put(KEY_AUTO_SAVE, false);
         map.put(KEY_ENABLE_ROOT, true);
         map.put(KEY_REMEMBER_LAST_OPENED_FILES, true);
-        map.put(KEY_SCREEN_ORIENTATION, "auto");
+        map.put(KEY_SCREEN_ORIENTATION, "landscape");
         map.put(KEY_KEEP_SCREEN_ON, false);
-        map.put(KEY_PREF_AUTO_CHECK_UPDATES, true);
+        map.put(KEY_PREF_AUTO_CHECK_UPDATES, false);
         map.put(KEY_PREF_KEEP_BACKUP_FILE, true);
         map.put(KEY_PREF_ENABLE_DRAWERS, false);
 

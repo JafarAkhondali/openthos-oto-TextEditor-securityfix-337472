@@ -75,6 +75,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="other"
         android:title="@string/other">
 
         <CheckBoxPreference
