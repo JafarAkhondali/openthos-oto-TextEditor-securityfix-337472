@@ -18,10 +18,12 @@
 
 package com.openthos.editor.v2.interfaces;
 
+import com.openthos.editor.v2.view.menu.MenuItemInfo;
+
 /**
  * Created by ljh on 18-1-4.
  */
 
-public interface MenuItemClickListener {
-    void onMenuItemClick(int id);
+public interface OnMenuClickListener {
+    void onMenuItemClick(MenuItemInfo itemInfo);
 }

@@ -20,25 +20,21 @@ package com.openthos.editor.v2.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.interfaces.MenuItemClickListener;
-import com.openthos.editor.v2.ui.dialog.TopMenuDialog;
+import com.openthos.editor.v2.interfaces.OnMenuClickListener;
+import com.openthos.editor.v2.ui.MainActivity;
+import com.openthos.editor.v2.view.MenuListView;
 import com.openthos.editor.v2.view.menu.MenuFactory;
 import com.openthos.editor.v2.view.menu.MenuGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * Created by ljh on 18-1-3.
@@ -46,18 +42,15 @@ import java.util.Timer;
 
 public class TopMenuAdapter extends RecyclerView.Adapter {
     private final MenuFactory mMenuFactory;
-    private MenuItemClickListener mListener;
     private Context mContext;
     private List<MenuGroup> mMenuGroups;
-    private View lastView;
-    private TopMenuDialog menuDialog;
+    private MenuListView mMenuListView;
 
     public TopMenuAdapter(Context context) {
         mContext = context;
         mMenuFactory = MenuFactory.getInstance(context);
         mMenuGroups = new ArrayList<>();
-        menuDialog = TopMenuDialog.getInstance(mContext);
-        menuDialog.setCanceledOnTouchOutside(true);
+        mMenuListView = ((MainActivity) mContext).getMenuList();
         for (MenuGroup group : MenuGroup.values()) {
             if (group.getNameResId() != 0) {
                 mMenuGroups.add(group);
@@ -68,7 +61,7 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.group_menu_item,
-                                                  parent, false);
+                parent, false);
         return new ViewHolder(view);
     }
 
@@ -85,8 +78,8 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
         return mMenuGroups.size();
     }
 
-    public void setOnMenuItemClickListener(MenuItemClickListener listener) {
-        mListener = listener;
+    public void setOnMenuItemClickListener(OnMenuClickListener onMenuClickListener) {
+        mMenuListView.setOnMenuClickListener(onMenuClickListener);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -103,12 +96,15 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
                 public boolean onHover(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_HOVER_ENTER:
-                            v.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
-                            //menuDialog.show(mMenuFactory.getMenuItemInfos(true,
-                            //            mMenuGroups.get((Integer) v.getTag()), true), v);
+                            if (mMenuListView.isVisibility()) {
+                                v.setSelected(true);
+                                mMenuListView.show(v, mMenuFactory.getMenuItemInfos(true,
+                                        mMenuGroups.get((Integer) v.getTag()), true));
+                                mMenuListView.setCanCancel(false);
+                            }
                             break;
                         case MotionEvent.ACTION_HOVER_EXIT:
-                            v.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                            v.setSelected(false);
                             break;
                     }
                     return false;
@@ -125,15 +121,11 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
             }
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    if (menuDialog.isShowing()) {
-                        menuDialog.dismiss();
-                    }
-                    return true;
+                    mMenuListView.show(v, mMenuFactory.getMenuItemInfos(true,
+                            mMenuGroups.get((Integer) v.getTag()), true));
+                    mMenuListView.setCanCancel(false);
                 case MotionEvent.ACTION_UP:
-                    menuDialog.show(mMenuFactory.getMenuItemInfos(true,
-                            mMenuGroups.get((Integer) v.getTag()), true), v);
-                    menuDialog.setOnMenuItemClickListener(mListener);
-                    return true;
+                    break;
             }
             return false;
         }

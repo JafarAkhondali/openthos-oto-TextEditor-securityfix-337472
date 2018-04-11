@@ -21,19 +21,25 @@ package com.openthos.editor.v2.ui.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.openthos.editor.v2.R;
-import com.openthos.editor.v2.adapter.GroupMenuListAdapter;
-import com.openthos.editor.v2.interfaces.MenuItemClickListener;
+import com.openthos.editor.v2.interfaces.OnMenuClickListener;
 import com.openthos.editor.v2.view.menu.MenuItemInfo;
 
 import java.util.ArrayList;
@@ -43,14 +49,14 @@ import java.util.List;
  * Created by ljh on 18-1-3.
  */
 
-public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickListener {
+public class TopMenuDialog extends Dialog {
 
     private static TopMenuDialog mMenuDialog;
     private ListView mMenuList;
     private GroupMenuListAdapter mAdapter;
     private List<MenuItemInfo> mDatas;
     private View mSelectView;
-    private MenuItemClickListener mListener;
+    private OnMenuClickListener mOnMenuClickListener;
 
     public static TopMenuDialog getInstance(Context context) {
         if (mMenuDialog == null) {
@@ -63,6 +69,7 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
         super(context, R.style.MenuDialogStyle);
         mDatas = new ArrayList<>();
         mAdapter = new GroupMenuListAdapter(context, mDatas);
+        create();
     }
 
     @Override
@@ -72,7 +79,6 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
         setCanceledOnTouchOutside(true);
         initView();
         initData();
-        initListener();
     }
 
     private void initView() {
@@ -81,10 +87,6 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
 
     private void initData() {
         mMenuList.setAdapter(mAdapter);
-    }
-
-    private void initListener() {
-        mMenuList.setOnItemClickListener(this);
     }
 
     public void show(List<MenuItemInfo> datas, View view) {
@@ -111,6 +113,9 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
             maxWidth = Math.max(views.getMeasuredWidth(), maxWidth);
             height = height + views.getMeasuredHeight();
         }
+        int paddingOne = getContext().getResources().getDimensionPixelSize(R.dimen.padding_one);
+        maxWidth = maxWidth + paddingOne * 2;
+        height = height + paddingOne * 2;
         mMenuList.setLayoutParams(new LinearLayout.LayoutParams(maxWidth, height));
     }
 
@@ -136,6 +141,9 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
             maxWidth = Math.max(views.getMeasuredWidth(), maxWidth);
             height = height + views.getMeasuredHeight();
         }
+        int paddingOne = getContext().getResources().getDimensionPixelSize(R.dimen.padding_one);
+        maxWidth = maxWidth + paddingOne * 2;
+        height = height + paddingOne * 2;
         mMenuList.setLayoutParams(new LinearLayout.LayoutParams(maxWidth, height));
     }
 
@@ -147,15 +155,101 @@ public class TopMenuDialog extends Dialog implements AdapterView.OnItemClickList
         super.dismiss();
     }
 
-    public void setOnMenuItemClickListener(MenuItemClickListener listener) {
-        mListener = listener;
+    public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
+        Log.i("Smaster", "position setOnMenuClickListener");
+        mOnMenuClickListener = onMenuClickListener;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mListener != null) {
-            mListener.onMenuItemClick(mDatas.get(position).getItemId());
+    private class GroupMenuListAdapter extends BaseAdapter {
+        private Context mContext;
+        private List<MenuItemInfo> mDatas;
+
+        public GroupMenuListAdapter(Context context, List<MenuItemInfo> datas) {
+            mContext = context;
+            mDatas = datas;
         }
-        dismiss();
+
+        @Override
+        public int getCount() {
+            return mDatas.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mDatas.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext)
+                        .inflate(R.layout.group_menu_list_item, parent, false);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            MenuItemInfo itemInfo = mDatas.get(position);
+            Drawable drawable = mContext.getResources().getDrawable(itemInfo.getIconResId());
+            holder.icon.setImageDrawable(drawable);
+            holder.text.setText(mContext.getResources().getString(itemInfo.getTitleResId()));
+            holder.layout.setTag(itemInfo);
+            return convertView;
+        }
+
+        public void refresh(List<MenuItemInfo> datas) {
+            if (datas != null) {
+                mDatas.clear();
+                mDatas.addAll(datas);
+                notifyDataSetChanged();
+            }
+        }
+
+        private class ViewHolder implements View.OnHoverListener, View.OnTouchListener {
+            private LinearLayout layout;
+            private ImageView icon;
+            private TextView text;
+
+            public ViewHolder(View view) {
+                layout = (LinearLayout) view.findViewById(R.id.layout);
+                icon = (ImageView) view.findViewById(R.id.img_icon);
+                text = (TextView) view.findViewById(R.id.menu_item_text);
+                layout.setOnHoverListener(this);
+                layout.setOnTouchListener(this);
+            }
+
+            @Override
+            public boolean onHover(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_HOVER_ENTER:
+                        v.setSelected(true);
+                        break;
+                    case MotionEvent.ACTION_HOVER_EXIT:
+                        v.setSelected(false);
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mOnMenuClickListener != null) {
+                            mOnMenuClickListener.onMenuItemClick((MenuItemInfo) v.getTag());
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                }
+                return false;
+            }
+        }
     }
 }

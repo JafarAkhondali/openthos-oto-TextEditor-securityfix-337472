@@ -47,11 +47,12 @@ import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.ThemeList;
-import com.openthos.editor.v2.interfaces.MenuItemClickListener;
+import com.openthos.editor.v2.interfaces.OnMenuClickListener;
 import com.openthos.editor.v2.interfaces.OnTextChangeListener;
 import com.openthos.editor.v2.ui.MainActivity;
 import com.openthos.editor.v2.ui.dialog.TopMenuDialog;
 import com.openthos.editor.v2.view.menu.MenuFactory;
+import com.openthos.editor.v2.view.menu.MenuItemInfo;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     private boolean textChanged;
     private InputConnectionHacker inputConnectionHacker;
     private String selectedText;
-    private MenuItemClickListener mListener;
+    private OnMenuClickListener mListener;
 
     private Boolean mIsShow = false;
 
@@ -515,7 +516,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
 
     public void hideSoftInput() {
         InputMethodManager imm = (InputMethodManager) getContext().
-                                 getSystemService(Context.INPUT_METHOD_SERVICE);
+                getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
@@ -560,7 +561,6 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     public void getSelectedText(JsCallback<String> callback) {
-        //execCommand(new EditorCommand.Builder("getSelectedText").callback(callback).build());
         callback.onCallback(getSelectedText());
     }
 
@@ -597,7 +597,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     }
 
     public void doFind(String findText, String replaceText, boolean caseSensitive,
-                                        boolean wholeWordOnly, boolean regex) {
+                       boolean wholeWordOnly, boolean regex) {
         execCommand(new EditorCommand.Builder("doFind")
                 .put("findText", findText)
                 .put("replaceText", replaceText)
@@ -633,17 +633,15 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
 
         if (event.getButtonState() == MotionEvent.BUTTON_SECONDARY
                 && action == MotionEvent.ACTION_DOWN) {
+            final TopMenuDialog menuDialog = TopMenuDialog.getInstance(getContext());
             if (mIsShow) {
-                //MenuEditorDialog menuDialog = MenuEditorDialog.getInstance(getContext(), this);
-                TopMenuDialog menuDialog = TopMenuDialog.getInstance(getContext());
                 menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
                 ).getMenuItemInfos(false, null, true), x, y);
-                //menuDialog.showLocationDialog(x, y);
-                menuDialog.setOnMenuItemClickListener(new MenuItemClickListener() {
+                menuDialog.setOnMenuClickListener(new OnMenuClickListener() {
                     @Override
-                    public void onMenuItemClick(int id) {
-                        Log.i("Smaster -->", "id:::" + id);
-                        switch (id) {
+                    public void onMenuItemClick(MenuItemInfo itemInfo) {
+                        Log.i("Smaster -->", "id:::" + itemInfo.getItemId());
+                        switch (itemInfo.getItemId()) {
                             case 2131755024://剪切
                                 cut();
                                 break;
@@ -660,17 +658,17 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                                 redo();
                                 break;
                         }
+                        menuDialog.dismiss();
                     }
                 });
             } else {
-                TopMenuDialog menuDialog = TopMenuDialog.getInstance(getContext());
                 menuDialog.showLocationDialog(MenuFactory.getInstance(getContext()
                 ).getMenuItemInfos(false, null, false), x, y);
-                menuDialog.setOnMenuItemClickListener(new MenuItemClickListener() {
+                menuDialog.setOnMenuClickListener(new OnMenuClickListener() {
                     @Override
-                    public void onMenuItemClick(int id) {
-                        Log.i("Smaster-->", "id:::" + id);
-                        switch (id) {
+                    public void onMenuItemClick(MenuItemInfo itemInfo) {
+                        Log.i("Smaster-->", "id:::" + itemInfo.getItemId());
+                        switch (itemInfo.getItemId()) {
                             case 2131755041://粘贴
                                 paste();
                                 break;
@@ -685,6 +683,7 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
                                 redo();
                                 break;
                         }
+                        menuDialog.dismiss();
                     }
                 });
             }

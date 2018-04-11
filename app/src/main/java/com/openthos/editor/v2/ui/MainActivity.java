@@ -44,6 +44,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -64,7 +65,7 @@ import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.TopMenuAdapter;
 import com.openthos.editor.v2.bean.Command;
-import com.openthos.editor.v2.interfaces.MenuItemClickListener;
+import com.openthos.editor.v2.interfaces.OnMenuClickListener;
 import com.openthos.editor.v2.interfaces.SaveListener;
 import com.openthos.editor.v2.task.CheckUpgradeTask;
 import com.openthos.editor.v2.task.ClusterCommand;
@@ -78,6 +79,7 @@ import com.openthos.editor.v2.ui.dialog.InsertDateTimeDialog;
 import com.openthos.editor.v2.ui.dialog.LangListDialog;
 import com.openthos.editor.v2.ui.dialog.RunDialog;
 import com.openthos.editor.v2.ui.dialog.WrapCharDialog;
+import com.openthos.editor.v2.view.MenuListView;
 import com.openthos.editor.v2.view.TabViewPager;
 import com.openthos.editor.v2.view.menu.MenuDef;
 import com.openthos.editor.v2.view.menu.MenuFactory;
@@ -124,6 +126,8 @@ public class MainActivity extends BaseActivity
     private PopupWindow mPopupWindow;
     private PopupWindow mLastPopupWindow;
     private TextView mPopTextView;
+    private FrameLayout mFrameLayout;
+    private MenuListView mMenuList;
     private RecyclerView mGroupMenu;
     private RecyclerView mCommonMenu;
     private RecyclerView mFileName;
@@ -139,7 +143,7 @@ public class MainActivity extends BaseActivity
 
     /**
      * 动态获取权限
-     * */
+     */
     private void requestWriteExternalStoragePermission() {
         final String[] permissions = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE
@@ -241,7 +245,19 @@ public class MainActivity extends BaseActivity
         initData();
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            mMenuList.setCanCancel(true);
+        } else if (ev.getAction() == MotionEvent.ACTION_UP) {
+            mMenuList.dismiss();
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void initView() {
+        mFrameLayout = (FrameLayout) findViewById(R.id.main_frame);
+        mMenuList = (MenuListView) findViewById(R.id.menu_list);
         mMenuLayout = (LinearLayout) findViewById(R.id.menu_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mLoadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
@@ -260,15 +276,22 @@ public class MainActivity extends BaseActivity
         mGroupMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mCommonMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mFileName.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mMenuList.setParentView(mFrameLayout);
 
         TopMenuAdapter adapter = new TopMenuAdapter(this);
-        adapter.setOnMenuItemClickListener(new MenuItemClickListener() {
+        adapter.setOnMenuItemClickListener(new OnMenuClickListener() {
             @Override
-            public void onMenuItemClick(int id) {
-                onMenuClick(id);
+            public void onMenuItemClick(MenuItemInfo itemInfo) {
+                onMenuClick(itemInfo.getItemId());
+                mMenuList.setCanCancel(true);
+                mMenuList.dismiss();
             }
         });
         mGroupMenu.setAdapter(adapter);
+    }
+
+    public MenuListView getMenuList() {
+        return mMenuList;
     }
 
     private void bindPreferences() {
@@ -335,7 +358,7 @@ public class MainActivity extends BaseActivity
     private void initUI() {
         mMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mTabRecyclerView.setLayoutManager(new LinearLayoutManager(this,
-                                          LinearLayoutManager.HORIZONTAL, false));
+                LinearLayoutManager.HORIZONTAL, false));
         mDrawerLayout.setEnabled(true);
         /**
          * 根据需求添加的文件导航栏。
@@ -356,7 +379,7 @@ public class MainActivity extends BaseActivity
         List<MenuItemInfo> menuItemInfos = MenuFactory.getInstance(this).getToolbarIcon();
         for (MenuItemInfo item : menuItemInfos) {
             MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, item.getItemId(),
-                                         Menu.NONE, item.getTitleResId());
+                    Menu.NONE, item.getTitleResId());
             //menuItem.setIcon(MenuManager.makeToolbarNormalIcon(res, item.getIconResId()));
             menuItem.setActionView(getMenuView(item));
             //menuItem.setShortcut()
@@ -364,7 +387,7 @@ public class MainActivity extends BaseActivity
             menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         MenuItem menuItem = menu.add(MenuDef.GROUP_TOOLBAR, R.id.m_menu, Menu.NONE,
-                                     getString(R.string.more_menu));
+                getString(R.string.more_menu));
         //menuItem.setIcon(R.drawable.ic_right_menu);
         menuItem.setOnMenuItemClickListener(this);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -551,7 +574,7 @@ public class MainActivity extends BaseActivity
     /**
      * 菜单中的item的触发实现
      * Smaster
-     * */
+     */
     public void onMenuClick(int id) {
         Command.CommandEnum commandEnum;
         closeMenu();
@@ -644,9 +667,9 @@ public class MainActivity extends BaseActivity
                         });
                         colorPickerDialog.show();
                     } catch (IllegalArgumentException e) {
-                    //java.lang.IllegalArgumentException: Unknown color
+                        //java.lang.IllegalArgumentException: Unknown color
                         //at android.graphics.Color.parseColor(Color.java)
-                    //at com.azeesoft.lib.colorpicker.ColorPickerDialog.getLastColor(ColorPickerDialog.java:508)
+                        //at com.azeesoft.lib.colorpicker.ColorPickerDialog.getLastColor(ColorPickerDialog.java:508)
                         Stools.saveLastColor(this, "#000000");
                     }
                 }
