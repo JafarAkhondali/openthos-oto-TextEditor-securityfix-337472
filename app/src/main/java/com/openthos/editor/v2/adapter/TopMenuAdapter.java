@@ -45,6 +45,7 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<MenuGroup> mMenuGroups;
     private MenuListView mMenuListView;
+    private View mLastView;
 
     public TopMenuAdapter(Context context) {
         mContext = context;
@@ -82,6 +83,13 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
         mMenuListView.setOnMenuClickListener(onMenuClickListener);
     }
 
+    public void setUnselect() {
+        if (!mMenuListView.isVisibility() && mLastView != null) {
+            mLastView.setSelected(false);
+            mLastView = null;
+        }
+    }
+
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView menuText;
 
@@ -96,15 +104,18 @@ public class TopMenuAdapter extends RecyclerView.Adapter {
                 public boolean onHover(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_HOVER_ENTER:
+                            if (mLastView != null && mLastView != v) {
+                                mLastView.setSelected(false);
+                            }
                             if (mMenuListView.isVisibility()) {
                                 v.setSelected(true);
                                 mMenuListView.show(v, mMenuFactory.getMenuItemInfos(true,
                                         mMenuGroups.get((Integer) v.getTag()), true));
                                 mMenuListView.setCanCancel(false);
                             }
+                            mLastView = v;
                             break;
                         case MotionEvent.ACTION_HOVER_EXIT:
-                            v.setSelected(false);
                             break;
                     }
                     return false;

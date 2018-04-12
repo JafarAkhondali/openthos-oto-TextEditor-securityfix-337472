@@ -117,6 +117,8 @@ public class MainActivity extends BaseActivity
     private ClusterCommand clusterCommand;
     //    TabDrawable tabDrawable;
     private MenuManager menuManager;
+    private TopMenuAdapter mTopMenuAdapter;
+
     private FolderChooserDialog.FolderCallback findFolderCallback;
     private long mExitTime;
 
@@ -247,6 +249,7 @@ public class MainActivity extends BaseActivity
             mMenuList.setCanCancel(true);
         } else if (ev.getAction() == MotionEvent.ACTION_UP) {
             mMenuList.dismiss();
+            mTopMenuAdapter.setUnselect();
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -272,8 +275,8 @@ public class MainActivity extends BaseActivity
         mCommonMenu.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mMenuList.setParentView(mFrameLayout);
 
-        TopMenuAdapter adapter = new TopMenuAdapter(this);
-        adapter.setOnMenuItemClickListener(new OnMenuClickListener() {
+        mTopMenuAdapter = new TopMenuAdapter(this);
+        mTopMenuAdapter.setOnMenuItemClickListener(new OnMenuClickListener() {
             @Override
             public void onMenuItemClick(MenuItemInfo itemInfo) {
                 onMenuClick(itemInfo.getItemId());
@@ -281,7 +284,7 @@ public class MainActivity extends BaseActivity
                 mMenuList.dismiss();
             }
         });
-        mGroupMenu.setAdapter(adapter);
+        mGroupMenu.setAdapter(mTopMenuAdapter);
     }
 
     public MenuListView getMenuList() {
