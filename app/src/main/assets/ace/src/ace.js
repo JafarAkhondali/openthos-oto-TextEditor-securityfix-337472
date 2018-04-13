@@ -15805,7 +15805,7 @@ var Text = function(parentEl) {
 
             stringBuilder.push(
                 "<span class='ace_invisible ace_invisible_eol'>",
-                row == this.session.getLength() - 1 ? this.EOF_CHAR : this.EOL_CHAR,
+//                row == this.session.getLength() - 1 ? this.EOF_CHAR : this.EOL_CHAR,
                 "</span>"
             );
         }
