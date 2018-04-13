@@ -215,6 +215,11 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
         }
     }
 
+    @Override
+    public ActionMode startActionMode(ActionMode.Callback callback) {
+        return null;
+    }
+
     private class JavascriptApi {
 
         @JavascriptInterface
