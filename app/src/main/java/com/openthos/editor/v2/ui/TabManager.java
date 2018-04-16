@@ -26,6 +26,7 @@ import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
 import com.openthos.editor.v2.adapter.EditorAdapter;
 import com.openthos.editor.v2.adapter.TabAdapter;
+import com.openthos.editor.v2.bean.TabInfo;
 import com.openthos.editor.v2.interfaces.TabCloseListener;
 import com.openthos.common.utils.DBHelper;
 import com.openthos.editor.v2.utils.ExtGrep;
@@ -55,8 +56,8 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
             }
         });
 
-        mainActivity.mTabRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.
-                                                         Builder(activity.getContext()).build());
+        mainActivity.mTabRecyclerView.addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(activity.getContext()).build());
         mainActivity.mTabRecyclerView.setAdapter(mTabAdapter);
 
         initEditor();
@@ -73,8 +74,7 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
 
     /**
      * 横向Tab的点击事件的实现
-     *
-     * */
+     */
     private void onTabMenuViewsClick(View v) {
         switch (v.getId()) {
             case R.id.close_image_view:
@@ -137,13 +137,12 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
     }
 
     public void newTab() {
-        mEditorAdapter.newEditor(mainActivity.getString(R.string.new_filename,
-                                            mEditorAdapter.getCount() + 1), null);
+        mEditorAdapter.newEditor(createNewTabName(), null);
         setCurrentTab(mEditorAdapter.getCount() - 1);//索引是从０开始,自然最后的索引是: getCount - 1
     }
 
     public boolean newTab(CharSequence content) {
-        mEditorAdapter.newEditor(mainActivity.getString(R.string.new_filename, mEditorAdapter.getCount() + 1), content);
+        mEditorAdapter.newEditor(createNewTabName(), content);
         setCurrentTab(mEditorAdapter.getCount() - 1);
         return true;
     }
@@ -172,6 +171,27 @@ public class TabManager implements TabViewPager.OnPageChangeListener {
         mEditorAdapter.newEditor(path, line, column, encoding);
         setCurrentTab(count);
         return true;
+    }
+
+    private String createNewTabName() {
+        boolean isHave = false;
+        TabInfo[] tabInfoList = mTabAdapter.getTabInfoList();
+        if (tabInfoList == null || tabInfoList.length == 0) {
+            return mainActivity.getString(R.string.new_filename, 1);
+        }
+        for (int i = 1; ; i++) {
+            String newFileName = mainActivity.getString(R.string.new_filename, i);
+            for (TabInfo tabInfo : tabInfoList) {
+                if (newFileName.equals(tabInfo.getTitle())) {
+                    isHave = true;
+                    break;
+                }
+            }
+            if (!isHave) {
+                return newFileName;
+            }
+            isHave = false;
+        }
     }
 
     public void setCurrentTab(final int index) {

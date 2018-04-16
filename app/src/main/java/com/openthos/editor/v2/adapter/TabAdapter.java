@@ -82,6 +82,9 @@ public class TabAdapter extends RecyclerView.Adapter {
         return list[position];
     }
 
+    public TabInfo[] getTabInfoList() {
+        return list;
+    }
 
     public void setTabInfoList(TabInfo[] tabInfoList) {
         this.list = tabInfoList;

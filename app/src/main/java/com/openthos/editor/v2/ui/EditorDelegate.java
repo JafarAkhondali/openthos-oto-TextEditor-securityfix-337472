@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.openthos.common.utils.DBHelper;
 import com.openthos.common.utils.UIUtils;
 import com.openthos.editor.v2.Pref;
 import com.openthos.editor.v2.R;
@@ -222,6 +223,7 @@ public class EditorDelegate implements OnVisibilityChangedListener, OnTextChange
         if (document == null)
             return;
         document.saveTo(file, encoding == null ? document.getEncoding() : encoding);
+        DBHelper.getInstance(context).addRecentFile(file.getAbsolutePath(), encoding, 0, 0);
     }
 
     /**
