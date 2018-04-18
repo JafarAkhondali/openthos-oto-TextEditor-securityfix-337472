@@ -3787,7 +3787,7 @@ exports.SelectDrawableEventHandler = SelectDrawableEventHandler;
 
 });
 
-define("ace/mouse/default_handlers",["require","exports","module","ace/mouse/pinch_zoom","ace/lib/dom","ace/lib/event","ace/lib/useragent","ace/fastscroll/Scroller","ace/mouse/select_drawables_event_handler"], function(require, exports, module) {
+define("ace/mouse/default_handlers",["require","exports","module","ace/mouse/pinch_zoom","ace/lib/dom","ace/lib/event","ace/lib/useragent","ace/fastscroll/Scroller","ace/mouse/select_drawables_event_handler","ace/range"], function(require, exports, module) {
 "use strict";
 
 var Pinch = require("../mouse/pinch_zoom").Pinch;
@@ -3797,6 +3797,10 @@ var useragent = require("../lib/useragent");
 var FastScroller = require("../fastscroll/Scroller").Scroller;
 var SelectDrawableEventHandler = require("./select_drawables_event_handler").SelectDrawableEventHandler;
 var DRAG_OFFSET = 0; // pixels
+
+var Range = require("../range").Range;
+var auchorRow, auchorColumn;
+var longClick = false;
 
 function DefaultHandlers(mouseHandler) {
     mouseHandler.$clickSelection = null;
@@ -4035,6 +4039,17 @@ function DefaultHandlers(mouseHandler) {
     };
 
     this.onTouchMove = function (ev) {
+
+        if (longClick){
+            var pos = ev.getDocumentPosition();
+
+            this.editor.$blockScrolling++;
+            this.editor.selection.setSelectionAnchor(auchorRow, auchorColumn);
+            this.editor.selection.selectToPosition(pos);
+            this.editor.$blockScrolling--;z
+            this.editor.renderer.scrollCursorIntoView();
+        }
+
         if (ev.editor.renderer.scrollBar.isDragging)
             return;
         if (this.longTouchTimer !== null) {
@@ -4085,13 +4100,27 @@ function DefaultHandlers(mouseHandler) {
 
             this.longTouchTimer = setTimeout(function () {
                 editor._signal("onLongTouch");
-            }, 500);
+
+                longClick = true;
+                var selection = this.editor.selection;
+                var anchor = selection.getSelectionAnchor();
+                var lead = selection.getSelectionLead();
+                var pos = ev.getDocumentPosition();
+                if (pos.row == lead.row && lead.column == pos.column) {
+                    auchorRow = anchor.row;
+                    auchorColumn = anchor.column;
+                } else {
+                    auchorRow = lead.row;
+                    auchorColumn = lead.column;
+                }
+            }, 50);
         } else {
             this.pinch.ontouchstart(ev.domEvent);
         }
     };
 
     this.onTouchEnd = function (ev) {
+        longClick = false;
         if (this.longTouchTimer !== null) {
             clearTimeout(this.longTouchTimer);
             this.longTouchTimer = null;
@@ -15928,16 +15957,18 @@ var SelectHandleDrawables = function(cursor) {
     };
 
     this.showMidSelectHandle = function() {
-        this.isMidVisible = true;
-        this.selectHandleMid.style.display = "";
-        this.hideLeftRightSelectHandle();
+//        this.isMidVisible = true;
+//        this.selectHandleMid.style.display = "";
+//        this.hideLeftRightSelectHandle();
+        this.hideAll();
     };
 
     this.showLeftRightSelectHandle = function() {
-        this.isLRVisible = true;
-        this.selectHandleLeft.style.display = "";
-        this.selectHandleRight.style.display = "";
-        this.hideMidSelectHandle();
+//        this.isLRVisible = true;
+//        this.selectHandleLeft.style.display = "";
+//        this.selectHandleRight.style.display = "";
+//        this.hideMidSelectHandle();
+          this.hideAll();
     };
 
     this.hideMidSelectHandle = function() {
@@ -15950,6 +15981,14 @@ var SelectHandleDrawables = function(cursor) {
         this.selectHandleRight.style.display = "none";
         this.isLRVisible = false;
     };
+
+        this.hideAll = function() {
+            this.selectHandleLeft.style.display = "none";
+            this.selectHandleRight.style.display = "none";
+            this.selectHandleMid.style.display = "none";
+            this.isMidVisible = false;
+            this.isLRVisible = false;
+        };
 
     this.update = function(config) {
         this.config = config;
