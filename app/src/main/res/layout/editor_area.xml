@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.openthos.editor.v2.view.EditorView
+<org.openthos.editor.view.EditorView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.openthos.editor.v2.widget.text.EditAreaView
+    <org.openthos.editor.widget.text.EditAreaView
         android:id="@+id/edit_text"
         android:theme="@style/EditorWebViewTheme"
         android:layout_width="match_parent"
@@ -26,5 +26,5 @@
         android:visibility="gone"
         android:indeterminate="true" />
 
-</com.openthos.editor.v2.view.EditorView>
+</org.openthos.editor.view.EditorView>
 

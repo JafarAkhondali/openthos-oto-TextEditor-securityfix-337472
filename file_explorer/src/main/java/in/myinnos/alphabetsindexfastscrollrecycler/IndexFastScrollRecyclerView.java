@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import com.openthos.android.file_explorer.R;
+import org.openthos.android.file_explorer.R;
 
 public class IndexFastScrollRecyclerView extends RecyclerView {
 

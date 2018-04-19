@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         //applicationId "com.smaster.editor.v2"
-        applicationId "com.openthos.editor.v2"
+        applicationId "org.openthos.editor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 44

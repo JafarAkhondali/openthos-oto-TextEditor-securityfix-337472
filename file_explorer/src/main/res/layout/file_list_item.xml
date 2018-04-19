@@ -18,7 +18,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="item" type="com.openthos.android.file_explorer.model.FileItemModel" />
+        <variable name="item" type="org.openthos.android.file_explorer.model.FileItemModel" />
     </data>
 
     <LinearLayout
@@ -37,7 +37,7 @@
             android:gravity="center"
             android:layout_marginRight="16dp">
 
-            <com.openthos.android.file_explorer.widget.IconImageView
+            <org.openthos.android.file_explorer.widget.IconImageView
                 android:id="@+id/iconImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

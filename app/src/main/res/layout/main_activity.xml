@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.openthos.editor.v2.widget.TranslucentDrawerLayout
+    <org.openthos.editor.widget.TranslucentDrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,7 +26,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone"/>
 
-            <com.openthos.editor.v2.widget.EditorToolbar
+            <org.openthos.editor.widget.EditorToolbar
                 android:id="@+id/toolbar"
                 style="@style/Toolbar"
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                     android:background="@color/gray"/>
             </LinearLayout>
 
-            <com.openthos.editor.v2.widget.BottomDrawerLayout
+            <org.openthos.editor.widget.BottomDrawerLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -76,20 +76,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
 
-                <com.openthos.editor.v2.view.TabViewPager
+                <org.openthos.editor.view.TabViewPager
                     android:id="@+id/tab_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"/>
 
-                <com.openthos.editor.v2.widget.SymbolBarLayout
+                <org.openthos.editor.widget.SymbolBarLayout
                     android:id="@+id/symbolBarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:background="?android:attr/windowBackground"
                     android:visibility="gone"/>
-            </com.openthos.editor.v2.widget.BottomDrawerLayout>
+            </org.openthos.editor.widget.BottomDrawerLayout>
 
         </LinearLayout>
 
@@ -107,9 +107,9 @@
         </android.support.design.widget.NavigationView>
 
 
-    </com.openthos.editor.v2.widget.TranslucentDrawerLayout>
+    </org.openthos.editor.widget.TranslucentDrawerLayout>
 
-    <com.openthos.editor.v2.view.MenuListView
+    <org.openthos.editor.view.MenuListView
         android:id="@+id/menu_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
