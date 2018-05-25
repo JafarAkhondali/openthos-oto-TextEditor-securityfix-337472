@@ -41,6 +41,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.alibaba.fastjson.JSON;
+
 import org.openthos.common.utils.IOUtils;
 import org.openthos.common.utils.L;
 import org.openthos.common.utils.UIUtils;
@@ -435,7 +436,11 @@ public class EditAreaView extends WebView implements SharedPreferences.OnSharedP
     public boolean paste() {
         ClipboardManager clipboard = (ClipboardManager) getContext().
                 getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+        ClipData primaryClip = clipboard.getPrimaryClip();
+        if (primaryClip == null) {
+            return false;
+        }
+        ClipData.Item item = primaryClip.getItemAt(0);
 
         // Gets the clipboard as text.
         CharSequence pasteData = item.getText();

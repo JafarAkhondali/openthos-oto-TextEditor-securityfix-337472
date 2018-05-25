@@ -795,6 +795,9 @@ public class MainActivity extends BaseActivity
                 openFile(data.getStringExtra("path"));
                 break;
             case RC_SAVE://另存为
+                if (data == null) {
+                    break;
+                }
                 String file = data.getStringExtra("path");
                 //Log.i("Smaster::::", "file::::" + file);
                 String encoding = FileExplorerActivity.getFileEncoding(data);
