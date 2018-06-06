@@ -54,6 +54,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.azeesoft.lib.colorpicker.ColorPickerDialog;
 import com.azeesoft.lib.colorpicker.Stools;
+
 import org.openthos.android.file_explorer.FileExplorerActivity;
 import org.openthos.common.utils.CrashDbHelper;
 import org.openthos.common.utils.DBHelper;
@@ -840,6 +841,16 @@ public class MainActivity extends BaseActivity
 
     public TabManager getTabManager() {
         return tabManager;
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.isCtrlPressed() && event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getKeyCode() == KeyEvent.KEYCODE_S) {
+            tabManager.getEditorAdapter().getCurrentEditorDelegate()
+                    .doCommand(new Command(Command.CommandEnum.SAVE));
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @Override
