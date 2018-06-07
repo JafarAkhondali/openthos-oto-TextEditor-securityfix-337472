@@ -170,6 +170,9 @@ public class FileWriter extends AsyncTask<String, Void, Void> {
             fileWriteListener.onSuccess();
         else
             fileWriteListener.onError(error);
+        if (backupFile.exists()) {
+            backupFile.delete();
+        }
     }
 
     private static File makeBackupFile(File file) {
